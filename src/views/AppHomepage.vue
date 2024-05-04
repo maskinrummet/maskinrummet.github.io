@@ -3,7 +3,7 @@
   <DataTable
     :value="activities"
     v-model:filters="filters"
-    filterDisplay="row"
+    filterDisplay="menu"
     :globalFilterFields="['topics']"
     removableSort
   >
@@ -19,19 +19,11 @@
         {{ $t(data.modality) }}
       </template>
     </Column>
-    <Column field="subject" :header="$t('subject')" sortable>
-      <template #body="{ data }">
-        <Tag :value="$t(data.subject)" />
-      </template>
-    </Column>
-    <Column field="age" :header="$t('age')" sortable>
-      <template #body="{ data }">{{ data.age }}+</template>
-    </Column>
     <Column
       field="topics"
       :header="$t('topics')"
-      :showFilterMenu="false"
-      :showClearButton="false"
+      filterField="topics"
+      :showFilterMatchModes="false"
     >
       <template #body="{ data }">
         <Tag
@@ -42,28 +34,39 @@
           class="mr-1 mb-1"
         />
       </template>
-      <template #filter="{ filterModel, filterCallback }">
-        <Dropdown
+      <template #filter="{ filterModel }">
+        <MultiSelect
           v-model="filterModel.value"
-          @change="filterCallback()"
           :options="allTopicOptions"
-          placeholder="Filter by topic"
+          :placeholder="$t('selectTopics')"
           class="p-column-filter"
-          :showClear="true"
         >
           <template #value="slotProps">
-            <div v-if="slotProps.value" class="flex align-items-center">
-              <div>{{ $t(slotProps.value) }}</div>
+            <div
+              v-if="slotProps.value && slotProps.value.length"
+              class="flex align-items-center"
+            >
+              {{ getDenseListString(slotProps.value) }}
             </div>
             <span v-else>
               {{ slotProps.placeholder }}
             </span>
           </template>
           <template #option="slotProps">
-            <Tag :value="$t(slotProps.option)" severity="secondary" />
+            <div class="flex align-items-center gap-2">
+              <span>{{ $t(slotProps.option) }}</span>
+            </div>
           </template>
-        </Dropdown>
+        </MultiSelect>
       </template>
+    </Column>
+    <Column field="subject" :header="$t('subject')" sortable>
+      <template #body="{ data }">
+        <Tag :value="$t(data.subject)" />
+      </template>
+    </Column>
+    <Column field="age" :header="$t('age')" sortable>
+      <template #body="{ data }">{{ data.age }}+</template>
     </Column>
     <Column field="duration" :header="$t('duration')" sortable>
       <template #body="{ data }">{{ data.duration }} {{ $t("mins") }}</template>
@@ -81,8 +84,20 @@ import Button from "primevue/button";
 import Tag from "primevue/tag";
 import { computed } from "vue";
 import { useStore } from "vuex";
-import { FilterMatchMode } from "primevue/api";
-import Dropdown from "primevue/dropdown";
+import MultiSelect from "primevue/multiselect";
+import { FilterService } from "primevue/api";
+
+FilterService.register("filterBySetMatch", (valueSet, filterSet) => {
+  if (!filterSet) {
+    return false;
+  }
+  if (!valueSet) {
+    return true;
+  }
+  return [...new Set(filterSet)].every((element) =>
+    new Set(valueSet).has(element)
+  );
+});
 
 export default {
   name: "AppHomepage",
@@ -91,7 +106,7 @@ export default {
     Column,
     Button,
     Tag,
-    Dropdown,
+    MultiSelect,
   },
   setup() {
     const store = useStore();
@@ -106,9 +121,19 @@ export default {
       return [...new Set(this.activities.flatMap((a) => a.topics))].sort();
     },
   },
+  methods: {
+    getDenseListString(list, maxChars = 20) {
+      const listString = list.map((v) => this.$t(v)).join(", ");
+      return listString.length > maxChars
+        ? listString.slice(0, maxChars - 3) + "..."
+        : listString;
+    },
+  },
   data() {
     return {
-      filters: { topics: { value: null, matchMode: FilterMatchMode.CONTAINS } },
+      filters: {
+        topics: { value: null, matchMode: "filterBySetMatch" },
+      },
     };
   },
 };

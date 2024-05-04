@@ -33,6 +33,7 @@ const messages = {
     textCleaningPaperDesc:
       "In this lesson we explore how texts can be cleaned into words for processing using paper.",
     practical: "Practical",
+    selectTopics: "Select topics",
   },
   da: {
     maskinrummet: "Maskinrummet",
