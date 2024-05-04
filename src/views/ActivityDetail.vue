@@ -10,7 +10,7 @@
               {{ $t("age") }} {{ activity.age }}+
             </div>
             <div class="text-right">
-              {{ activity.duration + $t("mins") }}
+              {{ activity.duration + $t("mins").slice(0, 1) }}
               <i class="pi pi-stopwatch"></i>
             </div>
           </div>
