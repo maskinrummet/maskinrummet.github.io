@@ -2,7 +2,7 @@ import { createI18n } from "vue-i18n";
 
 const messages = {
   en: {
-    maskinrummet: "The Engine Room",
+    maskinrummet: "Engine Room",
     home: "Home",
     about: "About",
     aboutText:
@@ -23,32 +23,51 @@ const messages = {
     duration: "Duration",
     topics: "Topics",
     textCleaning: "Text cleaning",
-    textCleaningDesc:
-      "In this lesson we explore how texts can be cleaned into words for processing.",
     digital: "Digital",
     anySubject: "Any",
     mins: "mins",
     tokenisation: "Tokenisation",
-    textCleaningPaper: "Text cleaning with paper",
-    textCleaningPaperDesc:
-      "In this lesson we explore how texts can be cleaned into words for processing using paper.",
     practical: "Practical",
     selectTopics: "Select topics",
+    activityNotFound: "Activity not found",
+    whatYouNeed: "What you need for this activity",
+    learningGoals: "Learning goals",
+    intro: "Introduction",
+    howTo: "How to use the site",
+    activities: {
+      textCleaning: {
+        title: "Text cleaning",
+        description:
+          "In this lesson we explore how texts can be cleaned into words for processing.",
+        whatYouNeed: "Nothing :)",
+        learningGoals:
+          "Understand how text can be cleaned into words for processing. Get an introdcution to tokenisation.",
+        intro:
+          "How do we process a piece of text? It's a more difficult question than it seems at first as text is represented in computers as 'strings' of characters in binary. Therefore while we can see the words 'hello', 'HELLO', and 'Helloooo' all mean the same thing, they are very different to a computer. To start with, let's focus on trying to break up a piece of text into words.",
+      },
+      textCleaningPaper: {
+        title: "Text cleaning with paper",
+        description:
+          "In this lesson we explore how texts can be cleaned into words for processing using paper.",
+        whatYouNeed:
+          "Some paper and a pen. If you're running this in a group, we have template sheets for writing on available.",
+      },
+    },
   },
   da: {
     maskinrummet: "Maskinrummet",
     home: "Hjem",
-    about: "Om os",
+    about: "Om",
     aboutText:
-      "Maskinrummet er et projekt, der sigter mod at give et læringsressource for den generelle befolkning og lærere med fokus på AI og tekstbehandlingsteknologier.",
+      "Maskinrummet er et projekt, der sigter mod at give en læringsressource til den brede befolkning og lærere med fokus på AI og tekstbehandlingsteknologier.",
     contact: "Kontakt",
     contactText:
       "Websted oprettet og under udvikling af Luke Connelly (+45 93 87 34 09, lukejconnelly1{'@'}gmail.com).",
     language: "Sprog",
-    currLanguage: "Dansk",
+    currLanguage: "Engelsk",
     error404: "Siden blev ikke fundet",
     availableActivities: "Tilgængelige aktiviteter",
-    suggestActivity: "Foreslå en aktivitet",
+    suggestActivity: "Forslå en aktivitet",
     currentActivity: "Nuværende aktivitet",
     title: "Titel",
     modality: "Modalitet",
@@ -56,12 +75,26 @@ const messages = {
     age: "Alder",
     duration: "Varighed",
     topics: "Emner",
-    textCleaning: "Tekst rensning",
-    textCleaningDesc: "I denne",
-    digital: "Digitalt",
-    anySubject: "Flexibel",
+    textCleaning: "Tekstrensning",
+    digital: "Digital",
+    anySubject: "Alle",
     mins: "min",
     tokenisation: "Tokenisering",
+    activities: {
+      textCleaning: {
+        title: "Tekstrensning",
+        description:
+          "I denne lektion udforsker vi, hvordan tekster kan renses og opdeles i ord til behandling.",
+      },
+      textCleaningPaper: {
+        title: "Tekstrensning med papir",
+        description:
+          "I denne lektion udforsker vi, hvordan tekster kan renses og opdeles i ord til behandling ved hjælp af papir.",
+      },
+    },
+    practical: "Praktisk",
+    selectTopics: "Vælg emner",
+    activityNotFound: "Aktiviteten blev ikke fundet",
   },
 };
 

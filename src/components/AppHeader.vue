@@ -2,7 +2,7 @@
   <Menubar :model="items">
     <template #start>
       <router-link to="/">
-        <Button class="p-button-link p-0 px-2 mr-2">
+        <Button class="p-button-link p-0 px-2">
           <img
             src="@/assets/logo.png"
             alt="Logo"
@@ -10,7 +10,7 @@
             width="35"
             height="40"
           />
-          <h3 class="ml-2">{{ $t("maskinrummet") }}</h3>
+          <h3 class="ml-2 text-purple-900">{{ $t("maskinrummet") }}</h3>
         </Button>
       </router-link>
     </template>

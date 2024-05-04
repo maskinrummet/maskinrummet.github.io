@@ -4,9 +4,7 @@ export default createStore({
   state: {
     activities: [
       {
-        id: "text-cleaning",
-        title: "textCleaning", // create lookup
-        description: "textCleaningDesc", // create lookup
+        id: "textCleaning",
         modality: "digital", // one of: digital, practical, mixed, embodied, resource
         subject: "anySubject",
         age: 10, // + will be appended e.g. 10+
@@ -14,9 +12,7 @@ export default createStore({
         duration: 20, // mins
       },
       {
-        id: "text-cleaning-paper",
-        title: "textCleaningPaper",
-        description: "textCleaningPaperDesc",
+        id: "textCleaningPaper",
         modality: "practical",
         subject: "anySubject",
         age: 8,

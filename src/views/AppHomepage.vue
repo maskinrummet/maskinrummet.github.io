@@ -10,7 +10,10 @@
     <Column field="title" :header="$t('title')">
       <template #body="{ data }">
         <router-link :to="{ path: 'activity', query: { id: data.id } }">
-          <Button :label="$t(data.title)" class="p-button-link" />
+          <Button
+            :label="$t(`activities.${data.id}.title`)"
+            class="p-button-link"
+          />
         </router-link>
       </template>
     </Column>
@@ -72,9 +75,11 @@
       <template #body="{ data }">{{ data.duration }} {{ $t("mins") }}</template>
     </Column>
   </DataTable>
-  <router-link to="/contact" class="flex no-underline mt-2">
-    <Button :label="$t('suggestActivity')" />
-  </router-link>
+  <div class="flex justify-content-end mt-2">
+    <router-link to="/contact" class="no-underline">
+      <Button :label="$t('suggestActivity')" />
+    </router-link>
+  </div>
 </template>
 
 <script>
