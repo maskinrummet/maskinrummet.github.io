@@ -1,5 +1,5 @@
 <template>
-  <div>Text Cleaning Paper Works!</div>
+  <div>Text Cleaning Paper coming soon!</div>
 </template>
 
 <script>

@@ -1,0 +1,167 @@
+<template>
+  <form @submit="checkDataset">
+    <div class="flex justify-content-center mb-5">
+      <FloatLabel>
+        <label> {{ $t("datasetName") }} </label>
+        <InputText v-model="datasetCopy.name" />
+      </FloatLabel>
+    </div>
+    <div class="flex justify-content-center mb-5 align-items-center">
+      <label class="mr-3">{{ $t("openDataset") }}</label>
+      <ToggleButton
+        v-model="datasetCopy.is_open"
+        :onLabel="$t('open')"
+        :offLabel="$t('closed')"
+        onIcon="pi pi-lock-open"
+        offIcon="pi pi-lock"
+        :aria-label="$t('openDataset')"
+      />
+    </div>
+    <DataTable :value="displaySentences" size="small" paginator :rows="numRows">
+      <Column field="text" :header="$t('inputTexts')"></Column>
+      <Column :header="$t('action')">
+        <template #body="{ index }">
+          <Button
+            severity="danger"
+            :label="$t('delete')"
+            @click="sentences.splice(index, 1)"
+          ></Button>
+        </template>
+      </Column>
+      <ColumnGroup type="footer">
+        <Row>
+          <Column
+            ><template #footer>
+              <form
+                @submit="
+                  (e) => {
+                    e.preventDefault();
+                    if (!addDisabled) addNewSentence();
+                  }
+                "
+              >
+                <InputText
+                  v-model="newSentence"
+                  class="w-full"
+                /></form></template
+          ></Column>
+          <Column>
+            <template #footer>
+              <Button
+                :label="$t('add')"
+                @click="addNewSentence"
+                :disabled="addDisabled"
+              ></Button>
+            </template>
+          </Column>
+        </Row>
+      </ColumnGroup>
+    </DataTable>
+    <transition-group name="p-message" tag="div">
+      <Message severity="error" v-if="error" :closable="false">
+        <template #container
+          ><div class="p-2">{{ error }}</div></template
+        >
+      </Message>
+    </transition-group>
+    <div class="flex justify-content-between mt-3">
+      <Button
+        :label="$t('nevermind')"
+        severity="danger"
+        @click="$emit('cancel')"
+      ></Button>
+      <Button :label="$t('refreshDataset')" @click="$emit('refresh')"></Button>
+      <Button
+        :label="$t('saveChanges')"
+        severity="success"
+        type="submit"
+      ></Button>
+    </div>
+  </form>
+</template>
+
+<script>
+import InputText from "primevue/inputtext";
+import FloatLabel from "primevue/floatlabel";
+import ToggleButton from "primevue/togglebutton";
+import Button from "primevue/button";
+import DataTable from "primevue/datatable";
+import Column from "primevue/column";
+import Message from "primevue/message";
+import ColumnGroup from "primevue/columngroup";
+import Row from "primevue/row";
+
+export default {
+  name: "EditDataset",
+  components: {
+    InputText,
+    FloatLabel,
+    ToggleButton,
+    Button,
+    DataTable,
+    Column,
+    Message,
+    ColumnGroup,
+    Row,
+  },
+  props: {
+    dataset: {
+      type: Object,
+      required: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+  },
+  data() {
+    return {
+      datasetCopy: { ...this.dataset },
+      error: "",
+      sentences: JSON.parse(this.dataset.json_string),
+      newSentence: "",
+      numRows: 10,
+    };
+  },
+  computed: {
+    addDisabled() {
+      return !this.newSentence || this.newSentence.length > 150;
+    },
+    displaySentences() {
+      return this.sentences.map((text) => ({
+        text: this.truncateText(text),
+      }));
+    },
+  },
+  methods: {
+    truncateText(text, maxChars = 100) {
+      return text.length > maxChars
+        ? text.slice(0, maxChars - 3) + "..."
+        : text;
+    },
+    addNewSentence() {
+      if (this.newSentence) {
+        if (this.sentences.length > this.numRows - 1) {
+          this.sentences.splice(this.numRows - 1, 0, this.newSentence);
+        } else {
+          this.sentences.push(this.newSentence);
+        }
+        this.newSentence = "";
+      }
+    },
+    checkDataset(e) {
+      e.preventDefault();
+      if (this.datasetCopy.name === "") {
+        this.error = this.$t("emptyDatasetName");
+        return;
+      }
+      if (this.datasetCopy.name.length > 150) {
+        this.error = this.$t("longDatasetName");
+        return;
+      }
+      this.datasetCopy.json_string = JSON.stringify(this.sentences);
+      this.$emit("update", this.datasetCopy);
+    },
+  },
+};
+</script>

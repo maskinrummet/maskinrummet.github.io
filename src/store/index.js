@@ -19,6 +19,14 @@ export default createStore({
         topics: ["textCleaning", "tokenisation"],
         duration: 40,
       },
+      {
+        id: "textGeneration",
+        modality: "digital",
+        subject: "anySubject",
+        age: 14,
+        topics: ["textGeneration"],
+        duration: 40,
+      },
     ],
   },
   getters: {

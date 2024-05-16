@@ -6,23 +6,30 @@
         <p>{{ $t(`activities.${activityID}.whatYouNeed`) }}</p>
       </template>
     </Card>
-    <Card class="mt-2">
-      <template #title>{{ $t("learningGoals") }}</template>
-      <template #content>
-        <p>{{ $t(`activities.${activityID}.learningGoals`) }}</p>
-      </template>
-    </Card>
+    <Fieldset
+      class="mt-2"
+      :legend="$t('learningGoals')"
+      :toggleable="true"
+      collapsed
+    >
+      <p>{{ $t(`activities.${activityID}.learningGoals`) }}</p>
+    </Fieldset>
     <Card class="mt-2">
       <template #title>{{ $t("intro") }}</template>
       <template #content>
         <p>{{ $t(`activities.${activityID}.intro`) }}</p>
       </template>
     </Card>
-    <SingleSentenceInput
-      v-model="sentence"
-      class="mt-2"
-      @sentenceReady="getSentence"
-    />
+    <Card>
+      <template #title>{{ this.$t("sentenceInputTitle") }}</template>
+      <template #content>
+        <SingleSentenceInput
+          v-model="sentence"
+          class="mt-2"
+          @sentenceReady="getSentence"
+        />
+      </template>
+    </Card>
   </div>
   <Stepper linear v-if="sentence && !complete">
     <StepperPanel :header="$t('yourSentence')">
@@ -39,6 +46,23 @@
           class="p-0 mr-1 mb-1"
           ><template #default
         /></Button>
+        <div class="flex py-3 justify-content-center">
+          <Button
+            :label="$t('seeComputer')"
+            severity="secondary"
+            icon="pi pi-desktop"
+            @click="sentenceCoded.forEach((s) => (s.showChar = false))"
+            :disabled="sentenceCoded.every((s) => !s.showChar)"
+          />
+          <Button
+            :label="$t('seeHuman')"
+            icon="pi pi-eye"
+            iconPos="right"
+            class="ml-2"
+            @click="sentenceCoded.forEach((s) => (s.showChar = true))"
+            :disabled="sentenceCoded.every((s) => s.showChar)"
+          />
+        </div>
         <p>
           {{ $t(`activities.${activityID}.custom.characterCodesExplained`) }}
         </p>
@@ -59,25 +83,51 @@
             $t(`activities.${activityID}.custom.splitSentenceUsingSpaceBelow`)
           }}
         </p>
-        <Button
-          v-for="s in sentenceCoded"
-          :key="s.index"
-          :label="s.showChar ? s.char : s.code.toString()"
-          @mouseenter="s.showChar = !s.showChar"
-          :severity="s.showChar ? 'primary' : 'secondary'"
-          :style="
-            'width: 2em; height: 2em' + (s.hidden ? '; visibility: hidden' : '')
-          "
-          :class="s.char === ' ' ? 'p-0 mx-1 mb-1' : 'p-0 mb-1'"
-          @click="spaceClick(s, $event)"
-          ><template #default
-        /></Button>
+        <div class="flex py-3 justify-content-center">
+          <Button
+            :label="$t('seeComputer')"
+            severity="secondary"
+            icon="pi pi-desktop"
+            @click="sentenceCoded.forEach((s) => (s.showChar = false))"
+            :disabled="sentenceCoded.every((s) => !s.showChar)"
+          />
+          <Button
+            :label="$t('seeHuman')"
+            icon="pi pi-eye"
+            iconPos="right"
+            class="ml-2"
+            @click="sentenceCoded.forEach((s) => (s.showChar = true))"
+            :disabled="sentenceCoded.every((s) => s.showChar)"
+          />
+        </div>
+        <div id="spaceButtons">
+          <Button
+            v-for="s in sentenceCoded"
+            :key="s.index"
+            :label="s.showChar ? s.char : s.code.toString()"
+            @mouseenter="s.showChar = !s.showChar"
+            :severity="s.showChar ? 'primary' : 'secondary'"
+            :style="
+              'width: 2em; height: 2em' +
+              (s.hidden ? '; visibility: hidden' : '')
+            "
+            :class="s.char === ' ' ? 'p-0 mx-1 mb-1' : 'p-0 mb-1'"
+            @click="spaceClick(s, $event)"
+            ><template #default
+          /></Button>
+        </div>
         <div class="flex pt-4 justify-content-between">
           <Button
             :label="$t('back')"
             severity="secondary"
             icon="pi pi-arrow-left"
             @click="resetSentenceCoded(prevCallback)"
+          />
+          <Button
+            :label="$t('autoClick')"
+            severity="help"
+            @click="clickAllButtons('spaceButtons')"
+            :disabled="!sentenceCoded.some((s) => s.char === ' ' && !s.hidden)"
           />
           <Button
             :label="$t('next')"
@@ -94,34 +144,64 @@
         <p>
           {{ $t(`activities.${activityID}.custom.lowercaseSentenceBelow`) }}
         </p>
-        <Button
-          v-for="s in sentenceCoded"
-          :key="s.index"
-          :label="
-            s.showLower
-              ? s.showChar
-                ? s.lowercaseChar
-                : s.lowercaseCode.toString()
-              : s.showChar
-              ? s.char
-              : s.code.toString()
-          "
-          @mouseenter="s.showChar = !s.showChar"
-          :severity="s.showChar ? 'primary' : 'secondary'"
-          :style="
-            'width: 2em; height: 2em' +
-            (s.char === ' ' ? '; visibility: hidden' : '')
-          "
-          :class="'p-0 mb-1'"
-          @click="capsClick(s, $event)"
-          ><template #default
-        /></Button>
+        <div class="flex py-3 justify-content-center">
+          <Button
+            :label="$t('seeComputer')"
+            severity="secondary"
+            icon="pi pi-desktop"
+            @click="sentenceCoded.forEach((s) => (s.showChar = false))"
+            :disabled="sentenceCoded.every((s) => !s.showChar)"
+          />
+          <Button
+            :label="$t('seeHuman')"
+            icon="pi pi-eye"
+            iconPos="right"
+            class="ml-2"
+            @click="sentenceCoded.forEach((s) => (s.showChar = true))"
+            :disabled="sentenceCoded.every((s) => s.showChar)"
+          />
+        </div>
+
+        <div id="lowercaseButtons">
+          <Button
+            v-for="s in sentenceCoded"
+            :key="s.index"
+            :label="
+              s.showLower
+                ? s.showChar
+                  ? s.lowercaseChar
+                  : s.lowercaseCode.toString()
+                : s.showChar
+                ? s.char
+                : s.code.toString()
+            "
+            @mouseenter="s.showChar = !s.showChar"
+            :severity="s.showChar ? 'primary' : 'secondary'"
+            :style="
+              'width: 2em; height: 2em' +
+              (s.char === ' ' ? '; visibility: hidden' : '')
+            "
+            :class="'p-0 mb-1'"
+            @click="capsClick(s, $event)"
+            ><template #default
+          /></Button>
+        </div>
         <div class="flex pt-4 justify-content-between">
           <Button
             :label="$t('back')"
             severity="secondary"
             icon="pi pi-arrow-left"
             @click="resetSentenceCoded(prevCallback)"
+          />
+          <Button
+            :label="$t('autoClick')"
+            severity="help"
+            @click="clickAllButtons('lowercaseButtons')"
+            :disabled="
+              !sentenceCoded.some(
+                (s) => !s.showLower && s.char !== s.lowercaseChar
+              )
+            "
           />
           <Button
             :label="$t('next')"
@@ -139,28 +219,60 @@
     </StepperPanel>
     <StepperPanel :header="$t('cleaning')">
       <template #content="{ prevCallback }">
-        <Button
-          v-for="s in sentenceCoded"
-          :key="s.index"
-          :label="s.showChar ? s.lowercaseChar : s.lowercaseCode.toString()"
-          @mouseenter="s.showChar = !s.showChar"
-          :severity="
-            s.inAnimation ? 'contrast' : s.showChar ? 'primary' : 'secondary'
-          "
-          :style="
-            'width: 2em; height: 2em' +
-            (s.char === ' ' ? '; visibility: hidden' : '')
-          "
-          :class="'p-0 mb-1'"
-          @click="puncClick(s, $event)"
-          ><template #default
-        /></Button>
+        <p>
+          {{ $t(`activities.${activityID}.custom.removePuncBelow`) }}
+        </p>
+        <div class="flex py-3 justify-content-center">
+          <Button
+            :label="$t('seeComputer')"
+            severity="secondary"
+            icon="pi pi-desktop"
+            @click="sentenceCoded.forEach((s) => (s.showChar = false))"
+            :disabled="sentenceCoded.every((s) => !s.showChar)"
+          />
+          <Button
+            :label="$t('seeHuman')"
+            icon="pi pi-eye"
+            iconPos="right"
+            class="ml-2"
+            @click="sentenceCoded.forEach((s) => (s.showChar = true))"
+            :disabled="sentenceCoded.every((s) => s.showChar)"
+          />
+        </div>
+
+        <div id="puncButtons">
+          <Button
+            v-for="s in sentenceCoded"
+            :key="s.index"
+            :label="s.showChar ? s.lowercaseChar : s.lowercaseCode.toString()"
+            @mouseenter="s.showChar = !s.showChar"
+            :severity="
+              s.inAnimation ? 'contrast' : s.showChar ? 'primary' : 'secondary'
+            "
+            :style="
+              'width: 2em; height: 2em' +
+              (s.char === ' ' ? '; visibility: hidden' : '')
+            "
+            :class="'p-0 mb-1'"
+            @click="puncClick(s, $event)"
+            ><template #default
+          /></Button>
+        </div>
+        <p v-if="!sentenceCoded.some((s) => s.isPunc && !s.inAnimation)">
+          {{ $t(`activities.${activityID}.custom.introToTokenisation`) }}
+        </p>
         <div class="flex pt-4 justify-content-between">
           <Button
             :label="$t('back')"
             severity="secondary"
             icon="pi pi-arrow-left"
             @click="resetSentenceCoded(prevCallback)"
+          />
+          <Button
+            :label="$t('autoClick')"
+            severity="help"
+            @click="clickAllButtons('puncButtons')"
+            :disabled="!sentenceCoded.some((s) => s.isPunc && !s.inAnimation)"
           />
           <Button
             :label="$t('finishLesson')"
@@ -181,12 +293,14 @@
         <p>{{ $t("youCompleted") }}</p>
       </template>
     </Card>
-    <Card class="mt-2">
-      <template #title>{{ $t("learningOutcomes") }}</template>
-      <template #content>
-        <p>{{ $t(`activities.${activityID}.learningOutcomes`) }}</p>
-      </template>
-    </Card>
+    <Fieldset
+      class="mt-2"
+      :legend="$t('learningOutcomes')"
+      :toggleable="true"
+      collapsed
+    >
+      <p>{{ $t(`activities.${activityID}.learningOutcomes`) }}</p>
+    </Fieldset>
     <Card class="mt-2">
       <template #title>{{ $t("seeMore") }}</template>
       <template #content>
@@ -202,6 +316,7 @@ import SingleSentenceInput from "@/components/SingleSentenceInput.vue";
 import Button from "primevue/button";
 import Stepper from "primevue/stepper";
 import StepperPanel from "primevue/stepperpanel";
+import Fieldset from "primevue/fieldset";
 
 export default {
   name: "TextCleaning",
@@ -211,6 +326,7 @@ export default {
     Button,
     Stepper,
     StepperPanel,
+    Fieldset,
   },
   props: {
     activityID: {
@@ -297,6 +413,14 @@ export default {
         s.inAnimation = true;
       }
       // TODO: ELSE SHAKE?
+    },
+    clickAllButtons(elementId) {
+      document
+        .getElementById(elementId)
+        .querySelectorAll("button")
+        .forEach((button) => {
+          button.click();
+        });
     },
     finishLesson() {
       this.complete = true;

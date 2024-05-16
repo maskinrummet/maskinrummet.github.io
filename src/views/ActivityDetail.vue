@@ -45,6 +45,10 @@
         v-else-if="activity.id === 'textCleaningPaper'"
         :activityID="activity.id"
       ></TextCleaningPaper>
+      <TextGeneration
+        v-else-if="activity.id === 'textGeneration'"
+        :activityID="activity.id"
+      ></TextGeneration>
       <div v-else>Activity has not been registered properly</div>
     </div>
     <div v-else>
@@ -59,7 +63,7 @@ import { useRoute } from "vue-router";
 import { useStore } from "vuex";
 import Card from "primevue/card";
 import Tag from "primevue/tag";
-import { TextCleaning, TextCleaningPaper } from "./activities";
+import { TextCleaning, TextCleaningPaper, TextGeneration } from "./activities";
 
 export default {
   name: "ActivityDetail",
@@ -68,6 +72,7 @@ export default {
     Tag,
     TextCleaning,
     TextCleaningPaper,
+    TextGeneration,
   },
   setup() {
     const route = useRoute();
