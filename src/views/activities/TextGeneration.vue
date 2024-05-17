@@ -1,26 +1,6 @@
 <template>
   <div v-if="!dataset">
-    <Card>
-      <template #title>{{ $t("whatYouNeed") }}</template>
-      <template #content>
-        <p>{{ $t(`activities.${activityID}.whatYouNeed`) }}</p>
-      </template>
-    </Card>
-    <Fieldset
-      class="mt-2"
-      :legend="$t('learningGoals')"
-      :toggleable="true"
-      collapsed
-    >
-      <p>{{ $t(`activities.${activityID}.learningGoals`) }}</p>
-    </Fieldset>
-    <Card class="mt-2">
-      <template #title>{{ $t("intro") }}</template>
-      <template #content>
-        <p>{{ $t(`activities.${activityID}.intro`) }}</p>
-      </template>
-    </Card>
-    <DatasetSelection class="mt-2" @datasetReady="getDataset" />
+    <DatasetSelection @datasetReady="getDataset" />
   </div>
   <ProgressBar
     v-if="loading && dataset && !complete && currStep === 0"
@@ -142,42 +122,18 @@
             icon="pi pi-arrow-right"
             iconPos="right"
             severity="success"
-            @click="complete = true"
+            @click="completed"
           />
         </div>
       </template>
     </StepperPanel>
   </Stepper>
-  <div v-if="complete">
-    <Card class="bg-green-900 text-white">
-      <template #title>{{ $t("congrats") }}</template>
-      <template #content>
-        <p>{{ $t("youCompleted") }}</p>
-      </template>
-    </Card>
-    <Fieldset
-      class="mt-2"
-      :legend="$t('learningOutcomes')"
-      :toggleable="true"
-      collapsed
-    >
-      <p>{{ $t(`activities.${activityID}.learningOutcomes`) }}</p>
-    </Fieldset>
-    <Card class="mt-2">
-      <template #title>{{ $t("seeMore") }}</template>
-      <template #content>
-        <p>{{ $t(`activities.${activityID}.readMore`) }}</p>
-      </template>
-    </Card>
-  </div>
 </template>
 <script>
-import Card from "primevue/card";
 import DatasetSelection from "@/components/DatasetSelection.vue";
 import Button from "primevue/button";
 import Stepper from "primevue/stepper";
 import StepperPanel from "primevue/stepperpanel";
-import Fieldset from "primevue/fieldset";
 import { getDatasetById } from "@/api";
 import VueWordCloud from "vuewordcloud";
 import {
@@ -193,12 +149,10 @@ import Slider from "primevue/slider";
 export default {
   name: "TextCleaning",
   components: {
-    Card,
     DatasetSelection,
     Button,
     Stepper,
     StepperPanel,
-    Fieldset,
     Dropdown,
     ProgressBar,
     TextGenerationVis,
@@ -261,6 +215,7 @@ export default {
       this.datasetId = datasetId;
       this.sentence = userSentence;
       this.dataset = (await getDatasetById(datasetId)).data;
+      this.$emit("startActivity");
     },
     async refreshDataset() {
       this.refreshing = true;
@@ -286,6 +241,10 @@ export default {
         return;
       }
       this.loading = progress;
+    },
+    completed() {
+      this.complete = true;
+      this.$emit("completedActivity");
     },
   },
 };

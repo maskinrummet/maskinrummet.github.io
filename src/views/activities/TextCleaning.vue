@@ -1,26 +1,6 @@
 <template>
   <div v-if="!sentence">
     <Card>
-      <template #title>{{ $t("whatYouNeed") }}</template>
-      <template #content>
-        <p>{{ $t(`activities.${activityID}.whatYouNeed`) }}</p>
-      </template>
-    </Card>
-    <Fieldset
-      class="mt-2"
-      :legend="$t('learningGoals')"
-      :toggleable="true"
-      collapsed
-    >
-      <p>{{ $t(`activities.${activityID}.learningGoals`) }}</p>
-    </Fieldset>
-    <Card class="mt-2">
-      <template #title>{{ $t("intro") }}</template>
-      <template #content>
-        <p>{{ $t(`activities.${activityID}.intro`) }}</p>
-      </template>
-    </Card>
-    <Card>
       <template #title>{{ this.$t("sentenceInputTitle") }}</template>
       <template #content>
         <SingleSentenceInput
@@ -286,28 +266,6 @@
       </template>
     </StepperPanel>
   </Stepper>
-  <div v-if="complete">
-    <Card class="bg-green-900 text-white">
-      <template #title>{{ $t("congrats") }}</template>
-      <template #content>
-        <p>{{ $t("youCompleted") }}</p>
-      </template>
-    </Card>
-    <Fieldset
-      class="mt-2"
-      :legend="$t('learningOutcomes')"
-      :toggleable="true"
-      collapsed
-    >
-      <p>{{ $t(`activities.${activityID}.learningOutcomes`) }}</p>
-    </Fieldset>
-    <Card class="mt-2">
-      <template #title>{{ $t("seeMore") }}</template>
-      <template #content>
-        <p>{{ $t(`activities.${activityID}.readMore`) }}</p>
-      </template>
-    </Card>
-  </div>
 </template>
 
 <script>
@@ -316,7 +274,6 @@ import SingleSentenceInput from "@/components/SingleSentenceInput.vue";
 import Button from "primevue/button";
 import Stepper from "primevue/stepper";
 import StepperPanel from "primevue/stepperpanel";
-import Fieldset from "primevue/fieldset";
 
 export default {
   name: "TextCleaning",
@@ -326,7 +283,6 @@ export default {
     Button,
     Stepper,
     StepperPanel,
-    Fieldset,
   },
   props: {
     activityID: {
@@ -348,6 +304,7 @@ export default {
           ? sentence
           : sentence + ".";
       this.resetSentenceCoded(() => {});
+      this.$emit("startActivity");
     },
     resetSentenceCoded(callback) {
       this.sentenceCoded = Array.from(this.sentence).map((c, i) => {
@@ -424,6 +381,7 @@ export default {
     },
     finishLesson() {
       this.complete = true;
+      this.$emit("completedActivity");
     },
   },
 };

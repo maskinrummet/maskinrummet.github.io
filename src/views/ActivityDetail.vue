@@ -1,6 +1,9 @@
 <template>
   <div>
-    <h3>{{ $t("currentActivity") }}</h3>
+    <h3>
+      <router-link to="/"> {{ $t("availableActivities") }} </router-link> >
+      {{ $t("currentActivity") }}
+    </h3>
     <div v-if="activity">
       <Card class="mb-2 bg-purple-900 text-white">
         <template #header>
@@ -35,21 +38,60 @@
           </div>
         </template>
       </Card>
+      <div v-if="!inProgress">
+        <Card>
+          <template #title>{{ $t("whatYouNeed") }}</template>
+          <template #content>
+            <div v-html="$t(`activities.${activity.id}.whatYouNeed`)"></div>
+          </template>
+        </Card>
+        <Fieldset
+          class="mt-2"
+          :legend="$t('learningGoals')"
+          :toggleable="true"
+          collapsed
+        >
+          <div v-html="$t(`activities.${activity.id}.learningGoals`)"></div>
+        </Fieldset>
+        <Card class="my-2">
+          <template #title>{{ $t("intro") }}</template>
+          <template #content>
+            <div v-html="$t(`activities.${activity.id}.intro`)"></div>
+          </template>
+        </Card>
+      </div>
 
       <!-- Switch logic for activity -->
-      <TextCleaning
-        v-if="activity.id === 'textCleaning'"
+      <component
+        :is="currentComponent"
+        v-if="currentComponent"
         :activityID="activity.id"
-      ></TextCleaning>
-      <TextCleaningPaper
-        v-else-if="activity.id === 'textCleaningPaper'"
-        :activityID="activity.id"
-      ></TextCleaningPaper>
-      <TextGeneration
-        v-else-if="activity.id === 'textGeneration'"
-        :activityID="activity.id"
-      ></TextGeneration>
+        @startActivity="inProgress = true"
+        @completedActivity="completed = true"
+      ></component>
       <div v-else>Activity has not been registered properly</div>
+      <div v-if="completed">
+        <Card class="bg-green-900 text-white">
+          <template #title>{{ $t("congrats") }}</template>
+          <template #content>
+            <p>{{ $t("youCompleted") }}</p>
+          </template>
+        </Card>
+        <Fieldset
+          class="mt-2"
+          :legend="$t('learningOutcomes')"
+          :toggleable="true"
+          collapsed
+        >
+          <div v-html="$t(`activities.${activity.id}.learningOutcomes`)"></div>
+        </Fieldset>
+        <Card class="mt-2">
+          <template #title>{{ $t("seeMore") }}</template>
+          <template #content>
+            <div v-html="$t(`activities.${activity.id}.readMore`)"></div>
+          </template>
+        </Card>
+      </div>
     </div>
     <div v-else>
       <p>{{ $t("activityNotFound") }}</p>
@@ -63,16 +105,24 @@ import { useRoute } from "vue-router";
 import { useStore } from "vuex";
 import Card from "primevue/card";
 import Tag from "primevue/tag";
+import Fieldset from "primevue/fieldset";
 import { TextCleaning, TextCleaningPaper, TextGeneration } from "./activities";
 
 export default {
   name: "ActivityDetail",
+  data() {
+    return {
+      inProgress: false,
+      completed: false,
+    };
+  },
   components: {
     Card,
     Tag,
     TextCleaning,
     TextCleaningPaper,
     TextGeneration,
+    Fieldset,
   },
   setup() {
     const route = useRoute();
@@ -86,6 +136,16 @@ export default {
     return {
       activity,
     };
+  },
+  computed: {
+    currentComponent() {
+      const componentMap = {
+        textCleaning: "TextCleaning",
+        textCleaningPaper: "TextCleaningPaper",
+        textGeneration: "TextGeneration",
+      };
+      return componentMap[this.activity.id] || null;
+    },
   },
 };
 </script>
