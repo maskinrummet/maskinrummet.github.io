@@ -27,6 +27,14 @@ export default createStore({
         topics: ["textGeneration"],
         duration: 40,
       },
+      {
+        id: "embodiedSentenceGeneration",
+        modality: "optional",
+        subject: "anySubject",
+        age: 6,
+        topics: ["textGeneration", "datasetBias"],
+        duration: 20,
+      },
     ],
   },
   getters: {

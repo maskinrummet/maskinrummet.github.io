@@ -3,51 +3,35 @@
     <DatasetSelection @datasetReady="getDataset" />
   </div>
   <ProgressBar
-    v-if="loading && dataset && !complete && currStep === 0"
+    v-if="loading && dataset && !complete && currStep === 1"
     mode="indeterminate"
     class="w-8 absolute z-5 top-100 mx-auto left-0 right-0"
   >
   </ProgressBar>
   <Stepper v-if="dataset && !complete" v-model:active-step="currStep">
-    <StepperPanel :header="$t('wordCloud')">
+    <StepperPanel :header="$t('randomWords')">
       <template #content="{ nextCallback }">
-        <p>
-          {{ $t(`activities.${activityID}.custom.wordCloudBelow`) }}
-        </p>
-        <div class="flex justify-content-center">
-          <div class="w-9 p-3 h-15rem border-2 border-round-md">
-            <vue-word-cloud
-              :spacing="1 / 2"
-              :words="bagOfWords"
-              :color="([, weight]) => calcColor(weight)"
-              font-family="Inter var, sans-serif"
-              @update:progress="updateLoading"
-            ></vue-word-cloud>
+        <div class="text-center">
+          <p>
+            {{ $t(`activities.${activityID}.custom.randomWordGen`) }}
+          </p>
+          <Button
+            :label="$t('generateRandomWords')"
+            severity="success"
+            @click="getRandomWords"
+          />
+          <div v-if="randomWords">
+            <Button
+              v-for="word in randomWords"
+              :key="word"
+              class="m-2"
+              severity="info"
+              >{{ word }}</Button
+            >
+            <div>
+              {{ $t(`activities.${activityID}.custom.repeat`) }}
+            </div>
           </div>
-        </div>
-        <p class="text-center">
-          {{ $t(`activities.${activityID}.custom.stemmingExplained`) }}
-        </p>
-        <div class="flex justify-content-center">
-          <Dropdown
-            v-model="langStemming"
-            :options="stemmingOptions"
-            optionLabel="label"
-            optionValue="value"
-            filter
-          />
-        </div>
-        <p class="text-center">
-          {{ $t(`activities.${activityID}.custom.stopwordsExplained`) }}
-        </p>
-        <div class="flex justify-content-center">
-          <Dropdown
-            v-model="langStopwords"
-            :options="stopwordsOptions"
-            optionLabel="label"
-            optionValue="value"
-            filter
-          />
         </div>
         <div class="flex pt-4 justify-content-between">
           <Button
@@ -65,51 +49,48 @@
         </div>
       </template>
     </StepperPanel>
-    <StepperPanel :header="$t('positionalTextGeneration')">
-      <template #content="{ prevCallback, nextCallback }">
-        <p class="text-center">
-          {{ $t(`activities.${activityID}.custom.positionalGeneration`) }}
-        </p>
-        <TextGenerationVis
-          :generateFn="() => generateMostCommonWordByPosition(sentences)"
-        />
-        <div class="flex pt-4 justify-content-between">
-          <Button
-            :label="$t('back')"
-            severity="secondary"
-            icon="pi pi-arrow-left"
-            @click="prevCallback"
-          />
-          <Button
-            :label="$t('next')"
-            icon="pi pi-arrow-right"
-            iconPos="right"
-            @click="nextCallback"
-          />
-        </div>
-      </template>
-    </StepperPanel>
-    <StepperPanel :header="$t('nGramsGeneration')">
+    <StepperPanel :header="$t('mostCommonWords')">
       <template #content="{ prevCallback }">
         <p class="text-center">
-          {{ $t(`activities.${activityID}.custom.nGramGeneration`) }}
+          {{ $t(`activities.${activityID}.custom.wordCloud`) }}
         </p>
         <div class="flex justify-content-center">
+          <div class="w-9 p-3 h-15rem border-2 border-round-md">
+            <vue-word-cloud
+              :spacing="1 / 2"
+              :words="bagOfWords"
+              :color="([, weight]) => calcColor(weight)"
+              font-family="Inter var, sans-serif"
+              @update:progress="updateLoading"
+            ></vue-word-cloud>
+          </div>
+        </div>
+        <div class="text-center">
+          <p>
+            {{ $t(`activities.${activityID}.custom.topWords`) }}
+          </p>
+          <Button
+            v-for="word in fiveTopWords"
+            :key="word"
+            class="m-2"
+            severity="info"
+            >{{ word }}</Button
+          >
+          <p>
+            {{ $t(`activities.${activityID}.custom.stopwordsExplained`) }}
+          </p>
           <Dropdown
-            v-model="selectionMethod"
-            :options="['greedy', 'weightedRandom', 'random']"
+            v-model="langStopwords"
+            :options="stopwordsOptions"
+            optionLabel="label"
+            optionValue="value"
+            filter
           />
-          <!-- TODO -->
+          <p>
+            {{ $t(`activities.${activityID}.custom.bias`) }}
+          </p>
         </div>
-        <p class="text-center">{{ $t("windowSize") }}: {{ windowSize }}</p>
-        <div class="flex justify-content-center">
-          <Slider v-model="windowSize" :min="1" :max="5" class="w-6 mb-3" />
-        </div>
-        <TextGenerationVis
-          :generateFn="
-            () => generateNgram(sentences, selectionMethod, windowSize)
-          "
-        />
+
         <div class="flex pt-4 justify-content-between">
           <Button
             :label="$t('back')"
@@ -140,11 +121,10 @@ import {
   getBagOfWords,
   generateMostCommonWordByPosition,
   generateNgram,
+  drawFromBagOfWords,
 } from "@/components/utils";
 import Dropdown from "primevue/dropdown";
 import ProgressBar from "primevue/progressbar";
-import TextGenerationVis from "@/components/TextGenerationVis.vue";
-import Slider from "primevue/slider";
 
 export default {
   name: "TextCleaning",
@@ -155,8 +135,6 @@ export default {
     StepperPanel,
     Dropdown,
     ProgressBar,
-    TextGenerationVis,
-    Slider,
     "vue-word-cloud": VueWordCloud,
   },
   props: {
@@ -169,36 +147,26 @@ export default {
     return {
       dataset: null,
       datasetId: null,
+      randomWords: null,
       sentence: "",
       complete: false,
       refreshing: false,
       currStep: 0,
       maxColor: [163, 11, 11],
       minColor: [24, 86, 143],
-      selectionMethod: "greedy",
       windowSize: 2,
-      stemmingOptions: [
-        { label: this.$t("doNoStemming"), value: false },
-        { label: this.$t("englishStemming"), value: "en" },
-        { label: this.$t("danishStemming"), value: "da" },
-      ],
       stopwordsOptions: [
         { label: this.$t("doNoStopwords"), value: false },
         { label: this.$t("englishStopwords"), value: "en" },
         { label: this.$t("danishStopwords"), value: "da" },
       ],
-      langStemming: false,
       langStopwords: false,
       loading: false,
     };
   },
   computed: {
     bagOfWords() {
-      return getBagOfWords(
-        this.sentences,
-        this.langStopwords,
-        this.langStemming
-      );
+      return getBagOfWords(this.sentences, this.langStopwords);
     },
     maxOccurences() {
       return Math.max(...this.bagOfWords.map(([, weight]) => weight));
@@ -206,6 +174,9 @@ export default {
     sentences() {
       if (!this.dataset.json_string) return [];
       return JSON.parse(this.dataset.json_string);
+    },
+    fiveTopWords() {
+      return this.bagOfWords.slice(0, 5).map(([word]) => word);
     },
   },
   methods: {
@@ -216,6 +187,11 @@ export default {
       this.sentence = userSentence;
       this.dataset = (await getDatasetById(datasetId)).data;
       this.$emit("startActivity");
+    },
+    getRandomWords() {
+      this.randomWords = Array.from({ length: 5 }, () =>
+        drawFromBagOfWords(this.bagOfWords)
+      );
     },
     async refreshDataset() {
       this.refreshing = true;

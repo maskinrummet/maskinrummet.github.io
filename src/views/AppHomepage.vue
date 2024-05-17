@@ -34,8 +34,18 @@
           :value="$t(t)"
           :key="i"
           severity="secondary"
-          class="mr-1 mb-1"
-        />
+          class="mr-1 mb-1 cursor-pointer"
+          @click="(e) => toggle(e, getRef(data.id, t))"
+        ></Tag
+        ><OverlayPanel
+          v-for="(t, i) in data.topics"
+          :key="i"
+          :ref="getRef(data.id, t)"
+          class="max-w-20rem"
+        >
+          <h3 class="m-0">{{ $t(t) }}</h3>
+          <p class="m-0 mt-3">{{ $t(`${t}Explained`) }}</p>
+        </OverlayPanel>
       </template>
       <template #filter="{ filterModel }">
         <MultiSelect
@@ -91,6 +101,7 @@ import { computed } from "vue";
 import { useStore } from "vuex";
 import MultiSelect from "primevue/multiselect";
 import { FilterService } from "primevue/api";
+import OverlayPanel from "primevue/overlaypanel";
 
 FilterService.register("filterBySetMatch", (valueSet, filterSet) => {
   if (!filterSet) {
@@ -112,6 +123,7 @@ export default {
     Button,
     Tag,
     MultiSelect,
+    OverlayPanel,
   },
   setup() {
     const store = useStore();
@@ -132,6 +144,12 @@ export default {
       return listString.length > maxChars
         ? listString.slice(0, maxChars - 3) + "..."
         : listString;
+    },
+    toggle(e, ref) {
+      this.$refs[ref][0].toggle(e);
+    },
+    getRef(id, topic) {
+      return `${id}-${topic}`;
     },
   },
   data() {

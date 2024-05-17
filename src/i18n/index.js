@@ -27,10 +27,14 @@ const messages = {
     duration: "Duration",
     topics: "Topics",
     textCleaning: "Text cleaning",
+    textCleaningExplained:
+      "Text cleaning is the process of preparing text for processing, which can involve removing punctuation, splitting into words or sentences, and general standardisation of the text.",
     digital: "Digital",
     anySubject: "Any",
     mins: "mins",
     tokenisation: "Tokenisation",
+    tokenisationExplained:
+      "Tokenisation is the process of splitting text into meaningful units, such as words, for further processing.",
     practical: "Practical",
     selectTopics: "Select topics",
     activityNotFound: "Activity not found",
@@ -68,6 +72,8 @@ const messages = {
     futureWork: "Future Work",
     aboutFutureWork: "To be decided...",
     textGeneration: "Text generation",
+    textGenerationExplained:
+      "Text generation is the process of creating text, often accomplished in e.g. ChatGPT with the use of AI.",
     createANewDatasetIntro:
       "Here you can create a new dataset for use on the site. You can provide all the text, or make it open for others to contribute to. You can change this, or add/delete to the dataset at any time. Each dataset has a password, which you can share with anyone who you'd also like to be able to edit it. NOTE: This is not a secure app, use silly passwords which you wouldn't mind being publicly available online. In summary, datasets are:",
     editable: "Editable",
@@ -130,6 +136,13 @@ const messages = {
     danishStopwords: "Danish stopwords",
     englishStemming: "English stemming",
     danishStemming: "Danish stemming",
+    datasetBias: "Dataset Bias",
+    randomWords: "Random words",
+    mostCommonWords: "Most common words",
+    generateRandomWords: "Generate random words",
+    optional: "Optional",
+    datasetBiasExplained:
+      "Dataset bias is when a dataset is skewed towards certain topics, words, or phrases, which can lead to unfair choices or incorrect outputs from AI trained on the dataset.",
     activities: {
       textCleaning: {
         title: "Text cleaning",
@@ -166,6 +179,33 @@ const messages = {
         whatYouNeed:
           "Some paper and a pen. If you're running this in a group, we have template sheets for writing on available.",
         custom: {},
+      },
+      embodiedSentenceGeneration: {
+        title: "Embodied Sentence Generation",
+        description:
+          "In this lesson you play the role of AI, generating sentences from the top words in a dataset",
+        whatYouNeed: "Nothing :)",
+        learningGoals:
+          "<ul><li>Understand through embodiment the difference between random and probability driven generation</li><li>Experience the limitations and biases a dataset provides firsthand</li><li>Get an introduction to word clouds and stop words</li></ul>",
+        intro:
+          "Here we use a dataset to experience some of how computers generate text. However, you can also choose to follow along practically - just write some sentences on paper and cut it up into words.<br><br>It might be interesting to try this twice, with datasets of different biases, to see how different the experience is.<br><br>To start, select a dataset below (you can use it as an example if following along practically).",
+        learningOutcomes:
+          "Hopefully after completing this lesson you: <ul><li>Have seen the effects of dataset on generation output</li><li>Have seen the impact of a random choice and a greedy choice from a dataset</li><li>Have learned what a stop word is and why they are useful</li></ul>",
+        readMore:
+          'An overview on bias in AI is available here: <a href="http://text-processing.com/demo/stem/</a>https://glair.ai/post/bias-in-natural-language-processing-nlp" target="_blank">https://glair.ai/post/bias-in-natural-language-processing-nlp</a>',
+        custom: {
+          randomWordGen:
+            "Below we will randomly choose 5 words from the selected dataset. If you imagine the dataset cut up into words in front of you, this is like randomly picking up 5 of them. Once you have the 5 words, write down the first sentence that comes to mind which uses all of the words. e.g. [apple, doctor, john, the, happy] -> 'John the doctor is happy eating an apple'. For a big challenge, try to keep them in the order they were picked!",
+          repeat:
+            "You can repeat this as many times as you like, and see how different the sentences are each time.",
+          stopwordsExplained:
+            "We know that the most popular words in text are probably 'the', 'and', 'is', 'in', etc. These are called 'stop words', and they don't tell us much about the meaning of the text, and really clog the word cloud. Therefore, we can filter them out from our word cloud to get a better idea of what the dataset is about. In the physical pile of words, this would be like going through and taking out the uninteresting ones. You can choose a stop words list to use on our word cloud using the dropdown below, then the word cloud and most common words above will update.",
+          wordCloud:
+            "Below we've represented the dataset as a word cloud. With a pile of cut up words, this would be similar to arranging them all face up on the table in front of you.",
+          topWords:
+            "Below are the 5 most common words in the dataset you selected. You could achieve this by counting the words in the pile in front of you, and then picking out the most common ones. This would be time consuming even with 10 sentences, but computers can process thousands of sentences in a second. Because we're taking the 5 biggest words, this is typically called a \"greedy\" approach. While the words changed every time when we randomly pulled, here they will be the same every time. Try and repeat the process of creating a sentence using these words from before. Hopefully, it's a more accurate representation of the dataset, however - we can only do this once.",
+          bias: "Now that you've written down a few sentences, it's worth thinking about how the dataset you selected affected the sentences you created. While your understanding of language was responsible for stitching these sentences together, like an AI has a general understanding of language, the probabilities of the words we picked came from the dataset, and therefore likely impacted what you would say. If you're not sure, try and repeat the process, but use a new dataset with a different theme. This is similar to how AI's can be biased by the datasets they are trained on, unintentionally leaning towards the opinions or themes of the dataset.",
+        },
       },
       textGeneration: {
         title: "Word Cloud & Text generation",

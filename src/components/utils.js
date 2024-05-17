@@ -13,7 +13,7 @@ const stemmer = {
   da: new StemmerDa(),
 };
 
-export function getBagOfWords(texts, languageStem, languageStopWords) {
+export function getBagOfWords(texts, languageStopWords, languageStem) {
   const fullText = texts
     .join(" ")
     .toLowerCase()
@@ -352,4 +352,13 @@ export function generateNgram(inputTexts, methodName, N) {
       ],
     },
   }));
+}
+
+export function getRandomWord(texts, languageStopWords, languageStem) {
+  const bagOfWords = getBagOfWords(texts, languageStopWords, languageStem);
+  return drawFromBagOfWords(bagOfWords);
+}
+
+export function drawFromBagOfWords(bagOfWords) {
+  return getRandomKeyProportionateToValue(Object.fromEntries(bagOfWords));
 }

@@ -106,7 +106,12 @@ import { useStore } from "vuex";
 import Card from "primevue/card";
 import Tag from "primevue/tag";
 import Fieldset from "primevue/fieldset";
-import { TextCleaning, TextCleaningPaper, TextGeneration } from "./activities";
+import {
+  TextCleaning,
+  TextCleaningPaper,
+  TextGeneration,
+  EmbodiedSentenceGeneration,
+} from "./activities";
 
 export default {
   name: "ActivityDetail",
@@ -122,6 +127,7 @@ export default {
     TextCleaning,
     TextCleaningPaper,
     TextGeneration,
+    EmbodiedSentenceGeneration,
     Fieldset,
   },
   setup() {
@@ -143,6 +149,7 @@ export default {
         textCleaning: "TextCleaning",
         textCleaningPaper: "TextCleaningPaper",
         textGeneration: "TextGeneration",
+        embodiedSentenceGeneration: "EmbodiedSentenceGeneration",
       };
       return componentMap[this.activity.id] || null;
     },
