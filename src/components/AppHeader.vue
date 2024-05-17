@@ -27,6 +27,16 @@
           <span class="ml-2">{{ item.label }}</span>
         </a>
       </router-link>
+      <a
+        v-else
+        :href="item.link"
+        target="_blank"
+        v-bind="props.action"
+        @click="navigate"
+      >
+        <span :class="item.icon" />
+        <span class="ml-2">{{ item.label }}</span>
+      </a>
     </template>
 
     <template #end>
@@ -59,6 +69,11 @@ export default {
         { label: this.$t("howTo"), route: "/how-to" },
         { label: this.$t("about"), route: "/about" },
         { label: this.$t("contact"), route: "/contact" },
+        {
+          label: "GitHub",
+          icon: "pi pi-github",
+          link: "https://github.com/maskinrummet/maskinrummet.github.io",
+        },
       ];
     },
   },
