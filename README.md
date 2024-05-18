@@ -16,7 +16,7 @@ If you have an idea for a lesson and are comfortable programming in Vue, follow 
 2. **In `@i18n`, add your camelCaseId as a key with each of the below keys**  
    `custom` can be used for longer texts. HTML rendering using `v-html` is enabled on each of the keys.
 
-   ```json
+   ```javascript
    example: {
        title: "etc",
        description: "etc",
@@ -33,7 +33,7 @@ If you have an idea for a lesson and are comfortable programming in Vue, follow 
 
 3. **In `@store`, add to the activity key the following:**
 
-   ```json
+   ```javascript
    {
      "id": "yourCamelCaseId",
      "modality": "digital", // one of digital, practical, optional
