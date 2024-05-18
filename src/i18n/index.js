@@ -42,6 +42,8 @@ const messages = {
     learningGoals: "Learning goals",
     intro: "Introduction",
     howTo: "How to use the site",
+    videoOnHowTo:
+      "Watch the video above to get an introduction to our site and how to use it personally or as part of a classroom activity",
     longSentence: "That sentence is a bit too long, try a shorter one!",
     emptySentence: "You need to write something in the box!",
     back: "Back",
