@@ -103,15 +103,7 @@
 import { computed } from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
-import Card from "primevue/card";
-import Tag from "primevue/tag";
-import Fieldset from "primevue/fieldset";
-import {
-  TextCleaning,
-  TextCleaningPaper,
-  TextGeneration,
-  EmbodiedSentenceGeneration,
-} from "./activities";
+import activities from "./activities";
 
 export default {
   name: "ActivityDetail",
@@ -120,15 +112,6 @@ export default {
       inProgress: false,
       completed: false,
     };
-  },
-  components: {
-    Card,
-    Tag,
-    TextCleaning,
-    TextCleaningPaper,
-    TextGeneration,
-    EmbodiedSentenceGeneration,
-    Fieldset,
   },
   setup() {
     const route = useRoute();
@@ -144,14 +127,11 @@ export default {
     };
   },
   computed: {
+    pascalCaseId() {
+      return this.activity.id[0].toUpperCase() + this.activity.id.slice(1);
+    },
     currentComponent() {
-      const componentMap = {
-        textCleaning: "TextCleaning",
-        textCleaningPaper: "TextCleaningPaper",
-        textGeneration: "TextGeneration",
-        embodiedSentenceGeneration: "EmbodiedSentenceGeneration",
-      };
-      return componentMap[this.activity.id] || null;
+      return activities[this.pascalCaseId]?.default || null;
     },
   },
 };

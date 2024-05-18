@@ -93,15 +93,9 @@
 </template>
 
 <script>
-import DataTable from "primevue/datatable";
-import Column from "primevue/column";
-import Button from "primevue/button";
-import Tag from "primevue/tag";
 import { computed } from "vue";
 import { useStore } from "vuex";
-import MultiSelect from "primevue/multiselect";
 import { FilterService } from "primevue/api";
-import OverlayPanel from "primevue/overlaypanel";
 
 FilterService.register("filterBySetMatch", (valueSet, filterSet) => {
   if (!filterSet) {
@@ -117,14 +111,6 @@ FilterService.register("filterBySetMatch", (valueSet, filterSet) => {
 
 export default {
   name: "AppHomepage",
-  components: {
-    DataTable,
-    Column,
-    Button,
-    Tag,
-    MultiSelect,
-    OverlayPanel,
-  },
   setup() {
     const store = useStore();
     const activities = computed(() => store.state.activities);

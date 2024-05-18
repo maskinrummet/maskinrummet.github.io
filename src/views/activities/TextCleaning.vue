@@ -46,14 +46,10 @@
         <p>
           {{ $t(`activities.${activityID}.custom.characterCodesExplained`) }}
         </p>
-        <div class="flex pt-4 justify-content-end">
-          <Button
-            :label="$t('next')"
-            icon="pi pi-arrow-right"
-            iconPos="right"
-            @click="resetSentenceCoded(nextCallback)"
-          />
-        </div>
+        <StepperButtons
+          class="pt-4"
+          :nextCallback="() => resetSentenceCoded(nextCallback)"
+        />
       </template>
     </StepperPanel>
     <StepperPanel :header="$t('splitting')">
@@ -80,7 +76,7 @@
             :disabled="sentenceCoded.every((s) => s.showChar)"
           />
         </div>
-        <div id="spaceButtons">
+        <div ref="spaceButtons">
           <Button
             v-for="s in sentenceCoded"
             :key="s.index"
@@ -96,27 +92,17 @@
             ><template #default
           /></Button>
         </div>
-        <div class="flex pt-4 justify-content-between">
-          <Button
-            :label="$t('back')"
-            severity="secondary"
-            icon="pi pi-arrow-left"
-            @click="resetSentenceCoded(prevCallback)"
-          />
-          <Button
-            :label="$t('autoClick')"
-            severity="help"
-            @click="clickAllButtons('spaceButtons')"
-            :disabled="!sentenceCoded.some((s) => s.char === ' ' && !s.hidden)"
-          />
-          <Button
-            :label="$t('next')"
-            icon="pi pi-arrow-right"
-            iconPos="right"
-            @click="resetSentenceCoded(nextCallback)"
-            :disabled="sentenceCoded.some((s) => s.char === ' ' && !s.hidden)"
-          />
-        </div>
+        <StepperButtons
+          class="pt-4"
+          :prevCallback="() => resetSentenceCoded(prevCallback)"
+          :nextCallback="() => resetSentenceCoded(nextCallback)"
+          :nextDisabled="sentenceCoded.some((s) => s.char === ' ' && !s.hidden)"
+          :centerButtonText="$t('autoClick')"
+          :centerButtonCallback="() => clickAllButtons('spaceButtons')"
+          :centerButtonDisabled="
+            !sentenceCoded.some((s) => s.char === ' ' && !s.hidden)
+          "
+        />
       </template>
     </StepperPanel>
     <StepperPanel :header="$t('lowercasing')">
@@ -142,7 +128,7 @@
           />
         </div>
 
-        <div id="lowercaseButtons">
+        <div ref="lowercaseButtons">
           <Button
             v-for="s in sentenceCoded"
             :key="s.index"
@@ -166,35 +152,23 @@
             ><template #default
           /></Button>
         </div>
-        <div class="flex pt-4 justify-content-between">
-          <Button
-            :label="$t('back')"
-            severity="secondary"
-            icon="pi pi-arrow-left"
-            @click="resetSentenceCoded(prevCallback)"
-          />
-          <Button
-            :label="$t('autoClick')"
-            severity="help"
-            @click="clickAllButtons('lowercaseButtons')"
-            :disabled="
-              !sentenceCoded.some(
-                (s) => !s.showLower && s.char !== s.lowercaseChar
-              )
-            "
-          />
-          <Button
-            :label="$t('next')"
-            icon="pi pi-arrow-right"
-            iconPos="right"
-            @click="resetSentenceCoded(nextCallback)"
-            :disabled="
-              sentenceCoded.some(
-                (s) => !s.showLower && s.char !== s.lowercaseChar
-              )
-            "
-          />
-        </div>
+        <StepperButtons
+          class="pt-4"
+          :prevCallback="() => resetSentenceCoded(prevCallback)"
+          :nextCallback="() => resetSentenceCoded(nextCallback)"
+          :nextDisabled="
+            sentenceCoded.some(
+              (s) => !s.showLower && s.char !== s.lowercaseChar
+            )
+          "
+          :centerButtonText="$t('autoClick')"
+          :centerButtonCallback="() => clickAllButtons('lowercaseButtons')"
+          :centerButtonDisabled="
+            !sentenceCoded.some(
+              (s) => !s.showLower && s.char !== s.lowercaseChar
+            )
+          "
+        />
       </template>
     </StepperPanel>
     <StepperPanel :header="$t('cleaning')">
@@ -220,7 +194,7 @@
           />
         </div>
 
-        <div id="puncButtons">
+        <div ref="puncButtons">
           <Button
             v-for="s in sentenceCoded"
             :key="s.index"
@@ -241,48 +215,31 @@
         <p v-if="!sentenceCoded.some((s) => s.isPunc && !s.inAnimation)">
           {{ $t(`activities.${activityID}.custom.introToTokenisation`) }}
         </p>
-        <div class="flex pt-4 justify-content-between">
-          <Button
-            :label="$t('back')"
-            severity="secondary"
-            icon="pi pi-arrow-left"
-            @click="resetSentenceCoded(prevCallback)"
-          />
-          <Button
-            :label="$t('autoClick')"
-            severity="help"
-            @click="clickAllButtons('puncButtons')"
-            :disabled="!sentenceCoded.some((s) => s.isPunc && !s.inAnimation)"
-          />
-          <Button
-            :label="$t('finishLesson')"
-            icon="pi pi-arrow-right"
-            iconPos="right"
-            severity="success"
-            @click="finishLesson"
-            :disabled="sentenceCoded.some((s) => s.isPunc && !s.inAnimation)"
-          />
-        </div>
+        <StepperButtons
+          class="pt-4"
+          :prevCallback="() => resetSentenceCoded(prevCallback)"
+          :finishCallback="finishLesson"
+          :finishDisabled="
+            sentenceCoded.some((s) => s.isPunc && !s.inAnimation)
+          "
+          :centerButtonText="$t('autoClick')"
+          :centerButtonCallback="() => clickAllButtons('puncButtons')"
+          :centerButtonDisabled="
+            !sentenceCoded.some((s) => s.isPunc && !s.inAnimation)
+          "
+        />
       </template>
     </StepperPanel>
   </Stepper>
 </template>
 
 <script>
-import Card from "primevue/card";
 import SingleSentenceInput from "@/components/SingleSentenceInput.vue";
-import Button from "primevue/button";
-import Stepper from "primevue/stepper";
-import StepperPanel from "primevue/stepperpanel";
 
 export default {
   name: "TextCleaning",
   components: {
-    Card,
     SingleSentenceInput,
-    Button,
-    Stepper,
-    StepperPanel,
   },
   props: {
     activityID: {
@@ -372,12 +329,13 @@ export default {
       // TODO: ELSE SHAKE?
     },
     clickAllButtons(elementId) {
-      document
-        .getElementById(elementId)
-        .querySelectorAll("button")
-        .forEach((button) => {
-          button.click();
-        });
+      if (!this.$refs[elementId]) {
+        return;
+      }
+      console.log(this.$refs, elementId);
+      this.$refs[elementId].querySelectorAll("button").forEach((button) => {
+        button.click();
+      });
     },
     finishLesson() {
       this.complete = true;

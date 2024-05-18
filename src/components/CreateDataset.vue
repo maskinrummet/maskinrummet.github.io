@@ -93,35 +93,8 @@
 </template>
 
 <script>
-import InputText from "primevue/inputtext";
-import FloatLabel from "primevue/floatlabel";
-import Password from "primevue/password";
-import ToggleButton from "primevue/togglebutton";
-import Checkbox from "primevue/checkbox";
-import Textarea from "primevue/textarea";
-import Button from "primevue/button";
-import InputGroup from "primevue/inputgroup";
-import Dropdown from "primevue/dropdown";
-import DataTable from "primevue/datatable";
-import Column from "primevue/column";
-import Message from "primevue/message";
-
 export default {
   name: "CreateDataset",
-  components: {
-    InputText,
-    FloatLabel,
-    Password,
-    ToggleButton,
-    Checkbox,
-    Textarea,
-    Button,
-    Dropdown,
-    InputGroup,
-    DataTable,
-    Column,
-    Message,
-  },
   data() {
     return {
       datasetName: "",

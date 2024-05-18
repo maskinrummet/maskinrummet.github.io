@@ -12,11 +12,11 @@ export default createStore({
         duration: 20, // mins
       },
       {
-        id: "textCleaningPaper",
+        id: "bagOfWordsPractical",
         modality: "practical",
         subject: "anySubject",
         age: 8,
-        topics: ["textCleaning", "tokenisation"],
+        topics: ["textCleaning", "tokenisation", "textGeneration"],
         duration: 40,
       },
       {
@@ -29,7 +29,7 @@ export default createStore({
       },
       {
         id: "embodiedSentenceGeneration",
-        modality: "optional",
+        modality: "either",
         subject: "anySubject",
         age: 6,
         topics: ["textGeneration", "datasetBias"],

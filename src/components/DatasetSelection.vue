@@ -112,11 +112,6 @@
 </template>
 
 <script>
-import Card from "primevue/card";
-import Dropdown from "primevue/dropdown";
-import Message from "primevue/message";
-import Button from "primevue/button";
-import Dialog from "primevue/dialog";
 import {
   getDatasetNames,
   getDatasetById,
@@ -133,11 +128,6 @@ import SingleSentenceInput from "@/components/SingleSentenceInput.vue";
 export default {
   name: "DatasetSelection",
   components: {
-    Card,
-    Dropdown,
-    Message,
-    Button,
-    Dialog,
     ShowDataset,
     InputGroup,
     CreateDataset,

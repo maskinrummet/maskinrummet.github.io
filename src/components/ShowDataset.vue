@@ -35,28 +35,10 @@
 </template>
 
 <script>
-import DataTable from "primevue/datatable";
-import Column from "primevue/column";
-import Tag from "primevue/tag";
-import Button from "primevue/button";
-import FloatLabel from "primevue/floatlabel";
-import Password from "primevue/password";
-import InputGroup from "primevue/inputgroup";
-import Message from "primevue/message";
 import { verifyPassword } from "@/api";
 
 export default {
   name: "ShowDataset",
-  components: {
-    DataTable,
-    Column,
-    Tag,
-    Button,
-    FloatLabel,
-    Password,
-    InputGroup,
-    Message,
-  },
   props: {
     dataset: {
       type: Object,

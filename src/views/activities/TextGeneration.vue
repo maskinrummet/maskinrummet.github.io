@@ -16,13 +16,13 @@
         </p>
         <div class="flex justify-content-center">
           <div class="w-9 p-3 h-15rem border-2 border-round-md">
-            <vue-word-cloud
+            <VueWordCloud
               :spacing="1 / 2"
               :words="bagOfWords"
               :color="([, weight]) => calcColor(weight)"
               font-family="Inter var, sans-serif"
               @update:progress="updateLoading"
-            ></vue-word-cloud>
+            ></VueWordCloud>
           </div>
         </div>
         <p class="text-center">
@@ -49,20 +49,13 @@
             filter
           />
         </div>
-        <div class="flex pt-4 justify-content-between">
-          <Button
-            :label="$t('refreshDataset')"
-            severity="help"
-            @click="refreshDataset"
-            :disabled="refreshing"
-          />
-          <Button
-            :label="$t('next')"
-            icon="pi pi-arrow-right"
-            iconPos="right"
-            @click="nextCallback"
-          />
-        </div>
+        <StepperButtons
+          class="pt-4"
+          :nextCallback="nextCallback"
+          :centerButtonText="$t('refreshDataset')"
+          :centerButtonCallback="refreshDataset"
+          :centerButtonDisabled="refreshing"
+        />
       </template>
     </StepperPanel>
     <StepperPanel :header="$t('positionalTextGeneration')">
@@ -110,54 +103,30 @@
             () => generateNgram(sentences, selectionMethod, windowSize)
           "
         />
-        <div class="flex pt-4 justify-content-between">
-          <Button
-            :label="$t('back')"
-            severity="secondary"
-            icon="pi pi-arrow-left"
-            @click="prevCallback"
-          />
-          <Button
-            :label="$t('finishLesson')"
-            icon="pi pi-arrow-right"
-            iconPos="right"
-            severity="success"
-            @click="completed"
-          />
-        </div>
+        <StepperButtons
+          class="pt-4"
+          :prevCallback="prevCallback"
+          :finishCallback="completed"
+        />
       </template>
     </StepperPanel>
   </Stepper>
 </template>
 <script>
 import DatasetSelection from "@/components/DatasetSelection.vue";
-import Button from "primevue/button";
-import Stepper from "primevue/stepper";
-import StepperPanel from "primevue/stepperpanel";
 import { getDatasetById } from "@/api";
-import VueWordCloud from "vuewordcloud";
 import {
   getBagOfWords,
   generateMostCommonWordByPosition,
   generateNgram,
-} from "@/components/utils";
-import Dropdown from "primevue/dropdown";
-import ProgressBar from "primevue/progressbar";
+} from "@/views/activities/utils";
 import TextGenerationVis from "@/components/TextGenerationVis.vue";
-import Slider from "primevue/slider";
 
 export default {
   name: "TextCleaning",
   components: {
     DatasetSelection,
-    Button,
-    Stepper,
-    StepperPanel,
-    Dropdown,
-    ProgressBar,
     TextGenerationVis,
-    Slider,
-    "vue-word-cloud": VueWordCloud,
   },
   props: {
     activityID: {

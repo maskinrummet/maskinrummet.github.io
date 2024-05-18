@@ -48,7 +48,7 @@ const messages = {
     next: "Next",
     finishLesson: "Finish lesson",
     congrats: "Congratulations!",
-    youCompleted: "You have completed the lesson.",
+    youCompleted: "You have completed the lesson :)",
     learningOutcomes: "Learning outcomes",
     seeMore: "See more",
     splitting: "Splitting into words",
@@ -140,7 +140,10 @@ const messages = {
     randomWords: "Random words",
     mostCommonWords: "Most common words",
     generateRandomWords: "Generate random words",
-    optional: "Optional",
+    either: "Either",
+    sentences: "Sentences",
+    wordFrequency: "Word frequency",
+    bagOfWords: "Bag of Words",
     datasetBiasExplained:
       "Dataset bias is when a dataset is skewed towards certain topics, words, or phrases, which can lead to unfair choices or incorrect outputs from AI trained on the dataset.",
     activities: {
@@ -171,14 +174,6 @@ const messages = {
           introToTokenisation:
             "Great job! You've now cleaned your text into words and punctuation. This process is called 'tokenisation', where we turn texts into lists of 'tokens' which contribute to the meaning of the text. This is a key part, and usually the first step, for text processing in AI. While ours was reasonably effective, there were a few simplifications to make things easier. For example, the word don't would be split into the words 'don' and 't', because of the punctuation, when we would probably want to treat it as one word or 'do' and 'not'. Therefore, the usual way of doing tokenisation on a text is to use 'Machine Learning' on a big dataset to allow text processing AIs to automatically learn the patterns of how words are split up.",
         },
-      },
-      textCleaningPaper: {
-        title: "Text cleaning with paper",
-        description:
-          "In this lesson we explore how texts can be cleaned into words for processing using paper.",
-        whatYouNeed:
-          "Some paper and a pen. If you're running this in a group, we have template sheets for writing on available.",
-        custom: {},
       },
       embodiedSentenceGeneration: {
         title: "Embodied Sentence Generation",
@@ -231,6 +226,44 @@ const messages = {
             "One of the simplest ways to start to generate text is to take the most common first word across the dataset, then the most common second word, then third, and so on. You can click generate below to see how it looks for this dataset, and the how button shows the words which were at position 0, 1, 2 (computers actually start counting at 0) and so on.",
           nGramGeneration:
             "While positional generation is simple, as we get further into the text, stop words become the most likely, and the text often starts to make less sense. Also, if we see 'Ready, steady,' in a text, we always know 'go' is coming next, no matter what position in the sentence it is. Therefore, it's useful to think of words in groups called n-grams. An n-gram is n-words that appeared one after another. So, if we had a 2-gram of 'Ready, steady', we could predict 'go' is the most likely next word. Below we will do n-grams on the dataset you selected, and you can experiment with different sizes to see how it changes the output. When you've done that, you can also decide how you want to choose what the next word is. When we take the most likely word, we call that a 'greedy' approach. This is effective, but can lead to unoriginal text. Therefore, adding randomness, either by randomly choosing a word or choosing one according to probability weights (imagine spinning the pie chart), we can make it easier to get an original sentence, which isn't always the same. In language models, how much randomness there is in a model is called the 'temperature'.",
+        },
+      },
+      bagOfWordsPractical: {
+        title: "Practical Bag of Words",
+        description:
+          "In this lesson using paper and scissors, we explore how text can be split into words, processed by a computer, and used to generate new text.",
+        whatYouNeed:
+          'For this lesson you will need a way to write down sentences and cut them up into words (e.g. paper, scissors, pen). This can be regular paper, but we also provide the following templates:<ul><li>Colour - 12 sentences per page, 10 words per sentence, up to 6 pages (71 sentences) [<a href="/sentence-template.pdf" target="_blank">pdf</a>] [<a href="/sentence-template.docx" target="_blank">docx</a>]</li><li>Inksaver - 12 sentences per page, 10 words per sentence, up to 2 pages (23 sentences) [<a href="/sentence-template-inksaver.pdf" target="_blank">pdf</a>] [<a href="/sentence-template-inksaver.docx" target="_blank">docx</a>]</li></ul>',
+        learningGoals:
+          "In this lesson we aim to: <li>Understand how text can be processed</li><li>Get an introduction to tokenisation</li><li>Get an introduction to bag of words as a technique for understanding what a text is about</li><li>Start thinking about generating text</li></ul>",
+        intro:
+          "For this lesson we will learn how computers can understand text and generate new text. To do so, we will need a set of sentences (5 is probably minimum, but more is better and theres no maximum). Before you start, consider having a theme for the sentences e.g. 'people introducing themselves' or 'opinions on a book you read recently'. It's not strictly necessary, but it does make the ideas we are teaching more apparent.",
+        learningOutcomes:
+          "Hopefully at the end of this lesson you:<ul><li>Understand what text processing might look like</li><li>Recognise the word tokenisation</li><li>Have seen and understood the bag of words and its purpose</li><li>Have some ideas as to what makes good (and bad) text generation</li></ul>",
+        readMore:
+          'You can see exactly how ChatGPT and OpenAI\'s GPT models would tokenise text here: <a href="https://platform.openai.com/tokenizer" target="_blank">https://platform.openai.com/tokenizer</a>',
+        custom: {
+          createSentences:
+            "To start the activity write each sentece on a seperate line, then cut each sentence into words",
+          cuttingAlt: "Example image of someone cutting up their sentence",
+          whatIsAWord:
+            'At this point, it\'s interesting to consider what makes a word. For example, is "don\'t" one word or two? Is New York a word? What about something like "!"? It\'s a difficult question to answer with rules, and therefore AIs typically split sentences by seeing lots of examples like you have just done, and noticing the patterns. The name for splitting a text up is: tokenisation.',
+          wordFreqChart:
+            "Now, take all of your words from all of the sentences and arrange them alphabetically on the desk in front of you, as shown below",
+          freqAlt: "Example image of a word frequency chart",
+          whatFrequencySays:
+            "This helps us to see a few things. For one, we now know what words are the most common. This can help us understand what the text is about. For example, if we see 'parrot' and 'rabbit' a lot, we might guess the text is about animals. But as well as this, the unique words can tell us something. If we can see the word 'enclosure' is used just once, we might guess that the text is about a zoo, rather than what pets people own. So, just by looking at the words without their sentences, we can still see hints for what the sentences were originally about. One limitation is that if we said we were NOT happy in a sentence, happy would be in our chart, and we'd have no way of knowing it was supposed to be the opposite.",
+          createBagOfWords:
+            "A bag of words is a text processing technique which goes all the way back to the 1950s. The idea is that by counting the number of times each word appears, we can begin to understand what the text is about. To create your own bag of words, sweep your frequency graph into a pile, or bag if you have one handy",
+          bagOfWordsAlt: "Example image of a bag of words",
+          whatBagOfWordsDoes:
+            "When a computer tokenises (splits) a text, this is what it ends up with. What can you think that this could be used for? One application was in email security, where for years Gmail used it to detect spam - because spammers would use words like money, now, danger much more than a regular email would. It's also worth thinking that even though these are individual words like 'teams', 'goals', 'manager', if those individual words appear with the word 'ball' we might assume its football, but 'office' might make us think its about work. So words appearing together is also important, even though we lost the exact order by cutting the words up.",
+          generateText:
+            "We can already generate text now! Pick a number of words to draw, and pull them randomly out from the text. Even though it might not make sense, we still generated new text. You can keep going until you run out of words, or add the word back every time to generate forever.",
+          textGenerationAlt:
+            "Example image of someone generating text from the bag of words",
+          probabilities:
+            "It can also be useful to consider the fact that theres actually a very small chance that you would pull out a sentence that went into the bag, in its exact order, and thus generate a perfect (but unoriginal) sentence. Theres also a slightly bigger, but still small chance that you pull out something new that makes sense. We can think of the goal of text generation as being increasing that probability that something new and that makes sense is generated based on our input data.",
         },
       },
     },

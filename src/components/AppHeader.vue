@@ -52,16 +52,12 @@
 
 <script>
 import Menubar from "primevue/menubar";
-import Dropdown from "primevue/dropdown";
 import { langs } from "@/i18n";
-import Button from "primevue/button";
 
 export default {
   name: "AppHeader",
   components: {
     Menubar,
-    Dropdown,
-    Button,
   },
   computed: {
     items() {

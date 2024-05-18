@@ -28,12 +28,7 @@
 </template>
 
 <script>
-import Card from "primevue/card";
-
 export default {
   name: "ContactUs",
-  components: {
-    Card,
-  },
 };
 </script>

@@ -18,21 +18,8 @@
 </template>
 
 <script>
-import InputText from "primevue/inputtext";
-import FloatLabel from "primevue/floatlabel";
-import Button from "primevue/button";
-import InputGroup from "primevue/inputgroup";
-import Message from "primevue/message";
-
 export default {
   name: "SingleSentenceInput",
-  components: {
-    InputText,
-    FloatLabel,
-    Button,
-    InputGroup,
-    Message,
-  },
   props: {
     labelProp: {
       type: String,

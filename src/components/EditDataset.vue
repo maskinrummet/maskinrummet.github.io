@@ -81,29 +81,8 @@
 </template>
 
 <script>
-import InputText from "primevue/inputtext";
-import FloatLabel from "primevue/floatlabel";
-import ToggleButton from "primevue/togglebutton";
-import Button from "primevue/button";
-import DataTable from "primevue/datatable";
-import Column from "primevue/column";
-import Message from "primevue/message";
-import ColumnGroup from "primevue/columngroup";
-import Row from "primevue/row";
-
 export default {
   name: "EditDataset",
-  components: {
-    InputText,
-    FloatLabel,
-    ToggleButton,
-    Button,
-    DataTable,
-    Column,
-    Message,
-    ColumnGroup,
-    Row,
-  },
   props: {
     dataset: {
       type: Object,

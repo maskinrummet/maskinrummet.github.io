@@ -86,7 +86,6 @@
 </template>
 
 <script>
-import Button from "primevue/button";
 import {
   Chart as ChartJS,
   ArcElement,
@@ -101,7 +100,6 @@ ChartJS.register(ArcElement, Tooltip, Legend, Colors);
 export default {
   components: {
     Pie,
-    Button,
   },
   props: {
     generateFn: {

@@ -8,9 +8,16 @@ import "primevue/resources/themes/lara-light-purple/theme.css";
 import "/node_modules/primeflex/primeflex.css";
 import "primeicons/primeicons.css";
 
+import globalComponents from "./globalComponents";
+
 const app = createApp(App);
 app.use(PrimeVue);
 app.use(i18n);
 app.use(router);
 app.use(store);
+
+Object.entries(globalComponents).forEach(([name, component]) => {
+  app.component(name, component);
+});
+
 app.mount("#app");
