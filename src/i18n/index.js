@@ -276,101 +276,267 @@ const messages = {
     about: "Om",
     contact: "Kontakt",
     luke: "Luke Connelly",
-    student: "Computervidenskab kandidatstuderende på Aarhus Universitet",
+    student: "Datalogi kandidatstuderende ved Aarhus Universitet",
     phoneNumber: "+45 93 87 34 09",
     email: "lukejconnelly1{'@'}gmail.com",
     aboutLuke:
       "Kontakt mig venligst med forslag, spørgsmål eller feedback! Jeg vil meget gerne høre fra dig!",
     thanks:
-      "Tak til Magnus, Karl-Emil, Susanne, Line, og især lærerne og forskningsdeltagerne, der har arbejdet sammen med os for at skabe denne hjemmeside",
+      "Tak til Magnus, Karl-Emil, Susanne, Line, og især lærerne og forskningsdeltagerne, som har arbejdet sammen med os for at skabe denne side",
     language: "Sprog",
     currLanguage: "Dansk",
-    error404: "Siden blev ikke fundet",
+    error404: "Side ikke fundet",
     availableActivities: "Tilgængelige aktiviteter",
     suggestActivity: "Foreslå en aktivitet",
-    currentActivity: "Nuværende aktivitet",
+    currentActivity: "Aktuel aktivitet",
     title: "Titel",
     modality: "Modalitet",
-    subject: "Emne",
+    subject: "Fag",
     age: "Alder",
     duration: "Varighed",
     topics: "Emner",
     textCleaning: "Tekstrensning",
+    textCleaningExplained:
+      "Tekstrensning er processen med at forberede tekst til behandling, hvilket kan involvere fjernelse af tegnsætning, opdeling i ord eller sætninger og generel standardisering af teksten.",
     digital: "Digital",
-    anySubject: "Ethvert emne",
-    mins: "min",
+    anySubject: "Ethvert",
+    mins: "minutter",
     tokenisation: "Tokenisering",
+    tokenisationExplained:
+      "Tokenisering er processen med at opdele tekst i meningsfulde enheder, såsom ord, til videre behandling.",
     practical: "Praktisk",
     selectTopics: "Vælg emner",
-    activityNotFound: "Aktiviteten blev ikke fundet",
-    whatYouNeed: "Hvad du skal bruge til denne aktivitet",
+    activityNotFound: "Aktivitet ikke fundet",
+    whatYouNeed: "Hvad du har brug for til denne aktivitet",
     learningGoals: "Læringsmål",
     intro: "Introduktion",
-    howTo: "Sådan bruges siden",
-    longSentence: "Denne sætning er lidt for lang, prøv en kortere!",
+    howTo: "Sådan bruger du siden",
+    videoOnHowTo:
+      "Se videoen ovenfor for at få en introduktion til vores side og hvordan du bruger den personligt eller som en del af en klasseaktivitet",
+    longSentence: "Den sætning er lidt for lang, prøv en kortere!",
     emptySentence: "Du skal skrive noget i boksen!",
     back: "Tilbage",
     next: "Næste",
-    finishLesson: "Afslut lektionen",
+    finishLesson: "Afslut lektion",
     congrats: "Tillykke!",
-    youCompleted: "Du har gennemført lektionen.",
+    youCompleted: "Du har fuldført lektionen :)",
     learningOutcomes: "Læringsresultater",
     seeMore: "Se mere",
     splitting: "Opdeling i ord",
-    lowercasing: "Gør småt",
+    lowercasing: "Konvertering til små bogstaver",
     cleaning: "Rensning af tegnsætning",
     sentenceInputTitle: "Indtast en sætning",
     yourSentence: "Din sætning",
     submit: "Indsend",
     gotSentence: "Modtaget sætning:",
-    seeComputer: "Skift alt til computer-visning",
-    seeHuman: "Skift alt til menneske-visning",
-    autoClick: "Auto-klik alle",
+    seeComputer: "Skift alt til computer visning",
+    seeHuman: "Skift alt til menneskelig visning",
+    autoClick: "Automatisk klik alt",
     helpUs:
-      "Hjælp os med forslag; deling; bidrag til vores GitHub; og støt videnskaben i dit lokalsamfund",
-    ourProject: "Vores projekt",
+      "Hjælp os med forslag; deling; bidrag til vores GitHub; og støtte videnskab i dit samfund",
+    ourProject: "Vores Projekt",
     aboutOurProject:
-      "Tekstbehandling, tekst-AI og chatbots er blevet utroligt populære, men vi ser mangel på uddannelsesværktøjer og ressourcer til at lære om, hvordan de fungerer. Vi mener, at samfundets brede indflydelse af disse teknologier kræver, at alle får mulighed for at lære. Derfor udviklede vi denne hjemmeside gennem konsultation med lærere, som en ressource til at udvikle forståelse og kritisk tænkning gennem enkle og anvendelige aktiviteter.",
+      "Tekstbehandling, tekst AI og chatbots er blevet utroligt populære, men vi ser en mangel på pædagogiske værktøjer og ressourcer til at lære om, hvordan de fungerer. Vi mener, at den samfundsmæssige indvirkning af disse teknologier kræver, at alle får mulighed for at lære. Derfor har vi udviklet denne hjemmeside gennem konsultation med lærere som en ressource til at udvikle forståelse og kritiske tænkningsevner gennem enkle og anvendelige aktiviteter.",
     compEmpowerment: "Computational Empowerment",
     aboutCompEmpowerment:
-      "Computational empowerment er en tilgang og et Participatory Design-svar på udfordringer relateret til det voksende behov for digital læsefærdighed i mellemskolen. Tilgangen udvider det nuværende fokus på computational thinking for at inkludere en bekymring for, hvordan børn og unge styrkes gennem konstruktivt, analytisk og kritisk engagement med teknologi. [Dindler, C., Smith, R. C., & Iversen, O. S. (2020). Computational Empowerment: participatory design in education. CoDesign: International Journal of CoCreation in Design and the Arts, 16(1), 66-80. https://doi.org/10.1080/15710882.2020.1722173]",
-    futureWork: "Fremtidigt arbejde",
-    aboutFutureWork: "Skal besluttes...",
+      "Computational empowerment er en tilgang og et Participatory Design svar på udfordringer relateret til det stigende behov for digital dannelse i de lavere sekundære uddannelser. Tilgangen udvider det nuværende fokus på computational thinking til også at omfatte en bekymring for, hvordan børn og unge bliver bemyndiget gennem konstruktiv, analytisk og kritisk engagement med teknologi. [Dindler, C., Smith, R. C., & Iversen, O. S. (2020). Computational Empowerment: participatory design in education. CoDesign: International Journal of CoCreation in Design and the Arts, 16(1), 66-80. https://doi.org/10.1080/15710882.2020.1722173]",
+    futureWork: "Fremtidigt Arbejde",
+    aboutFutureWork: "At blive besluttet...",
+    textGeneration: "Tekstgenerering",
+    textGenerationExplained:
+      "Tekstgenerering er processen med at skabe tekst, ofte udført i f.eks. ChatGPT ved brug af AI.",
+    createANewDatasetIntro:
+      "Her kan du oprette et nyt datasæt til brug på siden. Du kan levere al teksten, eller gøre det åbent for andre at bidrage til. Du kan ændre dette eller tilføje/slette i datasættet når som helst. Hvert datasæt har en adgangskode, som du kan dele med hvem som helst, du også gerne vil have mulighed for at redigere det. BEMÆRK: Dette er ikke en sikker app, brug fjollede adgangskoder, som du ikke har noget imod bliver offentligt tilgængelige online. Sammenfattende er datasæt:",
+    editable: "Redigerbare",
+    deleteable: "Slettelige",
+    passwordProtected: "Adgangskodebeskyttede",
+    publiclyVisible: "Offentligt synlige",
+    datasetName: "Datasætnavn",
+    datasetPassword: "Datasæt adgangskode",
+    confirmDatasetPassword: "Bekræft datasæt adgangskode",
+    openDataset: "Åben datasæt for andre at bidrage?",
+    open: "Åben",
+    closed: "Lukket",
+    startEmptyDataset: "Start med et tomt datasæt?",
+    startingSentences:
+      "Sætninger, som datasættet starter med (Du kan altid tilføje flere eller slette senere)",
+    action: "Handling",
+    delete: "Slet",
+    selectSplitter: "Vælg hvordan teksten ovenfor skal opdeles i datasættet",
+    add: "Tilføj",
+    createDataset: "Opret Datasæt",
+    emptyDatasetName: "Du skal angive et datasætnavn",
+    longDatasetName: "Datasætnavnet er for langt",
+    emptyPassword: "Du skal angive en adgangskode til datasættet",
+    longPassword: "Adgangskoden er for lang",
+    passwordMismatch: "Adgangskoderne stemmer ikke overens",
+    emptyStartingSentences:
+      "Dette ville oprette et tomt datasæt, du skal angive nogle start-sætninger eller fjerne markeringen i boksen ovenfor",
+    selectADataset: "Vælg et datasæt",
+    serverErrorOccurred: "Der opstod en serverfejl, prøv venligst igen senere",
+    loading: "Indlæser...",
+    viewDataset: "Se datasæt",
+    or: "eller",
+    createADataset: "Opret et datasæt",
+    newDataset: "Nyt datasæt",
+    addSentenceAndStart:
+      "Tilføj en sætning til det valgte datasæt og start aktivitet",
+    startActivity: "Start aktivitet",
+    startActivityWOSentence:
+      "Start aktivitet uden at tilføje en sætning til datasættet",
+    noDatasetSelected: "Intet datasæt valgt",
+    inputTexts: "Input tekster",
+    nevermind: "Glem det",
+    refreshDataset: "Opdater Datasæt",
+    saveChanges: "Gem ændringer",
+    openForInput: "Åben for input",
+    closedForInput: "Lukket for input",
+    editDataset: "Rediger datasæt",
+    generate: "Generer",
+    how: "Hvordan?",
+    position: "Position",
+    previous: "Forrige",
+    other: "Andet",
+    wordCloud: "Ordtæppe",
+    positionalTextGeneration: "Positional Tekstgenerering",
+    nGramsGeneration: "N-Grams Tekstgenerering",
+    windowSize: "Vinduesstørrelse",
+    doNoStemming: "Udfør ingen stemming",
+    doNoStopwords: "Filtrer ingen stopord",
+    englishStopwords: "Engelske stopord",
+    danishStopwords: "Danske stopord",
+    englishStemming: "Engelsk stemming",
+    danishStemming: "Dansk stemming",
+    datasetBias: "Datasæt Bias",
+    randomWords: "Tilfældige ord",
+    mostCommonWords: "Mest almindelige ord",
+    generateRandomWords: "Generer tilfældige ord",
+    either: "Enten",
+    sentences: "Sætninger",
+    wordFrequency: "Ordfrekvens",
+    bagOfWords: "Bag of Words",
+    datasetBiasExplained:
+      "Datasæt bias er, når et datasæt er skævt mod visse emner, ord eller sætninger, hvilket kan føre til uretfærdige valg eller forkerte resultater fra AI trænet på datasættet.",
     activities: {
       textCleaning: {
         title: "Tekstrensning",
         description:
-          "I denne lektion undersøger vi, hvordan tekster kan renses til ord for behandling i tekst-AI.",
-        whatYouNeed: "Ingenting :)",
+          "I denne lektion udforsker vi, hvordan tekster kan renses til ord for at blive behandlet i tekst-AI.",
+        whatYouNeed: "Intet :)",
         learningGoals:
-          "Forstå, hvordan tekst kan 'renses' til ord for behandling. Få en introduktion til tokenisering.",
+          "<ul><li>Forstå hvordan computere 'ser' tekst</li><li>Forstå hvordan tekst kan renses til ord for behandling</li><li>Få en introduktion til tokenisering</li></ul>",
         intro:
-          "Hvordan behandler vi et stykke tekst? Det er et mere komplekst spørgsmål, end det ser ud ved første øjekast, da tekst repræsenteres i computere som 'strenge' af tegn og som tal. Selvom vi kan se, at ordene 'hej', 'HEJ', og 'Hej!' betyder det samme, er de meget forskellige for en computer. Lad os starte med at forsøge at bryde en tekst op i ord.",
+          "Hvordan behandler vi et stykke tekst? Det er et sværere spørgsmål, end det ser ud ved første øjekast, da tekst er repræsenteret i computere som 'strenge' af tegn, altså som tal. Derfor, mens vi kan se ordene 'hej', 'HEJ', og 'Hej!' betyder det samme, ser de meget forskellige ud for en computer.<br><br>Til at starte med, lad os fokusere på at forsøge at opdele et stykke tekst i ord.",
         learningOutcomes:
-          "Forhåbentlig forstår du efter at have gennemført denne lektion, hvad tokenisering er, og hvordan det kan bruges i tekstbehandling. Du bør også have en bedre forståelse af, hvordan computere behandler tekst som 'strenge' af tegn, og hvordan dette gør den 'betydning', der er indlysende for os mennesker, meget mere udfordrende for en computer.",
+          "Forhåbentlig forstår du efter at have gennemført denne lektion: <ul><li>Hvad tokenisering er og hvordan det kan bruges i tekstbehandling</li><li>Hvordan computere behandler tekst som 'strenge' af tegn</li><li>Hvordan dette betyder, at tekstens 'betydning', som er åbenlys for os mennesker, kan være meget vanskeligere for en computer</li></ul>",
         readMore:
-          "Du kan se præcis, hvordan ChatGPT og OpenAI's GPT-modeller ville tokenisere tekst her: https://platform.openai.com/tokenizer. Hvis du er interesseret i at lære mere om tokenisering, kan du læse mere om det her: https://www.datacamp.com/blog/what-is-tokenization",
+          'Du kan se præcis, hvordan ChatGPT og OpenAIs GPT-modeller ville tokenisere tekst her: <a href="https://platform.openai.com/tokenizer" target="_blank">https://platform.openai.com/tokenizer</a><br><br>Hvis du er interesseret i at lære mere om tokenisering, kan du læse mere her: <a href="https://www.datacamp.com/blog/what-is-tokenization" target="_blank">https://www.datacamp.com/blog/what-is-tokenization</a>',
         custom: {
           howComputersSee:
-            "Nedenfor kan du se, hvordan din computer ser din sætning. Du kan svæve over tegnene/koderne eller bruge knapperne til at afsløre den oprindelige tekst.",
+            "Nedenfor kan du se, hvordan din computer ser din sætning. Du kan svæve over tegnene/koderne eller bruge knapperne til at afsløre den originale tekst.",
           characterCodesExplained:
-            "Hvert tegn (herunder bogstaver, tal og tegnsætning), som en computer ser, repræsenteres af et tal kaldet et tegnkode. For eksempel repræsenteres bogstavet 'a' af nummer 97, 'b'=98, 'c'=99, og så videre.",
+            "Hvert tegn (dette inkluderer bogstaver, tal og tegnsætning) en computer ser, er repræsenteret af et nummer kaldet en tegnkode. For eksempel er bogstavet 'a' repræsenteret af nummeret 97, 'b' = 98, 'c' = 99, og så videre.",
           splitSentenceUsingSpaceBelow:
-            "Så hvis vi vil få ord ud af vores tekst, skal vi først forstå, hvilke tegnkoder der udgør ord, og hvilke der ikke gør. En almindelig måde er at starte med at splitte strenge af tegn ved at bruge mellemrum, repræsenteret ved tegnkode 32. Klik på dem for at fjerne dem fra din sætning.",
+            "Så, hvis vi vil få ord ud af vores tekst, skal vi først forstå, hvilke tegnkoder der er dele af ord, og hvilke der ikke er. En almindelig måde er at starte med at splitte strenge af tegn ved hjælp af mellemrum, repræsenteret ved tegnkoden 32. Klik her for at fjerne dem fra din sætning.",
           lowercaseSentenceBelow:
-            "Nu har vi noget, der begynder at ligne individuelle ord. Men hvis nogen indsendte ordet 'HELLO', og en anden indsendte 'hello', ville computeren se disse som to helt forskellige sæt tal, selvom vi måske ville betragte dem som det samme ord. En måde at håndtere dette på er at konvertere alle tegn til små bogstaver. Klik på de store bogstaver nedenfor for at gøre dette.",
+            "Nu har vi noget, der begynder at ligne individuelle ord. Men hvis nogen indsendte ordet 'HEJ' og en anden indsendte 'hej', ville computeren se disse som to helt forskellige sæt tal, når vi sandsynligvis ville behandle dem som det samme ord. En måde at gøre dette på er at konvertere alle tegn til små bogstaver. Klik på de store bogstaver nedenfor for at gøre dette.",
           removePuncBelow:
-            "Nu ser vores ord rigtige ud, men tegnsætning kan stadig forårsage problemer. For eksempel er 'hello' og 'hello!' stadig forskellige ord for en computer. Nogle gange er det fint at fjerne tegnsætning, men vi har måske også brug for det for at forstå ordenes betydning. For eksempel er sætningen 'Lad os spise, mormor!' meget forskellig fra 'Lad os spise mormor!' For at håndtere dette vil vi beholde tegnsætningen, men markere den som ikke en del af de individuelle ord. Klik nedenfor for at markere tegnsætningen og afslutte rensning af din streng.",
+            "Nu ser vores ord rigtige ud, men tegnsætning kan stadig forårsage problemer. For eksempel er 'hej' og 'hej!' stadig forskellige ord for en computer. Nogle gange kan det være fint at fjerne det, men vi kan også have brug for tegnsætningen for at forstå ordene. For eksempel er sætningen 'Lad os spise, bedstemor!' meget forskellig fra 'Lad os spise bedstemor!'. Derfor, for at håndtere dette, vil vi beholde tegnsætningen, men markere det som ikke en del af de individuelle ord. Klik nedenfor for at markere tegnsætningen og afslutte rensningen af din streng.",
           introToTokenisation:
-            "Godt gået! Du har nu renset din tekst til ord og tegnsætning. Denne proces kaldes 'tokenisering', hvor vi omdanner tekster til lister over 'tokens', som bidrager til tekstens betydning. Dette er en central del, og normalt det første skridt, i tekstbehandling med AI. Selvom vores metode var ret effektiv, var der nogle forenklinger for at gøre processen nemmere. For eksempel ville ordet 'don't' blive opdelt i 'don' og 't', på grund af tegnsætningen, mens vi nok ville behandle det som ét ord eller som 'do' og 'not'. Derfor er den sædvanlige metode at bruge 'Machine Learning' på et stort datasæt for at lade tekstbehandlings-AI'er lære, hvordan ord bedst opdeles.",
+            "Godt gået! Du har nu renset din tekst til ord og tegnsætning. Denne proces kaldes 'tokenisering', hvor vi omdanner tekster til lister af 'tokens', som bidrager til tekstens mening. Dette er en vigtig del, og normalt det første skridt, i tekstbehandling i AI. Mens vores var rimeligt effektiv, var der nogle forenklinger for at gøre tingene lettere. For eksempel ville ordet don't blive delt i ordene 'don' og 't', på grund af tegnsætningen, når vi sandsynligvis ville behandle det som ét ord eller 'do' og 'not'. Derfor er den sædvanlige måde at lave tokenisering på en tekst at bruge 'Machine Learning' på et stort datasæt for at lade tekstbehandlings-AI'er automatisk lære mønstrene af, hvordan ord deles op.",
         },
       },
-      textCleaningPaper: {
-        title: "Tekstrensning med papir",
+      embodiedSentenceGeneration: {
+        title: "Legemliggjort sætningsgenerering",
         description:
-          "I denne lektion undersøger vi, hvordan tekster kan renses til ord for behandling ved brug af papir.",
+          "I denne lektion spiller du rollen som AI, der genererer sætninger fra de mest almindelige ord i et datasæt",
+        whatYouNeed: "Intet :)",
+        learningGoals:
+          "<ul><li>Forstå gennem legemliggørelse forskellen mellem tilfældig og sandsynlighedsdrevet generering</li><li>Oplev begrænsningerne og bias i et datasæt på første hånd</li><li>Få en introduktion til ordskyer og stopord</li></ul>",
+        intro:
+          "Her bruger vi et datasæt til at opleve noget af, hvordan computere genererer tekst. Du kan også vælge at følge med praktisk - skriv blot nogle sætninger på papir og klip dem op i ord.<br><br>Det kan være interessant at prøve dette to gange med datasæt med forskellige bias for at se, hvor forskellig oplevelsen er.<br><br>For at starte, vælg et datasæt nedenfor (du kan bruge det som et eksempel, hvis du følger med praktisk).",
+        learningOutcomes:
+          "Forhåbentlig har du efter at have gennemført denne lektion: <ul><li>Set effekterne af datasættet på genereringsoutput</li><li>Set virkningen af et tilfældigt valg og et grådigt valg fra et datasæt</li><li>Lært, hvad et stopord er, og hvorfor de er nyttige</li></ul>",
+        readMore:
+          'En oversigt over bias i AI er tilgængelig her: <a href="https://glair.ai/post/bias-in-natural-language-processing-nlp" target="_blank">https://glair.ai/post/bias-in-natural-language-processing-nlp</a>',
+        custom: {
+          randomWordGen:
+            "Nedenfor vil vi tilfældigt vælge 5 ord fra det valgte datasæt. Hvis du forestiller dig datasættet skåret op i ord foran dig, svarer dette til at vælge 5 tilfældige ord. Når du har de 5 ord, skal du skrive den første sætning, der falder dig ind, som bruger alle ordene. For eksempel [æble, læge, john, den, glad] -> 'John, lægen, er glad for at spise et æble'. For en større udfordring, prøv at holde dem i den rækkefølge, de blev valgt!",
+          repeat:
+            "Du kan gentage dette så mange gange, du vil, og se, hvor forskellige sætningerne bliver hver gang.",
+          stopwordsExplained:
+            "Vi ved, at de mest populære ord i teksten sandsynligvis er 'den', 'og', 'er', 'i', osv. Disse kaldes 'stopord', og de fortæller os ikke meget om tekstens betydning og fylder virkelig meget i ordskyen. Derfor kan vi filtrere dem ud fra vores ordsky for at få en bedre idé om, hvad datasættet handler om. I den fysiske bunke af ord svarer dette til at fjerne de uinteressante ord. Du kan vælge en liste over stopord til at bruge på vores ordsky ved hjælp af dropdown-menuen nedenfor, hvorefter ordskyen og de mest almindelige ord ovenfor opdateres.",
+          wordCloud:
+            "Nedenfor har vi repræsenteret datasættet som en ordsky. Med en bunke af udklippede ord svarer dette til at arrangere dem alle med forsiden opad på bordet foran dig.",
+          topWords:
+            "Nedenfor er de 5 mest almindelige ord i det valgte datasæt. Dette kunne opnås ved at tælle ordene i bunken foran dig og derefter vælge de mest almindelige. Dette ville være tidskrævende selv med 10 sætninger, men computere kan behandle tusindvis af sætninger på et sekund. Da vi tager de 5 største ord, kaldes dette typisk en 'grådig' tilgang. Mens ordene ændrede sig hver gang, vi tilfældigt trak, vil de her være de samme hver gang. Prøv at gentage processen med at skabe en sætning ved hjælp af disse ord fra før. Forhåbentlig er det en mere præcis repræsentation af datasættet, men vi kan kun gøre dette én gang.",
+          bias: "Nu hvor du har skrevet et par sætninger ned, er det værd at tænke over, hvordan det valgte datasæt påvirkede de sætninger, du oprettede. Mens din forståelse af sprog var ansvarlig for at sætte disse sætninger sammen, ligesom en AI har en generel forståelse af sprog, kom sandsynlighederne for de ord, vi valgte, fra datasættet og påvirkede sandsynligvis, hvad du ville sige. Hvis du ikke er sikker, så prøv at gentage processen, men brug et nyt datasæt med et andet tema. Dette svarer til, hvordan AI'er kan være biaseret af de datasæt, de er trænet på, og utilsigtet hælder mod datasættets meninger eller temaer.",
+        },
+      },
+      textGeneration: {
+        title: "Ordsky & Tekstgenerering",
+        description:
+          "I denne lektion udforsker vi, hvordan datasæt kan opsummeres med ordskyer, hvordan en computer kan generere tekst ved hjælp af et datasæt, og hvordan sprogmodeller balancerer kreativitet og sandhed.",
+        whatYouNeed: "Intet :)",
+        learningGoals:
+          "<ul><li>Lær om, hvad stemming og stopord er, og hvordan vi kan forstå tekst ved hjælp af ordskyer.</li><li>Udforsk hvordan tekst kan genereres af computere med forskellige metoder.</li><li>Få en intuition for, hvordan tilfældighed spiller ind i god (og upålidelig) tekstgenerering.</li></ul>",
+        intro:
+          "Hvordan genererer computere tekst? Hvordan kan de forstå dets mening? I denne lektion bruger vi ordskyer til at visualisere et datasæt og derefter generere tekst ved hjælp af det. Vi vil se, hvordan computere kan generere tekst, der er kreativ, men også hvordan de kan tage fejl.",
+        learningOutcomes:
+          "Forhåbentlig forstår du efter at have gennemført denne lektion:<ul><li>Hvad ordskyer er, og hvordan de kan bruges til at opsummere store datasæt</li><li>Hvordan computere bruger datasæt til at generere tekst</li><li>Hvordan tilfældighed kan påvirke tekstgenerering og medføre interessante og nogle gange uforudsigelige resultater</li></ul>",
+        readMore:
+          'Du kan læse mere om ordskyer her: <a href="https://www.wordclouds.com/" target="_blank">https://www.wordclouds.com/</a><br><br>Du kan læse mere om tekstgenerering og dens udfordringer her: <a href="https://towardsdatascience.com/how-to-create-text-generation-models-e4e4f3f2d8ab" target="_blank">https://towardsdatascience.com/how-to-create-text-generation-models-e4e4f3f2d8ab</a>',
+        custom: {
+          wordCloudBelow:
+            "Nedenfor kan du se en ordsky genereret fra det valgte datasæt. Størrelsen af ordene repræsenterer, hvor ofte de optræder i datasættet. Allerede fra dette kan computere begynde at forstå, hvad datasættet handler om, og hvilke ord der er de vigtigste. For eksempel, hvis vi prøver at finde ud af, om et datasæt handler om dyr, kunne vi se efter ord som 'hund', 'kat', 'fugl', der bruges flere gange. Gennem denne teknik, som en computer i stedet registrerer som ord og antallet af gange, de optræder, kan en computer bedre forstå, hvad et datasæt handler om.",
+          stemmingExplained:
+            "I en ordsky vil vi sandsynligvis have, at ordene 'elske', 'elskede' og 'elsker' tælles som 'elske'. Heldigvis kan vi gennem et sæt regler kaldet 'stemming', som skærer et ord ned til dets rod, gøre dette. Dette forbedrer nøjagtigheden af ordskyen, og du kan vælge en stemming-metode til at bruge på vores ordsky ved hjælp af dropdown-menuen, hvis du ønsker det.",
+          stopwordsExplained:
+            "Vi ved, at de mest populære ord i teksten sandsynligvis er 'den', 'og', 'er', 'i', osv. Disse kaldes 'stopord', og de fortæller os ikke meget om tekstens betydning og fylder virkelig meget i ordskyen. Derfor kan vi filtrere dem ud fra vores ordsky for at få en bedre idé om, hvad datasættet handler om. Du kan vælge en liste over stopord til at bruge på vores ordsky ved hjælp af dropdown-menuen nedenfor.",
+          positionalGeneration:
+            "En af de enkleste måder at begynde at generere tekst på er at tage det mest almindelige første ord i hele datasættet, derefter det mest almindelige andet ord, derefter det tredje, og så videre. Du kan klikke på 'generer' nedenfor for at se, hvordan det ser ud for dette datasæt, og knappen 'hvordan' viser de ord, der var på position 0, 1, 2 (computere begynder faktisk at tælle ved 0) og så videre.",
+          nGramGeneration:
+            "Mens positionsgenerering er enkel, bliver stopord de mest sandsynlige, jo længere vi kommer ind i teksten, og teksten begynder ofte at give mindre mening. Også, hvis vi ser 'Klar, parat,' i en tekst, ved vi altid, at 'start' kommer næste, uanset hvilken position det er i sætningen. Derfor er det nyttigt at tænke på ord i grupper kaldet n-grammer. Et n-gram er n-ord, der optræder efter hinanden. Så hvis vi havde et 2-gram af 'Klar, parat', kunne vi forudsige, at 'start' er det mest sandsynlige næste ord. Nedenfor vil vi lave n-grammer på det valgte datasæt, og du kan eksperimentere med forskellige størrelser for at se, hvordan det ændrer outputtet. Når du har gjort det, kan du også beslutte, hvordan du vil vælge, hvad det næste ord er. Når vi tager det mest sandsynlige ord, kalder vi det en 'grådig' tilgang. Dette er effektivt, men kan føre til uoriginal tekst. Derfor kan vi ved at tilføje tilfældighed, enten ved at vælge et ord tilfældigt eller vælge et i henhold til sandsynlighedsvægte (forestil dig at dreje på et pie-diagram), gøre det lettere at få en original sætning, som ikke altid er den samme. I sprogmodeller kaldes graden af tilfældighed i en model for 'temperatur'.",
+        },
+      },
+      bagOfWordsPractical: {
+        title: "Praktisk Bag of Words",
+        description:
+          "I denne lektion bruger vi papir og saks til at udforske, hvordan tekst kan opdeles i ord, behandles af en computer og bruges til at generere ny tekst.",
         whatYouNeed:
-          "Noget papir og en kuglepen. Hvis du kører dette i en gruppe, har vi skabeloner tilgængelige.",
+          'Til denne lektion har du brug for en måde at skrive sætninger ned og klippe dem op i ord (f.eks. papir, saks, pen). Det kan være almindeligt papir, men vi tilbyder også følgende skabeloner: <ul><li>Farve - 12 sætninger pr. side, 10 ord pr. sætning, op til 6 sider (71 sætninger) [<a href="/sentence-template.pdf" target="_blank">pdf</a>] [<a href="/sentence-template.docx" target="_blank">docx</a>]</li><li>Blækbesparende - 12 sætninger pr. side, 10 ord pr. sætning, op til 2 sider (23 sætninger) [<a href="/sentence-template-inksaver.pdf" target="_blank">pdf</a>] [<a href="/sentence-template-inksaver.docx" target="_blank">docx</a>]</li></ul>',
+        learningGoals:
+          "<ul><li>Forstå hvordan tekst kan behandles</li><li>Få en introduktion til tokenisering</li><li>Få en introduktion til Bag of Words som en teknik til at forstå, hvad en tekst handler om</li><li>Begynd at tænke på at generere tekst</li></ul>",
+        intro:
+          "I denne lektion lærer vi, hvordan computere kan forstå tekst og generere ny tekst. For at gøre det, har vi brug for et sæt sætninger (5 er nok minimum, men flere er bedre og der er ingen maksimum). Før du starter, overvej at have et tema for sætningerne f.eks. 'folk introducerer sig selv' eller 'meninger om en bog, du har læst for nylig'. Det er ikke strengt nødvendigt, men det gør de ideer, vi underviser i, mere tydelige.",
+        learningOutcomes:
+          "Forhåbentlig har du efter at have gennemført denne lektion: <ul><li>En forståelse for, hvordan tekst kan opdeles og behandles af en computer</li><li>En introduktion til tokenisering og Bag of Words</li><li>En forståelse for, hvordan tekst kan genereres af computere</li></ul>",
+        readMore:
+          'Du kan læse mere om Bag of Words her: <a href="https://machinelearningmastery.com/gentle-introduction-bag-words-model/" target="_blank">https://machinelearningmastery.com/gentle-introduction-bag-words-model/</a><br><br>Du kan læse mere om tokenisering her: <a href="https://www.analyticsvidhya.com/blog/2020/05/what-is-tokenization-nlp/" target="_blank">https://www.analyticsvidhya.com/blog/2020/05/what-is-tokenization-nlp/</a>',
+        custom: {
+          createSentences:
+            "For at starte aktiviteten skal du skrive hver sætning på en separat linje og derefter skære hver sætning op i ord",
+          cuttingAlt:
+            "Eksempelbillede af en person, der klipper deres sætning op",
+          whatIsAWord:
+            "På dette tidspunkt er det interessant at overveje, hvad der udgør et ord. For eksempel, er 'don't' ét ord eller to? Er New York et ord? Hvad med noget som '!''? Det er et svært spørgsmål at besvare med regler, og derfor opdeler AI'er typisk sætninger ved at se mange eksempler, som du lige har gjort, og bemærke mønstrene. Navnet for at opdele en tekst er: tokenisering.",
+          wordFreqChart:
+            "Nu skal du tage alle dine ord fra alle sætningerne og arrangere dem alfabetisk på bordet foran dig, som vist nedenfor",
+          freqAlt: "Eksempelbillede af et ordfrekvensdiagram",
+          whatFrequencySays:
+            "Dette hjælper os med at se nogle få ting. For det første ved vi nu, hvilke ord der er mest almindelige. Dette kan hjælpe os med at forstå, hvad teksten handler om. For eksempel, hvis vi ser 'papegøje' og 'kanin' meget, kan vi gætte, at teksten handler om dyr. Men udover dette kan de unikke ord fortælle os noget. Hvis vi kan se, at ordet 'indhegning' kun bruges én gang, kan vi gætte, at teksten handler om en zoologisk have i stedet for om kæledyr, folk ejer. Så ved blot at se på ordene uden deres sætninger, kan vi stadig se hints til, hvad sætningerne oprindeligt handlede om. En begrænsning er, at hvis vi sagde, at vi IKKE var glade i en sætning, ville 'glad' være i vores diagram, og vi ville ikke have nogen måde at vide, at det skulle være det modsatte.",
+          createBagOfWords:
+            "En pose med ord er en tekstbehandlingsteknik, der går helt tilbage til 1950'erne. Ideen er, at ved at tælle antallet af gange hvert ord optræder, kan vi begynde at forstå, hvad teksten handler om. For at skabe din egen pose med ord, fejer du dit frekvensdiagram sammen til en bunke, eller en pose, hvis du har en ved hånden",
+          bagOfWordsAlt: "Eksempelbillede af en pose med ord",
+          whatBagOfWordsDoes:
+            "Når en computer tokeniserer (splitter) en tekst, er det dette, den ender med. Hvad kan du tænke dig, at dette kunne bruges til? En anvendelse var i e-mail sikkerhed, hvor Gmail i årevis brugte det til at opdage spam - fordi spammere ville bruge ord som penge, nu, fare meget mere end en almindelig e-mail ville. Det er også værd at tænke på, at selvom disse er individuelle ord som 'hold', 'mål', 'manager', hvis disse individuelle ord optræder med ordet 'bold', kan vi antage, at det handler om fodbold, men 'kontor' kan få os til at tænke, at det handler om arbejde. Så ord, der optræder sammen, er også vigtige, selvom vi mistede den nøjagtige rækkefølge ved at klippe ordene op.",
+          generateText:
+            "Vi kan allerede generere tekst nu! Vælg et antal ord at trække, og træk dem tilfældigt ud fra teksten. Selvom det måske ikke giver mening, har vi stadig genereret ny tekst. Du kan fortsætte, indtil du løber tør for ord, eller tilføje ordet tilbage hver gang for at generere for evigt.",
+          textGenerationAlt:
+            "Eksempelbillede af en person, der genererer tekst fra posen med ord",
+          probabilities:
+            "Det kan også være nyttigt at overveje, at der faktisk er en meget lille chance for, at du ville trække en sætning, der gik ind i posen, i sin nøjagtige rækkefølge, og dermed generere en perfekt (men uoriginal) sætning. Der er også en lidt større, men stadig lille chance for, at du trækker noget nyt, der giver mening. Vi kan tænke på målet med tekstgenerering som at øge den sandsynlighed, at noget nyt og meningsfuldt genereres baseret på vores inputdata.",
+        },
       },
     },
   },

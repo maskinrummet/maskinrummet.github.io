@@ -2,7 +2,7 @@
   <Menubar :model="items">
     <template #start>
       <router-link to="/">
-        <Button class="p-button-link p-0 px-2">
+        <Button class="p-button-link p-0 px-2 mr-1">
           <img
             src="@/assets/logo.png"
             alt="Logo"
