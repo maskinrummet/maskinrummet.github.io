@@ -1,0 +1,28 @@
+WHAT SHOULD THE ACTIVITY BE TITLED?
+
+AI content on the internet
+
+DESCRIPTION OF THE ACTIVITY?
+
+Feed generation output based on a dataset X back into dataset X, and repeat for "generations"
+
+WHAT WILL USERS NEED BEFORE DOING THE ACTIVITY? WHAT RECOMMENDED MINIMUM AGE MIGHT BE APPROPRIATE?
+
+No requirements, will need to choose a dataset. Perhaps 14+
+
+WHAT ARE THE LEARNING GOALS AND OUTCOMES?
+
+Allow users to see that quality degrades through generations, point towards the issue created by AIs
+being trained on internet data, and AI content becoming widespread on the internet
+
+WHAT IS THE MODALITY OF THE ACTIVITY? (ONLINE WITH A SHARED DATASET, SINGLE SENTENCE, OFFLINE, ETC.)
+
+This will need to be done digitally with a dataset, as otherwise processing will be too time-consuming
+
+IS THE ACTIVITY SUBJECT SPECIFIC? COULD IT BE GENERALISED?
+
+Any dataset/subject could be used
+
+HOW LONG DO YOU IMAGINE THE ACTIVITY WOULD TAKE?
+
+Short, perhaps 20 minutes.

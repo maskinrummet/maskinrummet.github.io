@@ -8,7 +8,11 @@ Suggestions are extremely welcome!
 
 ### Contributing a Lesson
 
-If you have an idea for a lesson and are comfortable programming in Vue, follow the steps below. If coding is not your thing, send me an email at lukejconnelly1@gmail.com.
+If coding is not your thing, send me an email at lukejconnelly1@gmail.com.
+
+If you have an idea for a lesson, but don't have time to program it, consider adding to `activityIdeas` with a short .txt following the template.
+
+If you have time to help and are comfortable programming in Vue, follow the steps below:
 
 1. **Pick an ID for your lesson**  
    It should be at least two words. The current style is camelCase for the ID, with PascalCase for the Vue component.
@@ -45,7 +49,7 @@ If you have an idea for a lesson and are comfortable programming in Vue, follow 
    ```
 
 4. **Finally, in `@views/activities`, create `YourPascalCaseId.vue`**  
-   A template for this is provided in `ActivityTemplate.vue` It receives `activityID: String` as a prop for use in i18n, and should emit `startActivity` to hide the intro and `completedActivity` to show the outro. Please consider cross-device compatibility!
+   Templates for this are provided in `ActivityTemplateDigital.vue` and `ActivityTemplatePractical.vue` It receives `activityID: String` as a prop for use in i18n, and should emit `startActivity` to hide the intro and `completedActivity` to show the outro. Please consider cross-device compatibility!
 
 ### Thanks!
 

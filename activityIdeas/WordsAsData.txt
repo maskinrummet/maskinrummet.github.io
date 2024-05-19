@@ -1,0 +1,34 @@
+WHAT SHOULD THE ACTIVITY BE TITLED?
+
+Embeddings: Words as data
+
+DESCRIPTION OF THE ACTIVITY?
+
+Teach the concept of embeddings through creating a table with binary values (e.g. the classic king/queen example)
+
+Teach the idea of being able to summarise these through adding the table entries (e.g. Prince + Old = King)
+
+Finally, teach similarity as distance between embeddings, first with a single word, then with summing of words
+
+WHAT WILL USERS NEED BEFORE DOING THE ACTIVITY? WHAT RECOMMENDED MINIMUM AGE MIGHT BE APPROPRIATE?
+
+Understanding of geometric space quite important (e.g. distances), so perhaps 12+
+
+WHAT ARE THE LEARNING GOALS AND OUTCOMES?
+
+Users understand what an embedding is, how word similarity can work, how summarisation can be performed. Important
+to point out the limitation that embedding vectors are not neat categories (e.g. masc/fem, old/young, royal/not)
+
+WHAT IS THE MODALITY OF THE ACTIVITY? (ONLINE WITH A SHARED DATASET, SINGLE SENTENCE, OFFLINE, ETC.)
+
+Could be done offline as a lesson, if wanting to use a model will need to be done in the browser or with huggingface
+
+In an offline version could ask users to come up with their own word "sums" (e.g. Person - Old = Baby, Baby + Dog = Puppy)
+
+IS THE ACTIVITY SUBJECT SPECIFIC? COULD IT BE GENERALISED?
+
+Non-subject specific, but examples might need to be hardcoded?
+
+HOW LONG DO YOU IMAGINE THE ACTIVITY WOULD TAKE?
+
+Probably 45 minutes to an hour
