@@ -6,7 +6,9 @@
       class="m-1"
       severity="success"
       @click="generate"
-      :disabled="generatedSentence.some((word) => !word.show)"
+      :disabled="
+        disableGenerate || generatedSentence.some((word) => !word.show)
+      "
     >
       {{ $t("generate") }}
     </Button>
@@ -110,6 +112,10 @@ export default {
     },
     techniqueDescription: {
       type: String,
+    },
+    disableGenerate: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {

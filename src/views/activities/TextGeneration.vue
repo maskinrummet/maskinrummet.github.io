@@ -90,7 +90,10 @@
         <div class="flex justify-content-center">
           <Dropdown
             v-model="selectionMethod"
-            :options="['greedy', 'weightedRandom', 'random']"
+            :options="selectionMethodOptions"
+            :placeholder="$t('selectMethod')"
+            optionLabel="label"
+            optionValue="value"
           />
           <!-- TODO -->
         </div>
@@ -102,6 +105,7 @@
           :generateFn="
             () => generateNgram(sentences, selectionMethod, windowSize)
           "
+          :disableGenerate="!selectionMethod"
         />
         <StepperButtons
           class="pt-4"
@@ -119,6 +123,9 @@ import {
   getBagOfWords,
   generateMostCommonWordByPosition,
   generateNgram,
+  stemmingOptions,
+  stopwordsOptions,
+  selectionMethodOptions,
 } from "@/views/activities/utils";
 import TextGenerationVis from "@/components/TextGenerationVis.vue";
 
@@ -144,18 +151,11 @@ export default {
       currStep: 0,
       maxColor: [163, 11, 11],
       minColor: [24, 86, 143],
-      selectionMethod: "greedy",
+      selectionMethodOptions,
+      selectionMethod: null,
       windowSize: 2,
-      stemmingOptions: [
-        { label: this.$t("doNoStemming"), value: false },
-        { label: this.$t("englishStemming"), value: "en" },
-        { label: this.$t("danishStemming"), value: "da" },
-      ],
-      stopwordsOptions: [
-        { label: this.$t("doNoStopwords"), value: false },
-        { label: this.$t("englishStopwords"), value: "en" },
-        { label: this.$t("danishStopwords"), value: "da" },
-      ],
+      stemmingOptions: stemmingOptions,
+      stopwordsOptions: stopwordsOptions,
       langStemming: false,
       langStopwords: false,
       loading: false,
