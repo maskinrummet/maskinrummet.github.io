@@ -59,7 +59,7 @@ const messages = {
     sentenceInputTitle: "Input a sentence",
     yourSentence: "Your sentence",
     submit: "Submit",
-    gotSentence: "Received sentence:",
+    gotSentence: "Received the sentence:",
     seeComputer: "Change all to computer view",
     seeHuman: "Change all to human view",
     autoClick: "Auto click all",
@@ -67,7 +67,7 @@ const messages = {
       "Help us out with suggestions; sharing; contributing to our GitHub; and supporting science in your community",
     ourProject: "Our Project",
     aboutOurProject:
-      "Text processing, text AI, and chatbots have become incredibly popular, however, we see a lack of educational tools and resources for learning about how they work. We believe the society-wide impact of these technologies requires everyone to be afforded the opportunity to learn. Therefore we developed this website through consulation with teachers, as a resource for developing understanding and critical thinking skills, through simple and applicable activities.",
+      "Text processing, text AI, and chatbots have become incredibly popular, however, we see a lack of educational tools and resources for learning about how they work. We believe the society-wide impact of these technologies requires everyone to be afforded the opportunity to learn. Therefore we developed this website through consultation with teachers, as a resource for developing understanding and critical thinking skills, through simple and applicable activities.",
     compEmpowerment: "Computational Empowerment",
     aboutCompEmpowerment:
       "Computational empowerment is an approach and a Participatory Design response to challenges related to the emerging need for digital literacy in lower secondary education. The approach extends the current focus on computational thinking to include a concern for how children and youth are empowered through constructive, analytical and critical engagement with technology. [Dindler, C., Smith, R. C., & Iversen, O. S. (2020). Computational Empowerment: participatory design in education. CoDesign: International Journal of CoCreation in Design and the Arts, 16(1), 66-80. https://doi.org/10.1080/15710882.2020.1722173]",
@@ -77,11 +77,7 @@ const messages = {
     textGenerationExplained:
       "Text generation is the process of creating text, often accomplished in e.g. ChatGPT with the use of AI.",
     createANewDatasetIntro:
-      "Here you can create a new dataset for use on the site. You can provide all the text, or make it open for others to contribute to. You can change this, or add/delete to the dataset at any time. Each dataset has a password, which you can share with anyone who you'd also like to be able to edit it. NOTE: This is not a secure app, use silly passwords which you wouldn't mind being publicly available online. In summary, datasets are:",
-    editable: "Editable",
-    deleteable: "Deleteable",
-    passwordProtected: "Password protected",
-    publiclyVisible: "Publicly visible",
+      "Here you can create a new dataset for use on the site. You can provide all the text, or make it open for others to contribute to. You can change this, or add/delete to the dataset at any time.<br><br>Each dataset has a password, which you can share with anyone who you'd also like to be able to edit it.<br><br><b>NOTE:</b> This is not a secure app, use silly passwords which you wouldn't mind being publicly available online.<br><br>In summary, datasets are:<ul><li>Editable</li><li>Deleteable</li><li>Password protected</li><li>Publicly visible</li></ul>",
     datasetName: "Dataset name",
     datasetPassword: "Dataset password",
     confirmDatasetPassword: "Confirm dataset password",
@@ -90,7 +86,9 @@ const messages = {
     closed: "Closed",
     startEmptyDataset: "Start with an empty dataset?",
     startingSentences:
-      "Sentences which the dataset will start with (You can always add more or delete later)",
+      "Sentences which the dataset will start with: (You can always add more or delete later)",
+    useModalBelow: "Use the inputs below to add some sentences to the dataset",
+    text: "Text",
     action: "Action",
     delete: "Delete",
     selectSplitter: "Select how the text above should be split in the dataset",
@@ -117,7 +115,7 @@ const messages = {
       "Start activity without adding a sentence to the dataset",
     noDatasetSelected: "No dataset selected",
     inputTexts: "Input texts",
-    nevermind: "Nevermind",
+    deleteDataset: "Delete Dataset",
     refreshDataset: "Refresh Dataset",
     saveChanges: "Save changes",
     openForInput: "Open for input",
@@ -164,7 +162,7 @@ const messages = {
       textCleaning: {
         title: "Text cleaning",
         description:
-          "In this lesson we explore how texts can be cleaned into words for processing in text AI.",
+          "In this lesson we explore how texts can be 'cleaned' into words for processing in text AI.",
         whatYouNeed: "Nothing :)",
         learningGoals:
           '<ul><li>Understand how computers "see" text</li><li>Understand how text can be "cleaned" into words for processing</li><li>Get an introduction to tokenisation</li></ul>',
@@ -201,10 +199,10 @@ const messages = {
         learningOutcomes:
           "Hopefully after completing this lesson you: <ul><li>Have seen the effects of dataset on generation output</li><li>Have seen the impact of a random choice and a greedy choice from a dataset</li><li>Have learned what a stop word is and why they are useful</li></ul>",
         readMore:
-          'An overview on bias in AI is available here: <a href="http://text-processing.com/demo/stem/</a>https://glair.ai/post/bias-in-natural-language-processing-nlp" target="_blank">https://glair.ai/post/bias-in-natural-language-processing-nlp</a>',
+          'A video from Google explaining bias in machine learning is available here: <a href="https://www.youtube.com/watch?v=59bMh59JQDo" target="_blank">https://www.youtube.com/watch?v=59bMh59JQDo</a><br><br>And an example looking at text-to-image generation can be found here: <a href="https://www.microsoft.com/en-us/research/blog/understanding-social-biases-through-the-text-to-image-generation-lens/" target="_blank">https://www.microsoft.com/en-us/research/blog/understanding-social-biases-through-the-text-to-image-generation-lens/</a>',
         custom: {
           randomWordGen:
-            "Below we will randomly choose 5 words from the selected dataset. If you imagine the dataset cut up into words in front of you, this is like randomly picking up 5 of them. Once you have the 5 words, write down the first sentence that comes to mind which uses all of the words. e.g. [apple, doctor, john, the, happy] -> 'John the doctor is happy eating an apple'. For a big challenge, try to keep them in the order they were picked!",
+            "Below we will randomly choose 5 words from the selected dataset. If you imagine the dataset cut up into words in front of you, this is like randomly picking up 5 of them.<br><br>Once you have the 5 words, write down the first sentence that comes to mind which uses all of the words:<br>e.g. [apple] [doctor] [john] [the] [happy] => 'John the doctor is happy eating an apple'<br><br>For a big challenge, try to keep them in the order they were picked!",
           repeat:
             "You can repeat this as many times as you like, and see how different the sentences are each time.",
           stopwordsExplained:
@@ -255,7 +253,7 @@ const messages = {
         learningOutcomes:
           "Hopefully at the end of this lesson you:<ul><li>Understand what text processing might look like</li><li>Recognise the word tokenisation</li><li>Have seen and understood the bag of words and its purpose</li><li>Have some ideas as to what makes good (and bad) text generation</li></ul>",
         readMore:
-          'You can see exactly how ChatGPT and OpenAI\'s GPT models would tokenise text here: <a href="https://platform.openai.com/tokenizer" target="_blank">https://platform.openai.com/tokenizer</a>',
+          'You can see exactly how ChatGPT and OpenAI\'s GPT models would tokenise text here: <a href="https://platform.openai.com/tokenizer" target="_blank">https://platform.openai.com/tokenizer</a><br><br>This site will automatically create a bag of words with probabilities based on any text you give it: <a href="https://www.online-utility.org/text/analyzer.jsp" target="_blank">https://www.online-utility.org/text/analyzer.jsp</a>',
         custom: {
           createSentences:
             "To start the activity write each sentece on a seperate line, then cut each sentence into words",
@@ -271,13 +269,13 @@ const messages = {
             "A bag of words is a text processing technique which goes all the way back to the 1950s. The idea is that by counting the number of times each word appears, we can begin to understand what the text is about. To create your own bag of words, sweep your frequency graph into a pile, or bag if you have one handy",
           bagOfWordsAlt: "Example image of a bag of words",
           whatBagOfWordsDoes:
-            "When a computer tokenises (splits) a text, this is what it ends up with. What can you think that this could be used for? One application was in email security, where for years Gmail used it to detect spam - because spammers would use words like money, now, danger much more than a regular email would. It's also worth thinking that even though these are individual words like 'teams', 'goals', 'manager', if those individual words appear with the word 'ball' we might assume its football, but 'office' might make us think its about work. So words appearing together is also important, even though we lost the exact order by cutting the words up.",
+            "When a computer tokenises (splits) a text, this is what it ends up with. What can you think that this could be used for? One application was in email security, where for years Gmail used it to detect spam - because spammers would use words like money, now, danger much more than a regular email would. It's also worth thinking that although we are considering words individually, like 'teams', 'goals', 'manager', if those individual words appear with the word 'ball' we might assume those words are about football teams, goals and managers. But, the word 'office' might make us think its about Microsoft teams, work goals, and managers. So words appearing together is also important, even though we lose the exact order by cutting the sentences up.",
           generateText:
-            "We can already generate text now! Pick a number of words to draw, and pull them randomly out from the text. Even though it might not make sense, we still generated new text. You can keep going until you run out of words, or add the word back every time to generate forever.",
+            "We can already generate text now! Pick a number of words to draw, and pull them randomly out from the bag or pile. Even though our 'sentence' might not make sense, we still generated new text. You can keep going until you run out of words, or add the word back every time to generate forever.",
           textGenerationAlt:
             "Example image of someone generating text from the bag of words",
           probabilities:
-            "It can also be useful to consider the fact that theres actually a very small chance that you would pull out a sentence that went into the bag, in its exact order, and thus generate a perfect (but unoriginal) sentence. Theres also a slightly bigger, but still small chance that you pull out something new that makes sense. We can think of the goal of text generation as being increasing that probability that something new and that makes sense is generated based on our input data.",
+            "It can also be useful to consider the fact that theres actually a very small chance that you would pull out a sentence that went into the bag, in its exact order, and therefore generate a perfect (but unoriginal) sentence. Theres also a slightly bigger, but still small chance that you pull out something new that makes sense. We can think of the goal of text generation as being a task of increasing the probability that something new and that makes sense is generated based on our input data.",
         },
       },
     },
@@ -340,7 +338,7 @@ const messages = {
     sentenceInputTitle: "Indtast en sætning",
     yourSentence: "Din sætning",
     submit: "Indsend",
-    gotSentence: "Modtaget sætning:",
+    gotSentence: "Modtaget sætningen:",
     seeComputer: "Skift alt til computer visning",
     seeHuman: "Skift alt til menneskelig visning",
     autoClick: "Automatisk klik alt",
@@ -358,11 +356,7 @@ const messages = {
     textGenerationExplained:
       "Tekstgenerering er processen med at skabe tekst, ofte udført i f.eks. ChatGPT ved brug af AI.",
     createANewDatasetIntro:
-      "Her kan du oprette et nyt datasæt til brug på siden. Du kan levere al teksten, eller gøre det åbent for andre at bidrage til. Du kan ændre dette eller tilføje/slette i datasættet når som helst. Hvert datasæt har en adgangskode, som du kan dele med hvem som helst, du også gerne vil have mulighed for at redigere det. BEMÆRK: Dette er ikke en sikker app, brug fjollede adgangskoder, som du ikke har noget imod bliver offentligt tilgængelige online. Sammenfattende er datasæt:",
-    editable: "Redigerbare",
-    deleteable: "Slettelige",
-    passwordProtected: "Adgangskodebeskyttede",
-    publiclyVisible: "Offentligt synlige",
+      "Her kan du oprette et nyt datasæt til brug på siden. Du kan levere al teksten, eller gøre det åbent for andre at bidrage til. Du kan ændre dette eller tilføje/slette i datasættet når som helst.<br><br>Hvert datasæt har en adgangskode, som du kan dele med hvem som helst, du også gerne vil have mulighed for at redigere det.<br><br><b>BEMÆRK:</b> Dette er ikke en sikker app, brug fjollede adgangskoder, som du ikke har noget imod bliver offentligt tilgængelige online.<br><br>Sammenfattende er datasæt:<ul><li>Redigerbare</li><li>Slettelige</li><li>Adgangskodebeskyttede</li><li>Offentligt synlige</li></ul>",
     datasetName: "Datasætnavn",
     datasetPassword: "Datasæt adgangskode",
     confirmDatasetPassword: "Bekræft datasæt adgangskode",
@@ -371,7 +365,10 @@ const messages = {
     closed: "Lukket",
     startEmptyDataset: "Start med et tomt datasæt?",
     startingSentences:
-      "Sætninger, som datasættet starter med (Du kan altid tilføje flere eller slette senere)",
+      "Sætninger, som datasættet starter med: (Du kan altid tilføje flere eller slette senere)",
+    useModalBelow:
+      "Bruge inputboksen nedenfor til at tilføje sætninger til datasættet",
+    text: "Tekst",
     action: "Handling",
     delete: "Slet",
     selectSplitter: "Vælg hvordan teksten ovenfor skal opdeles i datasættet",
@@ -398,7 +395,7 @@ const messages = {
       "Start aktivitet uden at tilføje en sætning til datasættet",
     noDatasetSelected: "Intet datasæt valgt",
     inputTexts: "Input tekster",
-    nevermind: "Glem det",
+    deleteDataset: "Slet Datasæt",
     refreshDataset: "Opdater Datasæt",
     saveChanges: "Gem ændringer",
     openForInput: "Åben for input",
@@ -445,7 +442,7 @@ const messages = {
       textCleaning: {
         title: "Tekstrensning",
         description:
-          "I denne lektion udforsker vi, hvordan tekster kan renses til ord for at blive behandlet i tekst-AI.",
+          "I denne lektion udforsker vi, hvordan tekster kan 'renses' til ord for at blive behandlet i tekst-AI.",
         whatYouNeed: "Intet :)",
         learningGoals:
           "<ul><li>Forstå hvordan computere 'ser' tekst</li><li>Forstå hvordan tekst kan renses til ord for behandling</li><li>Få en introduktion til tokenisering</li></ul>",

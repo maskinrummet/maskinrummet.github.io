@@ -23,40 +23,18 @@
                 optionLabel="formattedName"
                 :placeholder="$t('selectADataset')"
                 filter
-                @change="
-                  () => {
-                    editMode = false;
-                    password = '';
-                  }
-                "
               />
               <Button
                 :disabled="!selectedDataset"
-                @click="showPreview"
+                @click="showDatasetModal"
                 severity="info"
                 >{{ $t("viewDataset") }}</Button
               ></InputGroup
             >
-            <Dialog
-              v-model:visible="previewVisible"
-              modal
-              :header="getCurrDatasetName()"
-              class="w-9"
-            >
-              <ShowDataset
-                v-if="!editMode"
-                :dataset="datasetPreview"
-                @edit="editDataset"
-              />
-              <EditDataset
-                v-else
-                :dataset="datasetPreview"
-                :password="password"
-                @cancel="previewVisible = false"
-                @update="updateDataset"
-                @refresh="refreshDataset"
-              ></EditDataset>
-            </Dialog>
+            <DatasetModal
+              :datasetId="selectedDataset.id"
+              ref="datasetModalSD"
+            ></DatasetModal>
             <div v-if="!createdDataset">
               <div class="flex justify-content-center m-3">{{ $t("or") }}</div>
               <div class="flex justify-content-center">
@@ -77,7 +55,7 @@
             </div>
           </div>
 
-          <div v-if="selectedDataset" class="mt-3">
+          <div v-if="selectedDataset.id" class="mt-3">
             <div v-if="selectedDataset.is_open" class="mt-3">
               <div class="flex justify-content-center">
                 <p>{{ $t("addSentenceAndStart") }}</p>
@@ -116,22 +94,19 @@ import {
   getDatasetNames,
   getDatasetById,
   postDataset,
-  editDataset,
   addSentenceToDataset,
 } from "@/api";
-import ShowDataset from "@/components/ShowDataset.vue";
 import InputGroup from "primevue/inputgroup";
 import CreateDataset from "@/components/CreateDataset.vue";
-import EditDataset from "@/components/EditDataset.vue";
+import DatasetModal from "@/components/DatasetModal.vue";
 import SingleSentenceInput from "@/components/SingleSentenceInput.vue";
 
 export default {
   name: "DatasetSelection",
   components: {
-    ShowDataset,
+    DatasetModal,
     InputGroup,
     CreateDataset,
-    EditDataset,
     SingleSentenceInput,
   },
   data() {
@@ -139,8 +114,7 @@ export default {
       value: "",
       error: "",
       datasets: "",
-      selectedDataset: null,
-      previewVisible: false,
+      selectedDataset: { id: null },
       getDatasetError: "",
       datasetPreview: null,
       createVisible: false,
@@ -151,10 +125,6 @@ export default {
     };
   },
   methods: {
-    showPreview() {
-      this.previewVisible = true;
-      this.getDataset(this.selectedDataset);
-    },
     async getDataset(dataset) {
       try {
         const response = await getDatasetById(dataset.id);
@@ -173,15 +143,10 @@ export default {
       );
       await this.getDataset(this.selectedDataset);
       this.loading = false;
-      this.previewVisible = true;
+      this.showDatasetModal();
     },
-    getCurrDatasetName(maxChars = 50) {
-      if (this.selectedDataset) {
-        return this.selectedDataset.name.length > maxChars
-          ? this.selectedDataset.name.slice(0, maxChars - 3) + "..."
-          : this.selectedDataset.name;
-      }
-      return this.$t("noDatasetSelected");
+    showDatasetModal() {
+      this.$refs.datasetModalSD.show();
     },
     formatName(name, open, maxChars = 50) {
       let tag = `[${open ? this.$t("open") : this.$t("closed")}] `;
@@ -197,27 +162,6 @@ export default {
       } catch (error) {
         this.error = error;
       }
-    },
-    editDataset(password) {
-      this.editMode = true;
-      this.password = password;
-    },
-    async updateDataset(dataset) {
-      this.loading = true;
-      await editDataset(dataset, this.password);
-      await this.getDatasets();
-      await this.getDataset(dataset);
-      this.selectedDataset = this.datasetsFormatted.find(
-        (d) => d.id === dataset.id
-      );
-      this.loading = false;
-      this.previewVisible = true;
-    },
-    async refreshDataset() {
-      this.loading = true;
-      await this.getDataset(this.selectedDataset);
-      this.loading = false;
-      this.previewVisible = true;
     },
     runLesson(sentence = null) {
       this.$emit("datasetReady", {

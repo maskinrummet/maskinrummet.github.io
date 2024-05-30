@@ -332,7 +332,6 @@ export default {
       if (!this.$refs[elementId]) {
         return;
       }
-      console.log(this.$refs, elementId);
       this.$refs[elementId].querySelectorAll("button").forEach((button) => {
         button.click();
       });

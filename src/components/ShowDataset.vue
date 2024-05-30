@@ -64,7 +64,6 @@ export default {
         : text;
     },
     verify(e) {
-      console.log(this.dataset.id, this.password);
       e.preventDefault();
       verifyPassword(this.dataset.id, this.password)
         .then(() => {

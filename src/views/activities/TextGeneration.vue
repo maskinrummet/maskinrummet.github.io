@@ -8,6 +8,7 @@
     class="w-8 absolute z-5 top-100 mx-auto left-0 right-0"
   >
   </ProgressBar>
+  <DatasetModal :datasetId="datasetId" ref="datasetModal"></DatasetModal>
   <Stepper v-if="dataset && !complete" v-model:active-step="currStep">
     <StepperPanel :header="$t('wordCloud')">
       <template #content="{ nextCallback }">
@@ -52,9 +53,8 @@
         <StepperButtons
           class="pt-4"
           :nextCallback="nextCallback"
-          :centerButtonText="$t('refreshDataset')"
-          :centerButtonCallback="refreshDataset"
-          :centerButtonDisabled="refreshing"
+          :centerButtonText="$t('viewDataset')"
+          :centerButtonCallback="showDatasetModal"
         />
       </template>
     </StepperPanel>
@@ -128,12 +128,14 @@ import {
   selectionMethodOptions,
 } from "@/views/activities/utils";
 import TextGenerationVis from "@/components/TextGenerationVis.vue";
+import DatasetModal from "@/components/DatasetModal.vue";
 
 export default {
   name: "TextCleaning",
   components: {
     DatasetSelection,
     TextGenerationVis,
+    DatasetModal,
   },
   props: {
     activityID: {
@@ -214,6 +216,9 @@ export default {
     completed() {
       this.complete = true;
       this.$emit("completedActivity");
+    },
+    showDatasetModal() {
+      this.$refs.datasetModal.show();
     },
   },
 };

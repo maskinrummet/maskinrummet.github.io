@@ -8,14 +8,17 @@
     class="w-8 absolute z-5 top-100 mx-auto left-0 right-0"
   >
   </ProgressBar>
+  <DatasetModal :datasetId="datasetId" ref="datasetModal"></DatasetModal>
   <Stepper v-if="dataset && !complete" v-model:active-step="currStep">
     <StepperPanel :header="$t('randomWords')">
       <template #content="{ nextCallback }">
         <div class="text-center">
-          <p>
-            {{ $t(`activities.${activityID}.custom.randomWordGen`) }}
-          </p>
+          <div
+            class="my-2"
+            v-html="$t(`activities.${activityID}.custom.randomWordGen`)"
+          ></div>
           <Button
+            class="m-2"
             :label="$t('generateRandomWords')"
             severity="success"
             @click="getRandomWords"
@@ -28,7 +31,7 @@
               severity="info"
               >{{ word }}</Button
             >
-            <div>
+            <div class="mt-4">
               {{ $t(`activities.${activityID}.custom.repeat`) }}
             </div>
           </div>
@@ -36,9 +39,8 @@
         <StepperButtons
           class="pt-4"
           :nextCallback="nextCallback"
-          :centerButtonText="$t('refreshDataset')"
-          :centerButtonCallback="refreshDataset"
-          :centerButtonDisabled="refreshing"
+          :centerButtonText="$t('viewDataset')"
+          :centerButtonCallback="showDatasetModal"
         />
       </template>
     </StepperPanel>
@@ -100,12 +102,15 @@ import {
   generateMostCommonWordByPosition,
   generateNgram,
   drawFromBagOfWords,
+  stopwordsOptions,
 } from "@/views/activities/utils";
+import DatasetModal from "@/components/DatasetModal.vue";
 
 export default {
   name: "TextCleaning",
   components: {
     DatasetSelection,
+    DatasetModal,
   },
   props: {
     activityID: {
@@ -120,16 +125,11 @@ export default {
       randomWords: null,
       sentence: "",
       complete: false,
-      refreshing: false,
       currStep: 0,
       maxColor: [163, 11, 11],
       minColor: [24, 86, 143],
       windowSize: 2,
-      stopwordsOptions: [
-        { label: this.$t("doNoStopwords"), value: false },
-        { label: this.$t("englishStopwords"), value: "en" },
-        { label: this.$t("danishStopwords"), value: "da" },
-      ],
+      stopwordsOptions,
       langStopwords: false,
       loading: false,
     };
@@ -163,11 +163,6 @@ export default {
         drawFromBagOfWords(this.bagOfWords)
       );
     },
-    async refreshDataset() {
-      this.refreshing = true;
-      this.dataset = (await getDatasetById(this.datasetId)).data;
-      this.refreshing = false;
-    },
     calcColor(weight) {
       let percentage = weight / this.maxOccurences;
 
@@ -191,6 +186,9 @@ export default {
     completed() {
       this.complete = true;
       this.$emit("completedActivity");
+    },
+    showDatasetModal() {
+      this.$refs.datasetModal.show();
     },
   },
 };

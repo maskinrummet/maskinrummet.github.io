@@ -19,7 +19,9 @@
           </div>
         </template>
         <template #title>{{ $t(`activities.${activity.id}.title`) }}</template>
-        <template #subtitle>{{ $t(activity.modality) }}</template>
+        <template #subtitle
+          >{{ $t("modality") }}: {{ $t(activity.modality) }}</template
+        >
         <template #content>
           <p>{{ $t(`activities.${activity.id}.description`) }}</p>
           <div class="pt-3">

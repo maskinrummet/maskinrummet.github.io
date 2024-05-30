@@ -66,9 +66,9 @@
     </transition-group>
     <div class="flex justify-content-between mt-3">
       <Button
-        :label="$t('nevermind')"
+        :label="$t('deleteDataset')"
         severity="danger"
-        @click="$emit('cancel')"
+        @click="$emit('delete')"
       ></Button>
       <Button :label="$t('refreshDataset')" @click="$emit('refresh')"></Button>
       <Button

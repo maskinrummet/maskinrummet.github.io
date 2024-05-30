@@ -1,11 +1,5 @@
 <template>
-  <p>{{ $t("createANewDatasetIntro") }}</p>
-  <ul>
-    <li>{{ $t("editable") }}</li>
-    <li>{{ $t("deletable") }}</li>
-    <li>{{ $t("passwordProtected") }}</li>
-    <li>{{ $t("publiclyVisible") }}</li>
-  </ul>
+  <div v-html="$t('createANewDatasetIntro')" class="m-2"></div>
   <form @submit="checkDataset">
     <div class="flex justify-content-center mb-5">
       <FloatLabel>
@@ -41,11 +35,14 @@
       <Checkbox v-model="startEmpty" :binary="true" />
     </div>
     <div v-if="!startEmpty">
-      <div class="flex justify-content-center mt-3">
-        <label>{{ $t("startingSentences") }}</label>
+      <div class="flex justify-content-center my-4">
+        <h3>{{ $t("startingSentences") }}</h3>
       </div>
       <DataTable :value="displaySentences" size="small" paginator :rows="10">
-        <Column field="text" :header="$t('Input Texts')"></Column>
+        <template #empty
+          ><div class="text-center">{{ $t("useModalBelow") }}</div></template
+        >
+        <Column field="text" :header="$t('text')"></Column>
         <Column :header="$t('action')">
           <template #body="{ index }">
             <Button
