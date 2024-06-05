@@ -96,7 +96,6 @@
             optionLabel="label"
             optionValue="value"
           />
-          <!-- TODO -->
         </div>
         <p class="text-center">{{ $t("windowSize") }}: {{ windowSize }}</p>
         <div class="flex justify-content-center">

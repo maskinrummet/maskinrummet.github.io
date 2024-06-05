@@ -87,7 +87,11 @@ export const otherColour = "#bbb";
 export const pieChartColors = categoricalColours.concat(otherColour);
 
 export function cleanString(s) {
-  return s.replace(/[^\p{L}\p{N}\s]/gu, "").toLowerCase() + " [END]";
+  return (
+    s.replace(/[^\p{L}\p{N}\s]/gu, "").toLowerCase() +
+    " " +
+    i18n.global.t("endToken")
+  );
 }
 
 export function getOtheredProbs(probs, max = categoricalColours.length) {
@@ -106,11 +110,11 @@ export function generateMostCommonWord(inputTexts) {
   let allSentences = inputTexts.map(cleanString);
   let wordCounts = {};
   let maxSentenceLength = Math.max(
-    ...allSentences.map((sentence) => sentence.split(" ").length + 1)
+    ...allSentences.map((sentence) => sentence.split(/\s+/).length + 1)
   );
 
   for (let sentence of allSentences) {
-    let words = sentence.split(" ");
+    let words = sentence.split(/\s+/);
     for (let w of words) {
       wordCounts[w] = wordCounts[w] ? wordCounts[w] + 1 : 1;
     }
@@ -125,7 +129,7 @@ export function generateMostCommonWord(inputTexts) {
     filledArray.push(mostCommonWord);
   }
 
-  return filledArray.concat("[END]").map((word, i) => ({
+  return filledArray.concat(i18n.global.t("endToken")).map((word, i) => ({
     word,
     pos: i,
     show: false,
@@ -151,7 +155,7 @@ export function generateMostCommonWordByPosition(inputTexts) {
   const wordCounts = {};
 
   allSentences.forEach((sentence) => {
-    const words = sentence.split(" ");
+    const words = sentence.split(/\s+/);
     words.forEach((word, i) => {
       if (!wordCounts[i]) wordCounts[i] = {};
       wordCounts[i][word] = (wordCounts[i][word] || 0) + 1;
@@ -172,7 +176,7 @@ export function generateMostCommonWordByPosition(inputTexts) {
       probs: allProbsWithOther,
     });
 
-    if (mostCommonWord === "[END]") break;
+    if (mostCommonWord === i18n.global.t("endToken")) break;
   }
 
   return mostCommonWordsList.map((word, i) => ({
@@ -200,9 +204,9 @@ export function slidingWindow(sentences, N) {
   for (let s of sentences) {
     let prevN = [];
     for (let i = 0; i < N; i++) {
-      prevN.push("[START]");
+      prevN.push(i18n.global.t("startToken"));
     }
-    for (let x of s.split(" ")) {
+    for (let x of s.split(/\s+/)) {
       if (prevN.join(" ") in probabilities) {
         if (x in probabilities[prevN.join(" ")]) {
           probabilities[prevN.join(" ")][x]++;
@@ -217,30 +221,30 @@ export function slidingWindow(sentences, N) {
       prevN.push(x);
     }
     if (prevN.join(" ") in probabilities) {
-      if ("[END]" in probabilities[prevN.join(" ")]) {
-        probabilities[prevN.join(" ")]["[END]"]++;
+      if (i18n.global.t("endToken") in probabilities[prevN.join(" ")]) {
+        probabilities[prevN.join(" ")][i18n.global.t("endToken")]++;
       } else {
-        probabilities[prevN.join(" ")]["[END]"] = 1;
+        probabilities[prevN.join(" ")][i18n.global.t("endToken")] = 1;
       }
     } else {
       probabilities[prevN.join(" ")] = {};
-      probabilities[prevN.join(" ")]["[END]"] = 1;
+      probabilities[prevN.join(" ")][i18n.global.t("endToken")] = 1;
     }
   }
   return probabilities;
 }
 
 export function greedyChoice(probabilities) {
-  let N = Object.keys(probabilities)[0].split(" ").length;
+  let N = Object.keys(probabilities)[0].split(/\s+/).length;
   let prevN = [];
   for (let i = 0; i < N; i++) {
-    prevN.push("[START]");
+    prevN.push(i18n.global.t("startToken"));
   }
   let sentence = [];
   let nextWord = Object.entries(probabilities[prevN.join(" ")]).reduce((a, b) =>
     a[1] > b[1] ? a : b
   )[0];
-  while (nextWord !== "[END]" && sentence.length < 40) {
+  while (nextWord !== i18n.global.t("endToken") && sentence.length < 40) {
     sentence.push({
       word: nextWord,
       probs: Object.entries(probabilities[prevN.join(" ")]).sort(
@@ -282,16 +286,16 @@ export function getRandomKeyProportionateToValue(dictionary) {
 }
 
 export function weightedRandomChoice(probabilities) {
-  let N = Object.keys(probabilities)[0].split(" ").length;
+  let N = Object.keys(probabilities)[0].split(/\s+/).length;
   let prevN = [];
   for (let i = 0; i < N; i++) {
-    prevN.push("[START]");
+    prevN.push(i18n.global.t("startToken"));
   }
   let sentence = [];
   let nextWord = getRandomKeyProportionateToValue(
     probabilities[prevN.join(" ")]
   );
-  while (nextWord !== "[END]" && sentence.length < 40) {
+  while (nextWord !== i18n.global.t("endToken") && sentence.length < 40) {
     sentence.push({
       word: nextWord,
       probs: Object.entries(probabilities[prevN.join(" ")]).sort(
@@ -327,14 +331,14 @@ export function getRandomKey(dictionary) {
 
 export function randomChoice(probabilities) {
   //TODO: combine this and above
-  let N = Object.keys(probabilities)[0].split(" ").length;
+  let N = Object.keys(probabilities)[0].split(/\s+/).length;
   let prevN = [];
   for (let i = 0; i < N; i++) {
-    prevN.push("[START]");
+    prevN.push(i18n.global.t("startToken"));
   }
   let sentence = [];
   let nextWord = getRandomKey(probabilities[prevN.join(" ")]);
-  while (nextWord !== "[END]" && sentence.length < 40) {
+  while (nextWord !== i18n.global.t("endToken") && sentence.length < 40) {
     sentence.push({
       word: nextWord,
       probs: Object.entries(probabilities[prevN.join(" ")]).sort(

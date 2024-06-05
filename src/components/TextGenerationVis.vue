@@ -13,52 +13,49 @@
       {{ $t("generate") }}
     </Button>
   </div>
-  <div class="m-auto w-full">
+  <div class="mt-2">
     <span v-for="word in generatedSentence" :key="word.pos">
-      <Button v-if="word.show" class="m-1" severity="info" :disabled="true">
+      <Button
+        v-if="word.show"
+        class="m-1"
+        severity="info"
+        :disabled="!finishedGenerating"
+        @click="(e) => $refs['pie_' + word.pos][0].show(e)"
+        :ref="'button_' + word.pos"
+      >
         {{ word.word }}
       </Button>
-    </span>
-    <Button
-      v-if="generatedSentence.some((word) => !word.show)"
-      class="m-1"
-      severity="info"
-      :disabled="true"
-    >
-      <span class="loading"></span>
-    </Button>
-  </div>
-  <div
-    class="flex align-items-center"
-    v-if="
-      generatedSentence.length && generatedSentence.every((word) => word.show)
-    "
-  >
-    <Button class="my-3 m-auto" @click="showPies = true" severity="help">
-      {{ $t("how") }}
-    </Button>
-  </div>
-  <div v-if="showPies">
-    <div v-for="word in generatedSentence" :key="word.pos">
-      <div v-if="word.pos === currPos">
-        <div class="flex justify-content-between w-full">
+      <!-- TODO: would be nice to have right left arrow keys to select, and would be nice to place overlay floating without w-full (currently a bug in PrimeVue) -->
+      <OverlayPanel :ref="'pie_' + word.pos" class="w-full">
+        <div class="flex justify-content-between">
           <Button
             icon="pi pi-angle-left"
             :aria-label="$t('previous')"
-            @click="currPos--"
-            :disabled="currPos === 0"
+            :disabled="word.pos === 0"
             class="w-1 my-auto"
+            @click="
+              (e) => {
+                showOverlay(word.pos - 1);
+                hideOverlay(word.pos);
+                e.stopPropagation();
+              }
+            "
           />
           <div class="w-10">
             <Pie :data="word.pieChartData" :options="chartOptions" />
           </div>
-
           <Button
             class="w-1 my-auto"
             icon="pi pi-angle-right"
             :aria-label="$t('next')"
-            @click="currPos++"
-            :disabled="currPos === generatedSentence.length - 1"
+            :disabled="word.pos === generatedSentence.length - 1"
+            @click="
+              (e) => {
+                hideOverlay(word.pos);
+                showOverlay(word.pos + 1);
+                e.stopPropagation();
+              }
+            "
           />
         </div>
         <div class="flex justify-content-center m-2">
@@ -82,8 +79,30 @@
             {{ word.word }}
           </Button>
         </div>
-      </div>
-    </div>
+      </OverlayPanel>
+    </span>
+    <Button
+      v-if="generatedSentence.some((word) => !word.show)"
+      class="m-1"
+      severity="info"
+      :disabled="true"
+    >
+      <span class="loading"></span>
+    </Button>
+  </div>
+  <div class="flex align-items-center" v-if="finishedGenerating">
+    <Button
+      class="my-3 m-auto"
+      @click="
+        (e) => {
+          showOverlay(0);
+          e.stopPropagation();
+        }
+      "
+      severity="help"
+    >
+      {{ $t("how") }}
+    </Button>
   </div>
 </template>
 
@@ -121,8 +140,6 @@ export default {
   data() {
     return {
       generatedSentence: [],
-      showPies: false,
-      currPos: 0,
       chartOptions: {
         responsive: true,
         maintainAspectRatio: false,
@@ -136,14 +153,26 @@ export default {
   },
   methods: {
     generate() {
-      this.showPies = false;
-      this.currPos = 0;
       this.generatedSentence = this.generateFn();
       for (let i in this.generatedSentence) {
         setTimeout(() => {
           this.generatedSentence[i].show = true;
-        }, i * 1000);
+        }, i * 400);
       }
+    },
+    showOverlay(pos) {
+      this.$refs["button_" + pos][0].$el.click();
+    },
+    hideOverlay(pos) {
+      this.$refs["pie_" + pos][0].hide();
+    },
+  },
+  computed: {
+    finishedGenerating() {
+      return (
+        this.generatedSentence.length &&
+        this.generatedSentence.every((word) => word.show)
+      );
     },
   },
 };
