@@ -1,7 +1,7 @@
 <template>
   <Menubar :model="items">
     <template #start>
-      <router-link to="/">
+      <router-link :to="'/' + $i18n.locale">
         <Button class="p-button-link p-0 px-2 mr-1">
           <img
             src="@/assets/logo.png"
@@ -62,9 +62,12 @@ export default {
   computed: {
     items() {
       return [
-        { label: this.$t("howToUseTheSite"), route: "/how-to" },
-        { label: this.$t("about"), route: "/about" },
-        { label: this.$t("contact"), route: "/contact" },
+        {
+          label: this.$t("howToUseTheSite"),
+          route: `/${this.$i18n.locale}/how-to`,
+        },
+        { label: this.$t("about"), route: `/${this.$i18n.locale}/about` },
+        { label: this.$t("contact"), route: `/${this.$i18n.locale}/contact` },
         {
           label: "GitHub",
           icon: "pi pi-github",
@@ -82,6 +85,10 @@ export default {
   methods: {
     changeLang() {
       this.$i18n.locale = this.selectedLang.value;
+      this.$router.push({
+        name: this.$route.name,
+        params: { lang: this.$i18n.locale },
+      });
     },
   },
 };

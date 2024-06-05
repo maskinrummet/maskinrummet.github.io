@@ -11,7 +11,7 @@
   >
     <Column field="title" :header="$t('title')">
       <template #body="{ data }">
-        <router-link :to="{ path: 'activity', query: { id: data.id } }">
+        <router-link :to="`/${$i18n.locale}/activity/${data.id}`">
           <Button
             :label="$t(`activities.${data.id}.title`)"
             class="p-button-link w-full text-left"
@@ -88,7 +88,7 @@
     </Column>
   </DataTable>
   <div class="flex justify-content-end mt-2">
-    <router-link to="/contact" class="no-underline">
+    <router-link :to="'/' + $i18n.locale + '/contact'" class="no-underline">
       <Button :label="$t('suggestActivity')" />
     </router-link>
   </div>

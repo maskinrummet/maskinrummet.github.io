@@ -1,7 +1,10 @@
 <template>
   <div>
     <h3>
-      <router-link to="/"> {{ $t("availableActivities") }} </router-link> >
+      <router-link :to="'/' + $i18n.locale">
+        {{ $t("availableActivities") }}
+      </router-link>
+      >
       {{ $t("currentActivity") }}
     </h3>
     <div v-if="activity">
@@ -119,7 +122,7 @@ export default {
     const route = useRoute();
     const store = useStore();
 
-    const activityId = computed(() => route.query.id);
+    const activityId = computed(() => route.params.id);
     const activity = computed(() =>
       store.getters.getActivityById(activityId.value)
     );

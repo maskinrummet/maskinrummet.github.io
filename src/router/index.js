@@ -6,18 +6,49 @@ import AboutUs from "@/views/AboutUs.vue";
 import NotFound from "@/views/NotFound.vue";
 import HowTo from "@/views/HowTo.vue";
 import i18n from "@/i18n";
+import { DEFAULT_LOCALE, LOCALES } from "@/i18n";
 
 function getName(key) {
   return () => i18n.global.t("maskinrummet") + " | " + i18n.global.t(key);
 }
 
+function getPath(k) {
+  return "/:lang(" + LOCALES.join("|") + ")" + k;
+}
+
 const routes = [
-  { path: "/", component: AppHomepage, name: getName("home") },
-  { path: "/contact", component: ContactUs, name: getName("contact") },
-  { path: "/about", component: AboutUs, name: getName("about") },
-  { path: "/activity", component: ActivityDetail, name: getName("activity") },
-  { path: "/how-to", component: HowTo, name: getName("howTo") },
-  { path: "/:pathMatch(.*)*", component: NotFound, name: getName("error404") },
+  { path: "/", redirect: `/${DEFAULT_LOCALE}` },
+  {
+    path: getPath(""),
+    component: AppHomepage,
+    name: getName("home"),
+  },
+  {
+    path: getPath("/contact"),
+    component: ContactUs,
+    name: getName("contact"),
+  },
+  {
+    path: getPath("/about"),
+    component: AboutUs,
+    name: getName("about"),
+  },
+  {
+    path: getPath("/activity/:id"),
+    component: ActivityDetail,
+    name: getName("activity"),
+  },
+  {
+    path: getPath("/how-to"),
+    component: HowTo,
+    name: getName("howTo"),
+  },
+  {
+    path: getPath("/:pathMatch(.*)*"),
+    component: NotFound,
+    name: getName("error404"),
+  },
+  { path: "/:pathMatch(.*)*", redirect: `/${DEFAULT_LOCALE}/` },
 ];
 
 const router = createRouter({
