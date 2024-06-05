@@ -1,31 +1,28 @@
 <template>
-  <Dialog v-model:visible="visible" class="w-9">
+  <Dialog v-model:visible="visible" class="w-9" modal>
     <ProgressBar v-if="loading" mode="indeterminate"></ProgressBar>
     <ShowDataset
       v-else-if="!editMode"
       :dataset="dataset"
       @edit="allowEditDataset"
+      @refresh="refreshDataset"
     />
     <EditDataset
       v-else
       :dataset="dataset"
       :password="password"
-      @delete="
-        () => {
-          visible = false;
-        }
-      "
+      :showDelete="showDelete"
+      @delete="deleteDataset"
       @update="updateDataset"
       @refresh="refreshDataset"
     ></EditDataset>
-    <!--TODO: DELETE DATASET FUNCTIONALITY -->
   </Dialog>
 </template>
 
 <script>
 import EditDataset from "@/components/EditDataset.vue";
 import ShowDataset from "@/components/ShowDataset.vue";
-import { editDataset, getDatasetById } from "@/api";
+import { editDataset, getDatasetById, removeDataset } from "@/api";
 
 export default {
   name: "DatasetModal",
@@ -47,6 +44,10 @@ export default {
     datasetId: {
       datasetId: String,
       required: true,
+    },
+    showDelete: {
+      type: Boolean,
+      default: false,
     },
   },
   methods: {
@@ -81,6 +82,13 @@ export default {
       await this.refreshDataset();
       this.loading = false;
     },
+    async deleteDataset() {
+      this.loading = true;
+      await removeDataset(this.dataset.id, this.password);
+      this.$emit("deleted");
+      this.loading = false;
+      this.hide();
+    },
   },
   computed: {
     datasetName() {
@@ -94,13 +102,16 @@ export default {
     },
   },
   watch: {
-    datasetId() {
-      if (!this.datasetId) {
-        return;
-      }
-      this.editMode = false;
-      this.password = "";
-      this.getDataset(this.datasetId);
+    datasetId: {
+      handler: function () {
+        this.editMode = false;
+        this.password = "";
+        if (!this.datasetId) {
+          return;
+        }
+        this.getDataset(this.datasetId);
+      },
+      immediate: true,
     },
   },
 };

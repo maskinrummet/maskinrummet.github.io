@@ -114,6 +114,8 @@ const messages = {
     startActivityWOSentence:
       "Start activity without adding a sentence to the dataset",
     noDatasetSelected: "No dataset selected",
+    datasetSelectionExplanation:
+      "In this activity we will use a dataset to generate and summarise text. You can create your own dataset, create a dataset which others can contribute to, or use one of the available datasets.",
     inputTexts: "Input texts",
     deleteDataset: "Delete Dataset",
     refreshDataset: "Refresh Dataset",
@@ -394,6 +396,8 @@ const messages = {
     startActivityWOSentence:
       "Start aktivitet uden at tilføje en sætning til datasættet",
     noDatasetSelected: "Intet datasæt valgt",
+    datasetSelectionExplanation:
+      "I denne aktivitet vil vi bruge et datasæt til at generere og opsummere tekst. Du kan oprette dit eget datasæt, oprette et datasæt, som andre kan bidrage til, eller bruge et af de tilgængelige datasæt.",
     inputTexts: "Input tekster",
     deleteDataset: "Slet Datasæt",
     refreshDataset: "Opdater Datasæt",

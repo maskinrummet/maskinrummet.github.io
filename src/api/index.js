@@ -31,3 +31,7 @@ export function editDataset(dataset, password) {
     password: password,
   });
 }
+
+export function removeDataset(id, password) {
+  return axios.post(API_URL + "remove", { id, password });
+}

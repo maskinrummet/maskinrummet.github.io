@@ -69,6 +69,7 @@
         :label="$t('deleteDataset')"
         severity="danger"
         @click="$emit('delete')"
+        v-if="showDelete"
       ></Button>
       <Button :label="$t('refreshDataset')" @click="$emit('refresh')"></Button>
       <Button
@@ -91,6 +92,10 @@ export default {
     password: {
       type: String,
       required: true,
+    },
+    showDelete: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {

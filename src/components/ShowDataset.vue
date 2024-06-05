@@ -15,13 +15,20 @@
       >
     </DataTable>
     <form @submit="verify">
-      <InputGroup>
-        <FloatLabel>
-          <Password v-model="password" :feedback="false" toggleMask />
-          <label for="password-input">{{ $t("datasetPassword") }}</label>
-        </FloatLabel>
-        <Button :label="$t('editDataset')" type="submit" />
-      </InputGroup>
+      <div class="flex justify-content-between">
+        <InputGroup>
+          <FloatLabel>
+            <Password v-model="password" :feedback="false" toggleMask />
+            <label for="password-input">{{ $t("datasetPassword") }}</label>
+          </FloatLabel>
+          <Button :label="$t('editDataset')" type="submit" severity="success" />
+        </InputGroup>
+        <Button
+          :label="$t('refreshDataset')"
+          @click="$emit('refresh')"
+          class="ml-2"
+        ></Button>
+      </div>
       <transition-group name="p-message" tag="div">
         <Message severity="error" v-if="error" :closable="false">
           <template #container

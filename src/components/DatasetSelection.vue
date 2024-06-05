@@ -7,11 +7,7 @@
       >
       <div v-else>
         <p>
-          {{
-            $t(
-              "In this activity we will use a dataset to generate and summarise text. You can create your own dataset, create a dataset which others can contribute to, or use one of the available datasets."
-            )
-          }}
+          {{ $t("datasetSelectionExplanation") }}
         </p>
         <div v-if="loading">{{ $t("loading") }}</div>
         <div v-else>
@@ -25,14 +21,16 @@
                 filter
               />
               <Button
-                :disabled="!selectedDataset"
+                :disabled="!selectedDatasetId"
                 @click="showDatasetModal"
                 severity="info"
                 >{{ $t("viewDataset") }}</Button
               ></InputGroup
             >
             <DatasetModal
-              :datasetId="selectedDataset.id"
+              :datasetId="selectedDatasetId"
+              :showDelete="true"
+              @deleted="datasetDeleted"
               ref="datasetModalSD"
             ></DatasetModal>
             <div v-if="!createdDataset">
@@ -90,16 +88,12 @@
 </template>
 
 <script>
-import {
-  getDatasetNames,
-  getDatasetById,
-  postDataset,
-  addSentenceToDataset,
-} from "@/api";
+import { getDatasetNames, postDataset, addSentenceToDataset } from "@/api";
 import InputGroup from "primevue/inputgroup";
 import CreateDataset from "@/components/CreateDataset.vue";
 import DatasetModal from "@/components/DatasetModal.vue";
 import SingleSentenceInput from "@/components/SingleSentenceInput.vue";
+import { nextTick } from "vue";
 
 export default {
   name: "DatasetSelection",
@@ -111,7 +105,6 @@ export default {
   },
   data() {
     return {
-      value: "",
       error: "",
       datasets: "",
       selectedDataset: { id: null },
@@ -120,29 +113,20 @@ export default {
       createVisible: false,
       createdDataset: null,
       loading: false,
-      editMode: false,
-      password: "",
     };
   },
   methods: {
-    async getDataset(dataset) {
-      try {
-        const response = await getDatasetById(dataset.id);
-        this.datasetPreview = response.data;
-      } catch (error) {
-        this.getDatasetError = error;
-      }
-    },
     async submitDataset(dataset) {
       this.loading = true;
       let resp = await postDataset(dataset);
       await this.getDatasets();
+      this.createVisible = false;
       this.createdDataset = resp.data.id;
       this.selectedDataset = this.datasetsFormatted.find(
         (d) => d.id === this.createdDataset
       );
-      await this.getDataset(this.selectedDataset);
       this.loading = false;
+      await nextTick();
       this.showDatasetModal();
     },
     showDatasetModal() {
@@ -173,6 +157,14 @@ export default {
       addSentenceToDataset(this.selectedDataset.id, sentence);
       this.runLesson(sentence);
     },
+    datasetDeleted() {
+      this.createdDataset = null;
+      this.selectedDataset = { id: null };
+      this.datasetPreview = null;
+      this.datasets = null;
+      this.createdDataset = null;
+      this.getDatasets();
+    },
   },
   computed: {
     datasetsFormatted() {
@@ -183,6 +175,12 @@ export default {
         formattedName: this.formatName(dataset.name, dataset.is_open),
         ...dataset,
       }));
+    },
+    selectedDatasetId() {
+      if (!this.selectedDataset) {
+        return null;
+      }
+      return this.selectedDataset.id;
     },
   },
   mounted() {
