@@ -62,7 +62,7 @@ export default {
   computed: {
     items() {
       return [
-        { label: this.$t("howTo"), route: "/how-to" },
+        { label: this.$t("howToUseTheSite"), route: "/how-to" },
         { label: this.$t("about"), route: "/about" },
         { label: this.$t("contact"), route: "/contact" },
         {

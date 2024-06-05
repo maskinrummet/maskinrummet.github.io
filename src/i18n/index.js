@@ -19,6 +19,7 @@ const messages = {
       "With thanks to Magnus, Karl-Emil, Susanne, Line, and especially the teachers and research participants who have worked together with us to create this site",
     language: "Language",
     currLanguage: "English",
+    activity: "Activity",
     error404: "Page not found",
     availableActivities: "Available activities",
     suggestActivity: "Suggest an activity",
@@ -44,7 +45,8 @@ const messages = {
     whatYouNeed: "What you need for this activity",
     learningGoals: "Learning goals",
     intro: "Introduction",
-    howTo: "How to use the site",
+    howTo: "How to",
+    howToUseTheSite: "How to use the site",
     videoOnHowTo:
       "Watch the video above to get an introduction to our site and how to use it personally or as part of a classroom activity",
     longSentence: "That sentence is a bit too long, try a shorter one!",
@@ -306,6 +308,7 @@ const messages = {
       "Tak til Magnus, Karl-Emil, Susanne, Line, og især lærerne og forskningsdeltagerne, som har arbejdet sammen med os for at skabe denne side",
     language: "Sprog",
     currLanguage: "Dansk",
+    activity: "Aktivitet",
     error404: "Side ikke fundet",
     availableActivities: "Tilgængelige aktiviteter",
     suggestActivity: "Foreslå en aktivitet",
@@ -331,7 +334,8 @@ const messages = {
     whatYouNeed: "Hvad du har brug for til denne aktivitet",
     learningGoals: "Læringsmål",
     intro: "Introduktion",
-    howTo: "Sådan bruger du siden",
+    howTo: "Hvordan",
+    howToUseTheSite: "Sådan bruger du siden",
     videoOnHowTo:
       "Se videoen ovenfor for at få en introduktion til vores side og hvordan du bruger den personligt eller som en del af en klasseaktivitet",
     longSentence: "Den sætning er lidt for lang, prøv en kortere!",
@@ -584,8 +588,12 @@ export const langs = [
   { name: "Dansk", value: "da" },
 ];
 
+export const DEFAULT_LOCALE = "en";
+
+export const LOCALES = langs.map((lang) => lang.value);
+
 const i18n = createI18n({
-  locale: "en",
+  locale: DEFAULT_LOCALE,
   fallbackLocale: "en",
   messages,
 });
