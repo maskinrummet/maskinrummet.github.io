@@ -86,6 +86,8 @@ export const otherColour = "#bbb";
 
 export const pieChartColors = categoricalColours.concat(otherColour);
 
+export const MAX_SENTENCE_LENGTH = 50;
+
 export function cleanString(s) {
   return (
     s.replace(/[^\p{L}\p{N}\s]/gu, "").toLowerCase() +
@@ -244,7 +246,10 @@ export function greedyChoice(probabilities) {
   let nextWord = Object.entries(probabilities[prevN.join(" ")]).reduce((a, b) =>
     a[1] > b[1] ? a : b
   )[0];
-  while (nextWord !== i18n.global.t("endToken") && sentence.length < 40) {
+  while (
+    nextWord !== i18n.global.t("endToken") &&
+    sentence.length < MAX_SENTENCE_LENGTH
+  ) {
     sentence.push({
       word: nextWord,
       probs: Object.entries(probabilities[prevN.join(" ")]).sort(
@@ -295,7 +300,10 @@ export function weightedRandomChoice(probabilities) {
   let nextWord = getRandomKeyProportionateToValue(
     probabilities[prevN.join(" ")]
   );
-  while (nextWord !== i18n.global.t("endToken") && sentence.length < 40) {
+  while (
+    nextWord !== i18n.global.t("endToken") &&
+    sentence.length < MAX_SENTENCE_LENGTH
+  ) {
     sentence.push({
       word: nextWord,
       probs: Object.entries(probabilities[prevN.join(" ")]).sort(
@@ -338,7 +346,10 @@ export function randomChoice(probabilities) {
   }
   let sentence = [];
   let nextWord = getRandomKey(probabilities[prevN.join(" ")]);
-  while (nextWord !== i18n.global.t("endToken") && sentence.length < 40) {
+  while (
+    nextWord !== i18n.global.t("endToken") &&
+    sentence.length < MAX_SENTENCE_LENGTH
+  ) {
     sentence.push({
       word: nextWord,
       probs: Object.entries(probabilities[prevN.join(" ")]).sort(

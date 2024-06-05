@@ -61,6 +61,11 @@
         <div class="flex justify-content-center m-2">
           <Button severity="contrast">
             {{ $t("position") }}: {{ word.pos }}
+            {{
+              word.pos === MAX_SENTENCE_LENGTH
+                ? `(${$t("maxSentenceLength")})`
+                : ""
+            }}
           </Button>
         </div>
         <div v-if="word.prevN" class="flex justify-content-center">
@@ -107,6 +112,7 @@
 </template>
 
 <script>
+import { MAX_SENTENCE_LENGTH } from "@/views/activities/utils";
 import {
   Chart as ChartJS,
   ArcElement,
@@ -139,6 +145,7 @@ export default {
   },
   data() {
     return {
+      MAX_SENTENCE_LENGTH,
       generatedSentence: [],
       chartOptions: {
         responsive: true,

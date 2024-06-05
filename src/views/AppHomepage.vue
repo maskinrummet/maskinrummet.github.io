@@ -1,5 +1,7 @@
 <template>
-  <h1>{{ $t("availableActivities") }}</h1>
+  <h1>{{ $t("welcome") }}</h1>
+  <div v-html="$t('welcomeText')" class="mb-5"></div>
+  <h2>{{ $t("availableActivities") }}</h2>
   <DataTable
     :value="activities"
     v-model:filters="filters"
@@ -12,7 +14,7 @@
         <router-link :to="{ path: 'activity', query: { id: data.id } }">
           <Button
             :label="$t(`activities.${data.id}.title`)"
-            class="p-button-link"
+            class="p-button-link w-full text-left"
           />
         </router-link>
       </template>

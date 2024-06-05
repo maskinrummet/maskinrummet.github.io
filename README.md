@@ -51,6 +51,25 @@ If you have time to help and are comfortable programming in Vue, follow the step
 4. **Finally, in `@views/activities`, create `YourPascalCaseId.vue`**  
    Templates for this are provided in `ActivityTemplateDigital.vue` and `ActivityTemplatePractical.vue` It receives `activityID: String` as a prop for use in i18n, and should emit `startActivity` to hide the intro and `completedActivity` to show the outro. Please consider cross-device compatibility!
 
+### Adding a language
+
+To add a language, go to `@i18n/index.js`. Firstly add your language name and code (value) to the `langs` const:
+
+```javascript
+export const langs = [...{ name: "Volapük", value: "vo" }];
+```
+
+Then just add your language code to the messages object, along with each of the translations:
+
+```javascript
+   export const messages = {
+      vo: {
+         maskinrummet: "Büdazänod",
+         ...
+      }
+   }
+```
+
 ### Thanks!
 
 Thanks for taking a look at our hyggelig project!  
