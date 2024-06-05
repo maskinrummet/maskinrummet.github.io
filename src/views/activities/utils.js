@@ -16,7 +16,6 @@ function getTranslationStemmer(lang) {
 }
 
 function getTranslationStopwords(lang) {
-  console.log(i18n.global.t(lang) + " " + i18n.global.t("stopwords"));
   return i18n.global.t(lang) + " " + i18n.global.t("stopwords");
 }
 

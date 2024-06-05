@@ -5,7 +5,8 @@
   <ProgressBar
     v-if="loading && dataset && !complete && currStep === 0"
     mode="indeterminate"
-    class="w-8 absolute z-5 top-100 mx-auto left-0 right-0"
+    class="w-6 absolute z-5 mx-auto left-0 right-0"
+    :style="{ top: topForProgressBar + 'px' }"
   >
   </ProgressBar>
   <DatasetModal :datasetId="datasetId" ref="datasetModal"></DatasetModal>
@@ -16,7 +17,7 @@
           {{ $t(`activities.${activityID}.custom.wordCloudBelow`) }}
         </p>
         <div class="flex justify-content-center">
-          <div class="w-9 p-3 h-15rem border-2 border-round-md">
+          <div class="w-9 p-3 h-15rem border-2 border-round-md" ref="wordCloud">
             <VueWordCloud
               :spacing="1 / 2"
               :words="bagOfWords"
@@ -161,6 +162,7 @@ export default {
       langStemming: false,
       langStopwords: false,
       loading: false,
+      resized: false,
     };
   },
   computed: {
@@ -178,6 +180,19 @@ export default {
       if (!this.dataset.json_string) return [];
       return JSON.parse(this.dataset.json_string);
     },
+    topForProgressBar() {
+      this.resized;
+      if (!this.$refs.wordCloud) return -99999;
+      return (
+        this.$refs.wordCloud.offsetTop + this.$refs.wordCloud.clientHeight / 2
+      );
+    },
+  },
+  mounted() {
+    window.addEventListener("resize", () => (this.resized = !this.resized));
+  },
+  unmounted() {
+    window.removeEventListener("resize", () => (this.resized = !this.resized));
   },
   methods: {
     generateMostCommonWordByPosition,
@@ -211,7 +226,7 @@ export default {
         this.loading = false;
         return;
       }
-      this.loading = progress;
+      this.loading = true;
     },
     completed() {
       this.complete = true;
