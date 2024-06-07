@@ -93,7 +93,6 @@ import InputGroup from "primevue/inputgroup";
 import CreateDataset from "@/components/CreateDataset.vue";
 import DatasetModal from "@/components/DatasetModal.vue";
 import SingleSentenceInput from "@/components/SingleSentenceInput.vue";
-import { nextTick } from "vue";
 
 export default {
   name: "DatasetSelection",
@@ -126,7 +125,7 @@ export default {
         (d) => d.id === this.createdDataset
       );
       this.loading = false;
-      await nextTick();
+      await this.$nextTick();
       this.showDatasetModal();
     },
     showDatasetModal() {

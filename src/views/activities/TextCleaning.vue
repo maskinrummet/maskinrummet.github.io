@@ -1,4 +1,5 @@
 <template>
+  <span ref="scrollReset"></span>
   <div v-if="!sentence">
     <Card>
       <template #title>{{ this.$t("sentenceInputTitle") }}</template>
@@ -262,8 +263,10 @@ export default {
           : sentence + ".";
       this.resetSentenceCoded(() => {});
       this.$emit("startActivity");
+      this.resetScroll();
     },
     resetSentenceCoded(callback) {
+      this.resetScroll();
       this.sentenceCoded = Array.from(this.sentence).map((c, i) => {
         return {
           char: c,
@@ -337,8 +340,12 @@ export default {
       });
     },
     finishLesson() {
+      this.resetScroll();
       this.complete = true;
       this.$emit("completedActivity");
+    },
+    resetScroll() {
+      this.$refs.scrollReset.scrollIntoView({ behavior: "smooth" });
     },
   },
 };

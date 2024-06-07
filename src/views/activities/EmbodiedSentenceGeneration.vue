@@ -1,4 +1,5 @@
 <template>
+  <span ref="scrollReset"></span>
   <div v-if="!dataset">
     <DatasetSelection @datasetReady="getDataset" />
   </div>
@@ -39,7 +40,12 @@
         </div>
         <StepperButtons
           class="pt-4"
-          :nextCallback="nextCallback"
+          :nextCallback="
+            () => {
+              resetScroll();
+              nextCallback();
+            }
+          "
           :centerButtonText="$t('viewDataset')"
           :centerButtonCallback="showDatasetModal"
         />
@@ -88,7 +94,12 @@
         </div>
         <StepperButtons
           class="pt-4"
-          :prevCallback="prevCallback"
+          :prevCallback="
+            () => {
+              resetScroll();
+              prevCallback();
+            }
+          "
           :finishCallback="completed"
         />
       </template>
@@ -172,6 +183,7 @@ export default {
       this.sentence = userSentence;
       this.dataset = (await getDatasetById(datasetId)).data;
       this.$emit("startActivity");
+      this.resetScroll();
     },
     getRandomWords() {
       this.randomWords = Array.from({ length: 5 }, () =>
@@ -199,11 +211,15 @@ export default {
       this.loading = true;
     },
     completed() {
+      this.resetScroll();
       this.complete = true;
       this.$emit("completedActivity");
     },
     showDatasetModal() {
       this.$refs.datasetModal.show();
+    },
+    resetScroll() {
+      this.$refs.scrollReset.scrollIntoView({ behavior: "smooth" });
     },
   },
 };

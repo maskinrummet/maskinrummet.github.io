@@ -1,4 +1,5 @@
 <template>
+  <span ref="scrollReset"></span>
   <div v-if="!started" class="flex justify-content-center">
     <Button @click="start">{{ $t("startActivity") }}</Button>
   </div>
@@ -20,7 +21,15 @@
             {{ $t(`activities.${activityID}.custom.whatIsAWord`) }}
           </p>
         </div>
-        <StepperButtons class="pt-4" :nextCallback="nextCallback" />
+        <StepperButtons
+          class="pt-4"
+          :nextCallback="
+            () => {
+              resetScroll();
+              nextCallback();
+            }
+          "
+        />
       </template>
     </StepperPanel>
     <StepperPanel :header="$t('step2')">
@@ -30,7 +39,12 @@
         </p>
         <StepperButtons
           class="pt-4"
-          :prevCallback="prevCallback"
+          :prevCallback="
+            () => {
+              resetScroll();
+              prevCallback();
+            }
+          "
           :finishCallback="completed"
         />
       </template>
@@ -57,10 +71,15 @@ export default {
     start() {
       this.started = true;
       this.$emit("startActivity");
+      this.resetScroll();
     },
     completed() {
+      this.resetScroll();
       this.complete = true;
       this.$emit("completedActivity");
+    },
+    resetScroll() {
+      this.$refs.scrollReset.scrollIntoView({ behavior: "smooth" });
     },
   },
 };

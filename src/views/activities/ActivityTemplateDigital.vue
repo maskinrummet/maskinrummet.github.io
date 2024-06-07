@@ -1,7 +1,9 @@
 <template>
+  <span ref="scrollReset"></span>
   <div v-if="!dataset">
     <DatasetSelection @datasetReady="getDataset" />
   </div>
+  <DatasetModal :datasetId="datasetId" ref="datasetModal"></DatasetModal>
   <Stepper v-if="dataset && !complete">
     <StepperPanel :header="$t('step1')">
       <template #content="{ nextCallback }">
@@ -19,10 +21,14 @@
         </div>
         <StepperButtons
           class="pt-4"
-          :nextCallback="nextCallback"
-          :centerButtonText="$t('refreshDataset')"
-          :centerButtonCallback="refreshDataset"
-          :centerButtonDisabled="refreshing"
+          :nextCallback="
+            () => {
+              resetScroll();
+              nextCallback();
+            }
+          "
+          :centerButtonText="$t('viewDataset')"
+          :centerButtonCallback="showDatasetModal"
         />
       </template>
     </StepperPanel>
@@ -33,7 +39,12 @@
         </p>
         <StepperButtons
           class="pt-4"
-          :prevCallback="prevCallback"
+          :prevCallback="
+            () => {
+              resetScroll();
+              prevCallback();
+            }
+          "
           :finishCallback="completed"
         />
       </template>
@@ -42,12 +53,14 @@
 </template>
 <script>
 import DatasetSelection from "@/components/DatasetSelection.vue";
+import DatasetModal from "@/components/DatasetModal.vue";
 import { getDatasetById } from "@/api";
 
 export default {
   name: "TextCleaning",
   components: {
     DatasetSelection,
+    DatasetModal,
   },
   props: {
     activityID: {
@@ -61,7 +74,6 @@ export default {
       datasetId: null,
       sentence: "",
       complete: false,
-      refreshing: false,
     };
   },
   computed: {
@@ -76,15 +88,18 @@ export default {
       this.sentence = userSentence;
       this.dataset = (await getDatasetById(datasetId)).data;
       this.$emit("startActivity");
-    },
-    async refreshDataset() {
-      this.refreshing = true;
-      this.dataset = (await getDatasetById(this.datasetId)).data;
-      this.refreshing = false;
+      this.resetScroll();
     },
     completed() {
+      this.resetScroll();
       this.complete = true;
       this.$emit("completedActivity");
+    },
+    showDatasetModal() {
+      this.$refs.datasetModal.show();
+    },
+    resetScroll() {
+      this.$refs.scrollReset.scrollIntoView({ behavior: "smooth" });
     },
   },
 };

@@ -20,9 +20,4 @@ Object.entries(globalComponents).forEach(([name, component]) => {
   app.component(name, component);
 });
 
-router.beforeEach((to, from, next) => {
-  document.title = to.name();
-  next();
-});
-
 app.mount("#app");

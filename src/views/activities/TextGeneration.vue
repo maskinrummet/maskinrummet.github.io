@@ -1,4 +1,5 @@
 <template>
+  <span ref="scrollReset"></span>
   <div v-if="!dataset">
     <DatasetSelection @datasetReady="getDataset" />
   </div>
@@ -53,7 +54,12 @@
         </div>
         <StepperButtons
           class="pt-4"
-          :nextCallback="nextCallback"
+          :nextCallback="
+            () => {
+              resetScroll();
+              nextCallback();
+            }
+          "
           :centerButtonText="$t('viewDataset')"
           :centerButtonCallback="showDatasetModal"
         />
@@ -72,13 +78,23 @@
             :label="$t('back')"
             severity="secondary"
             icon="pi pi-arrow-left"
-            @click="prevCallback"
+            @click="
+              () => {
+                resetScroll();
+                prevCallback();
+              }
+            "
           />
           <Button
             :label="$t('next')"
             icon="pi pi-arrow-right"
             iconPos="right"
-            @click="nextCallback"
+            @click="
+              () => {
+                resetScroll();
+                nextCallback();
+              }
+            "
           />
         </div>
       </template>
@@ -109,7 +125,12 @@
         />
         <StepperButtons
           class="pt-4"
-          :prevCallback="prevCallback"
+          :prevCallback="
+            () => {
+              resetScroll();
+              prevCallback();
+            }
+          "
           :finishCallback="completed"
         />
       </template>
@@ -149,7 +170,6 @@ export default {
       datasetId: null,
       sentence: "",
       complete: false,
-      refreshing: false,
       currStep: 0,
       maxColor: [163, 11, 11],
       minColor: [24, 86, 143],
@@ -201,11 +221,7 @@ export default {
       this.sentence = userSentence;
       this.dataset = (await getDatasetById(datasetId)).data;
       this.$emit("startActivity");
-    },
-    async refreshDataset() {
-      this.refreshing = true;
-      this.dataset = (await getDatasetById(this.datasetId)).data;
-      this.refreshing = false;
+      this.resetScroll();
     },
     calcColor(weight) {
       let percentage = weight / this.maxOccurences;
@@ -228,11 +244,15 @@ export default {
       this.loading = true;
     },
     completed() {
+      this.resetScroll();
       this.complete = true;
       this.$emit("completedActivity");
     },
     showDatasetModal() {
       this.$refs.datasetModal.show();
+    },
+    resetScroll() {
+      this.$refs.scrollReset.scrollIntoView({ behavior: "smooth" });
     },
   },
 };

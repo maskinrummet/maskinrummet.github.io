@@ -43,6 +43,7 @@
           </div>
         </template>
       </Card>
+      <span ref="scrollReset"></span>
       <div v-if="!inProgress">
         <Card>
           <template #title>{{ $t("whatYouNeed") }}</template>
