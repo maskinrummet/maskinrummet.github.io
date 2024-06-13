@@ -52,6 +52,7 @@
           "
           :centerButtonText="$t('viewDataset')"
           :centerButtonCallback="showDatasetModal"
+          :nextDisabled="!randomWords"
         />
       </template>
     </StepperPanel>

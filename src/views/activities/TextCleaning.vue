@@ -93,6 +93,9 @@
             ><template #default
           /></Button>
         </div>
+        <p v-if="!sentenceCoded.some((s) => s.char === ' ' && !s.hidden)">
+          {{ $t(`niceWork`) }}
+        </p>
         <StepperButtons
           class="pt-4"
           :prevCallback="() => resetSentenceCoded(prevCallback)"
@@ -153,6 +156,15 @@
             ><template #default
           /></Button>
         </div>
+        <p
+          v-if="
+            !sentenceCoded.some(
+              (s) => !s.showLower && s.char !== s.lowercaseChar
+            )
+          "
+        >
+          {{ $t(`niceWork`) }}
+        </p>
         <StepperButtons
           class="pt-4"
           :prevCallback="() => resetSentenceCoded(prevCallback)"
