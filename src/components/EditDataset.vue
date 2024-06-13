@@ -20,11 +20,11 @@
     <DataTable :value="displaySentences" size="small" paginator :rows="numRows">
       <Column field="text" :header="$t('inputTexts')"></Column>
       <Column :header="$t('action')">
-        <template #body="{ index }">
+        <template #body="{ data }">
           <Button
             severity="danger"
             :label="$t('delete')"
-            @click="sentences.splice(index, 1)"
+            @click="sentences.splice(data.index, 1)"
           ></Button>
         </template>
       </Column>
@@ -112,7 +112,8 @@ export default {
       return !this.newSentence || this.newSentence.length > 150;
     },
     displaySentences() {
-      return this.sentences.map((text) => ({
+      return this.sentences.map((text, index) => ({
+        index: index,
         text: this.truncateText(text),
       }));
     },
@@ -125,11 +126,7 @@ export default {
     },
     addNewSentence() {
       if (this.newSentence) {
-        if (this.sentences.length > this.numRows - 1) {
-          this.sentences.splice(this.numRows - 1, 0, this.newSentence);
-        } else {
-          this.sentences.push(this.newSentence);
-        }
+        this.sentences.push(this.newSentence);
         this.newSentence = "";
       }
     },
