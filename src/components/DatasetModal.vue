@@ -79,8 +79,18 @@ export default {
     },
     async updateDataset(dataset) {
       this.loading = true;
+      let requiresUpdate = false;
+      if (
+        this.dataset.is_open != dataset.is_open ||
+        this.dataset.name != dataset.name
+      ) {
+        requiresUpdate = true;
+      }
       await editDataset(dataset, this.password);
       await this.refreshDataset();
+      if (requiresUpdate) {
+        this.$emit("updated", dataset);
+      }
       this.loading = false;
     },
     async deleteDataset() {

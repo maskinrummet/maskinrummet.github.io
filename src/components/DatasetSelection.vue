@@ -31,6 +31,7 @@
               :datasetId="selectedDatasetId"
               :showDelete="true"
               @deleted="datasetDeleted"
+              @updated="datasetUpdated"
               ref="datasetModalSD"
             ></DatasetModal>
             <div v-if="!createdDataset">
@@ -163,6 +164,14 @@ export default {
       this.datasets = null;
       this.createdDataset = null;
       this.getDatasets();
+    },
+    datasetUpdated(updatedDataset) {
+      this.datasets = this.datasets.map((dataset) =>
+        dataset.id === updatedDataset.id ? updatedDataset : dataset
+      );
+      this.selectedDataset = this.datasetsFormatted.find(
+        (d) => d.id === updatedDataset.id
+      );
     },
   },
   computed: {
