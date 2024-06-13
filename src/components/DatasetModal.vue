@@ -74,6 +74,7 @@ export default {
     async refreshDataset() {
       this.loading = true;
       await this.getDataset(this.dataset.id);
+      this.$emit("refresh", this.dataset);
       this.loading = false;
     },
     async updateDataset(dataset) {

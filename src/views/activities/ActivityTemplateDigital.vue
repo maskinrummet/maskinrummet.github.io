@@ -3,7 +3,11 @@
   <div v-if="!dataset">
     <DatasetSelection @datasetReady="getDataset" />
   </div>
-  <DatasetModal :datasetId="datasetId" ref="datasetModal"></DatasetModal>
+  <DatasetModal
+    @refresh="refreshDataset"
+    :datasetId="datasetId"
+    ref="datasetModal"
+  ></DatasetModal>
   <Stepper v-if="dataset && !complete">
     <StepperPanel :header="$t('step1')">
       <template #content="{ nextCallback }">
@@ -89,6 +93,9 @@ export default {
       this.dataset = (await getDatasetById(datasetId)).data;
       this.$emit("startActivity");
       this.resetScroll();
+    },
+    refreshDataset(dataset) {
+      this.dataset = dataset;
     },
     completed() {
       this.resetScroll();

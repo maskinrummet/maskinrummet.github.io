@@ -10,7 +10,11 @@
     :style="{ top: topForProgressBar + 'px' }"
   >
   </ProgressBar>
-  <DatasetModal :datasetId="datasetId" ref="datasetModal"></DatasetModal>
+  <DatasetModal
+    @refresh="refreshDataset"
+    :datasetId="datasetId"
+    ref="datasetModal"
+  ></DatasetModal>
   <Stepper v-if="dataset && !complete" v-model:active-step="currStep">
     <StepperPanel :header="$t('randomWords')">
       <template #content="{ nextCallback }">
@@ -184,6 +188,9 @@ export default {
       this.dataset = (await getDatasetById(datasetId)).data;
       this.$emit("startActivity");
       this.resetScroll();
+    },
+    refreshDataset(dataset) {
+      this.dataset = dataset;
     },
     getRandomWords() {
       this.randomWords = Array.from({ length: 5 }, () =>

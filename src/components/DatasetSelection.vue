@@ -153,7 +153,7 @@ export default {
       });
     },
     async runLessonWithNewSentence(sentence) {
-      addSentenceToDataset(this.selectedDataset.id, sentence);
+      await addSentenceToDataset(this.selectedDataset.id, sentence);
       this.runLesson(sentence);
     },
     datasetDeleted() {
