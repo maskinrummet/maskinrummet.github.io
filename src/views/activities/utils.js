@@ -1,50 +1,39 @@
 import i18n from "@/i18n";
+import { stopwordDictDa, stopwordDictDe } from "./extraStopWords";
 
-const { StemmerDa, StopwordsDa } = require("@nlpjs/lang-da");
-const { StemmerEn, StopwordsEn } = require("@nlpjs/lang-en");
-const { StemmerFr, StopwordsFr } = require("@nlpjs/lang-fr");
-const { StemmerDe, StopwordsDe } = require("@nlpjs/lang-de");
-const { StemmerEs, StopwordsEs } = require("@nlpjs/lang-es");
-const { StemmerIt, StopwordsIt } = require("@nlpjs/lang-it");
-const { StemmerNl, StopwordsNl } = require("@nlpjs/lang-nl");
-const { StemmerPt, StopwordsPt } = require("@nlpjs/lang-pt");
-const { StemmerSv, StopwordsSv } = require("@nlpjs/lang-sv");
-const { StemmerNo, StopwordsNo } = require("@nlpjs/lang-no");
-
-function getTranslationStemmer(lang) {
-  return i18n.global.t(lang) + " " + i18n.global.t("stemming");
-}
-
-function getTranslationStopwords(lang) {
-  return i18n.global.t(lang) + " " + i18n.global.t("stopwords");
-}
-
-export const stemmingOptions = [
-  { label: i18n.global.t("doNoStemming"), value: false },
-  { label: getTranslationStemmer("english"), value: new StemmerEn() },
-  { label: getTranslationStemmer("danish"), value: new StemmerDa() },
-  { label: getTranslationStemmer("french"), value: new StemmerFr() },
-  { label: getTranslationStemmer("german"), value: new StemmerDe() },
-  { label: getTranslationStemmer("spanish"), value: new StemmerEs() },
-  { label: getTranslationStemmer("italian"), value: new StemmerIt() },
-  { label: getTranslationStemmer("dutch"), value: new StemmerNl() },
-  { label: getTranslationStemmer("portuguese"), value: new StemmerPt() },
-  { label: getTranslationStemmer("swedish"), value: new StemmerSv() },
-  { label: getTranslationStemmer("norwegian"), value: new StemmerNo() },
+const languages = [
+  { code: "En", label: "english", nlp: require("@nlpjs/lang-en") },
+  { code: "Da", label: "danish", nlp: require("@nlpjs/lang-da") },
+  { code: "Fr", label: "french", nlp: require("@nlpjs/lang-fr") },
+  { code: "De", label: "german", nlp: require("@nlpjs/lang-de") },
+  { code: "Es", label: "spanish", nlp: require("@nlpjs/lang-es") },
+  { code: "It", label: "italian", nlp: require("@nlpjs/lang-it") },
+  { code: "Nl", label: "dutch", nlp: require("@nlpjs/lang-nl") },
+  { code: "Pt", label: "portuguese", nlp: require("@nlpjs/lang-pt") },
+  { code: "Sv", label: "swedish", nlp: require("@nlpjs/lang-sv") },
+  { code: "No", label: "norwegian", nlp: require("@nlpjs/lang-no") },
 ];
 
+export const stemmingOptions = [
+  { i18nKey: "doNoStemming", value: false },
+  ...languages.map((lang) => ({
+    i18nKey: lang.label,
+    value: new lang.nlp["Stemmer" + lang.code](),
+  })),
+];
+
+function addStopwords(stopworder, code) {
+  if (code === "Da") stopworder.dictionary = stopwordDictDa;
+  if (code === "De") stopworder.dictionary = stopwordDictDe;
+  return stopworder;
+}
+
 export const stopwordsOptions = [
-  { label: i18n.global.t("doNoStopwords"), value: false },
-  { label: getTranslationStopwords("english"), value: new StopwordsEn() },
-  { label: getTranslationStopwords("danish"), value: new StopwordsDa() },
-  { label: getTranslationStopwords("french"), value: new StopwordsFr() },
-  { label: getTranslationStopwords("german"), value: new StopwordsDe() },
-  { label: getTranslationStopwords("spanish"), value: new StopwordsEs() },
-  { label: getTranslationStopwords("italian"), value: new StopwordsIt() },
-  { label: getTranslationStopwords("dutch"), value: new StopwordsNl() },
-  { label: getTranslationStopwords("portuguese"), value: new StopwordsPt() },
-  { label: getTranslationStopwords("swedish"), value: new StopwordsSv() },
-  { label: getTranslationStopwords("norwegian"), value: new StopwordsNo() },
+  { i18nKey: "doNoStopwords", value: false },
+  ...languages.map((lang) => ({
+    i18nKey: lang.label,
+    value: addStopwords(new lang.nlp["Stopwords" + lang.code](), lang.code),
+  })),
 ];
 
 export function getBagOfWords(texts, stopwords = false, stemmer = false) {
@@ -372,9 +361,9 @@ export function randomChoice(probabilities) {
 }
 
 export const selectionMethodOptions = [
-  { label: i18n.global.t("greedy"), value: greedyChoice },
-  { label: i18n.global.t("weightedRandom"), value: weightedRandomChoice },
-  { label: i18n.global.t("random"), value: randomChoice },
+  { i18nKey: "greedy", value: greedyChoice },
+  { i18nKey: "weightedRandom", value: weightedRandomChoice },
+  { i18nKey: "random", value: randomChoice },
 ];
 
 export function generateNgram(inputTexts, selectionMethod, N) {

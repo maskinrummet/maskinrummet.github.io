@@ -39,7 +39,7 @@
           <Dropdown
             v-model="langStemming"
             :options="stemmingOptions"
-            optionLabel="label"
+            :optionLabel="stemmingOptionLabel"
             optionValue="value"
             filter
           />
@@ -51,7 +51,7 @@
           <Dropdown
             v-model="langStopwords"
             :options="stopwordsOptions"
-            optionLabel="label"
+            :optionLabel="stopwordsOptionLabel"
             optionValue="value"
             filter
           />
@@ -113,7 +113,7 @@
             v-model="selectionMethod"
             :options="selectionMethodOptions"
             :placeholder="$t('selectMethod')"
-            optionLabel="label"
+            :optionLabel="({ i18nKey }) => $t(i18nKey)"
             optionValue="value"
           />
         </div>
@@ -144,6 +144,7 @@
 <script>
 import DatasetSelection from "@/components/DatasetSelection.vue";
 import { getDatasetById } from "@/api";
+import i18n from "@/i18n";
 import {
   getBagOfWords,
   generateMostCommonWordByPosition,
@@ -242,6 +243,14 @@ export default {
       });
 
       return `rgb(${color.join(",")})`;
+    },
+    stemmingOptionLabel({ i18nKey }) {
+      if (i18nKey === "doNoStemming") return i18n.global.t(i18nKey);
+      return i18n.global.t(i18nKey) + " " + i18n.global.t("stemming");
+    },
+    stopwordsOptionLabel({ i18nKey }) {
+      if (i18nKey === "doNoStopwords") return i18n.global.t(i18nKey);
+      return i18n.global.t(i18nKey) + " " + i18n.global.t("stopwords");
     },
     updateLoading(progress) {
       if (!progress) {

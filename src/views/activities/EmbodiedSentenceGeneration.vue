@@ -89,7 +89,7 @@
           <Dropdown
             v-model="langStopwords"
             :options="stopwordsOptions"
-            optionLabel="label"
+            :optionLabel="stopwordsOptionLabel"
             optionValue="value"
             filter
           />
@@ -114,6 +114,7 @@
 <script>
 import DatasetSelection from "@/components/DatasetSelection.vue";
 import { getDatasetById } from "@/api";
+import i18n from "@/i18n";
 import {
   getBagOfWords,
   generateMostCommonWordByPosition,
@@ -122,6 +123,8 @@ import {
   stopwordsOptions,
 } from "@/views/activities/utils";
 import DatasetModal from "@/components/DatasetModal.vue";
+
+console.log(stopwordsOptions);
 
 export default {
   name: "TextCleaning",
@@ -228,6 +231,10 @@ export default {
     },
     resetScroll() {
       this.$refs.scrollReset.scrollIntoView({ behavior: "smooth" });
+    },
+    stopwordsOptionLabel({ i18nKey }) {
+      if (i18nKey === "doNoStopwords") return i18n.global.t(i18nKey);
+      return i18n.global.t(i18nKey) + " " + i18n.global.t("stopwords");
     },
   },
 };
