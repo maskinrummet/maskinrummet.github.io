@@ -26,7 +26,7 @@
         {{ word.word }}
       </Button>
       <!-- TODO: would be nice to have right left arrow keys to select, and would be nice to place overlay floating without w-full (currently a bug in PrimeVue) -->
-      <OverlayPanel :ref="'pie_' + word.pos" class="w-full">
+      <OverlayPanel :ref="'pie_' + word.pos" class="w-30rem max-w-full">
         <div class="flex justify-content-between">
           <Button
             icon="pi pi-angle-left"

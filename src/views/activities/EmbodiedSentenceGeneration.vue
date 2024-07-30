@@ -124,8 +124,6 @@ import {
 } from "@/views/activities/utils";
 import DatasetModal from "@/components/DatasetModal.vue";
 
-console.log(stopwordsOptions);
-
 export default {
   name: "TextCleaning",
   components: {
