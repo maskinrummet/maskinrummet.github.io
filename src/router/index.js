@@ -60,6 +60,8 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
+  const lang = to.params.lang;
+  i18n.global.locale = lang;
   document.title = to.name();
   next();
 });

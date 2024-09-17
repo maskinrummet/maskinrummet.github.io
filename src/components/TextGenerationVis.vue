@@ -68,7 +68,7 @@
             }}
           </Button>
         </div>
-        <div v-if="word.prevN" class="flex justify-content-center">
+        <div v-if="word.prevN" class="flex justify-content-center flex-wrap">
           <div v-for="x in word.prevN.split(' ')" :key="x">
             <Button severity="secondary">
               {{ x }}
@@ -97,7 +97,17 @@
   </div>
   <div class="flex align-items-center" v-if="finishedGenerating">
     <Button
-      class="my-3 m-auto"
+      severity="success"
+      v-if="originalSentence"
+      disabled
+      class="ml-auto"
+      >{{ $t("originalText") }}</Button
+    >
+    <Button severity="warning" v-else disabled class="ml-auto">{{
+      $t("unoriginalText")
+    }}</Button>
+    <Button
+      class="my-3 ml-2 mr-auto"
       @click="
         (e) => {
           showOverlay(0);
@@ -112,7 +122,7 @@
 </template>
 
 <script>
-import { MAX_SENTENCE_LENGTH } from "@/views/activities/utils";
+import { MAX_SENTENCE_LENGTH, cleanString } from "@/views/activities/utils";
 import {
   Chart as ChartJS,
   ArcElement,
@@ -131,6 +141,9 @@ export default {
   props: {
     generateFn: {
       type: Function,
+    },
+    sentences: {
+      type: Array,
     },
     techniqueName: {
       type: String,
@@ -180,6 +193,16 @@ export default {
         this.generatedSentence.length &&
         this.generatedSentence.every((word) => word.show)
       );
+    },
+    cleanedSentences() {
+      return this.sentences.map((s) => cleanString(s));
+    },
+    generatedSentenceComplete() {
+      return this.generatedSentence.map((word) => word.word).join(" ");
+    },
+    originalSentence() {
+      if (!this.finishedGenerating) return false;
+      return !this.cleanedSentences.includes(this.generatedSentenceComplete);
     },
   },
 };

@@ -37,10 +37,7 @@ export const stopwordsOptions = [
 ];
 
 export function getBagOfWords(texts, stopwords = false, stemmer = false) {
-  const fullText = texts
-    .join(" ")
-    .toLowerCase()
-    .replace(/[^\p{L}\p{N}\s]/gu, "");
+  const fullText = cleanString(texts.join(" "), false);
   const words = fullText.split(/\s+/);
 
   const filteredWords = stopwords ? stopwords.removeStopwords(words) : words;
@@ -77,11 +74,10 @@ export const pieChartColors = categoricalColours.concat(otherColour);
 
 export const MAX_SENTENCE_LENGTH = 50;
 
-export function cleanString(s) {
+export function cleanString(s, includeEndToken = true) {
   return (
     s.replace(/[^\p{L}\p{N}\s]/gu, "").toLowerCase() +
-    " " +
-    i18n.global.t("endToken")
+    (includeEndToken ? " " + i18n.global.t("endToken") : "")
   );
 }
 

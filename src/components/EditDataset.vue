@@ -17,8 +17,22 @@
         :aria-label="$t('openDataset')"
       />
     </div>
-    <DataTable :value="displaySentences" size="small" paginator :rows="numRows">
-      <Column field="text" :header="$t('inputTexts')"></Column>
+    <DataTable
+      :value="displaySentences"
+      size="small"
+      paginator
+      v-model:first="first"
+      :rows="numRows"
+      @page="
+        () => {
+          first = undefined;
+        }
+      "
+    >
+      <Column field="text" :header="$t('inputTexts')">
+        <template #body="slotProps">
+          <TruncatedText :text="slotProps.data.text"></TruncatedText> </template
+      ></Column>
       <Column :header="$t('action')">
         <template #body="{ data }">
           <Button
@@ -82,8 +96,13 @@
 </template>
 
 <script>
+import TruncatedText from "./TruncatedText.vue";
+
 export default {
   name: "EditDataset",
+  components: {
+    TruncatedText,
+  },
   props: {
     dataset: {
       type: Object,
@@ -100,6 +119,7 @@ export default {
   },
   data() {
     return {
+      first: 0,
       datasetCopy: { ...this.dataset },
       error: "",
       sentences: JSON.parse(this.dataset.json_string),
@@ -114,7 +134,7 @@ export default {
     displaySentences() {
       return this.sentences.map((text, index) => ({
         index: index,
-        text: this.truncateText(text),
+        text,
       }));
     },
   },
@@ -124,8 +144,9 @@ export default {
         ? text.slice(0, maxChars - 3) + "..."
         : text;
     },
-    addNewSentence() {
+    async addNewSentence() {
       if (this.newSentence) {
+        this.first = Math.floor(this.sentences.length / 10) * 10;
         this.sentences.push(this.newSentence);
         this.newSentence = "";
       }

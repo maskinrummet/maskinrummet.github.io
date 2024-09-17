@@ -91,5 +91,13 @@ export default {
       });
     },
   },
+  watch: {
+    "$i18n.locale": function (newVal) {
+      this.selectedLang = {
+        name: this.$t("currLanguage"),
+        value: newVal,
+      };
+    },
+  },
 };
 </script>

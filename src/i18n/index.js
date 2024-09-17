@@ -34,7 +34,7 @@ const messages = {
     textCleaningExplained:
       "Text cleaning is the process of preparing text for processing, which can involve removing punctuation, splitting into words or sentences, and general standardisation of the text.",
     digital: "Digital",
-    anySubject: "Any",
+    anySubject: "Flexible",
     mins: "mins",
     tokenisation: "Tokenisation",
     tokenisationExplained:
@@ -167,6 +167,8 @@ const messages = {
     sentences: "Sentences",
     wordFrequency: "Word frequency",
     bagOfWords: "Bag of Words",
+    originalText: "This is a new sentence not present in the dataset",
+    unoriginalText: "This is a sentence already in the dataset",
     datasetBiasExplained:
       "Dataset bias is when a dataset is skewed towards certain topics, words, or phrases, which can lead to unfair choices or incorrect outputs from an AI trained on the dataset.",
     activities: {
@@ -324,7 +326,7 @@ const messages = {
     textCleaningExplained:
       "Tekstrensning er processen med at forberede tekst til behandling, hvilket kan involvere fjernelse af tegnsætning, opdeling i ord eller sætninger og generel standardisering af teksten.",
     digital: "Digital",
-    anySubject: "Ethvert",
+    anySubject: "Fleksibel",
     mins: "minutter",
     tokenisation: "Tokenisering",
     tokenisationExplained:
@@ -458,6 +460,8 @@ const messages = {
     sentences: "Sætninger",
     wordFrequency: "Ordfrekvens",
     bagOfWords: "Bag of Words",
+    originalText: "Dette er en ny sætning, der ikke findes i datasættet",
+    unoriginalText: "Dette er en sætning, der allerede findes i datasættet",
     datasetBiasExplained:
       "Datasæt bias er, når et datasæt er partisk mod visse emner, ord eller sætninger, hvilket kan føre til uretfærdige valg eller forkerte resultater fra en AI trænet på datasættet.",
     activities: {

@@ -76,6 +76,7 @@
         </p>
         <TextGenerationVis
           :generateFn="() => generateMostCommonWordByPosition(sentences)"
+          :sentences="sentences"
         />
         <div class="flex pt-4 justify-content-between">
           <Button
@@ -126,6 +127,7 @@
             () => generateNgram(sentences, selectionMethod, windowSize)
           "
           :disableGenerate="!selectionMethod"
+          :sentences="sentences"
         />
         <StepperButtons
           class="pt-4"

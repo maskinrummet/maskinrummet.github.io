@@ -11,8 +11,10 @@
               }}</Tag>
             </div>
           </div>
-        </template></Column
-      >
+        </template>
+        <template #body="slotProps">
+          <TruncatedText :text="slotProps.data.text"></TruncatedText> </template
+      ></Column>
     </DataTable>
     <form @submit="verify">
       <div class="flex justify-content-between">
@@ -43,9 +45,11 @@
 
 <script>
 import { verifyPassword } from "@/api";
+import TruncatedText from "./TruncatedText.vue";
 
 export default {
   name: "ShowDataset",
+  components: { TruncatedText },
   props: {
     dataset: {
       type: Object,
@@ -65,11 +69,6 @@ export default {
     };
   },
   methods: {
-    truncateText(text, maxChars = 100) {
-      return text.length > maxChars
-        ? text.slice(0, maxChars - 3) + "..."
-        : text;
-    },
     verify(e) {
       e.preventDefault();
       verifyPassword(this.dataset.id, this.password)
@@ -88,7 +87,7 @@ export default {
         return null;
       }
       return JSON.parse(this.dataset.json_string).map((text) => ({
-        text: this.truncateText(text),
+        text,
       }));
     },
     open() {

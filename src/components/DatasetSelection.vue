@@ -9,7 +9,7 @@
         <p>
           {{ $t("datasetSelectionExplanation") }}
         </p>
-        <div v-if="loading">{{ $t("loading") }}</div>
+        <div v-if="loading || datasetsLoading">{{ $t("loading") }}</div>
         <div v-else>
           <div class="p-3 border-round-md surface-200">
             <InputGroup>
@@ -107,6 +107,7 @@ export default {
     return {
       error: "",
       datasets: "",
+      datasetsLoading: true,
       selectedDataset: { id: null },
       getDatasetError: "",
       datasetPreview: null,
@@ -141,11 +142,13 @@ export default {
     },
     async getDatasets() {
       try {
+        this.datasetsLoading = true;
         const response = await getDatasetNames();
         this.datasets = response.data;
       } catch (error) {
         this.error = error;
       }
+      this.datasetsLoading = false;
     },
     runLesson(sentence = null) {
       this.$emit("datasetReady", {
