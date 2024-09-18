@@ -133,7 +133,7 @@
 </template>
 <script>
 export default {
-  name: "TextCleaning",
+  name: "BagOfWordsPractical",
   props: {
     activityID: {
       type: String,

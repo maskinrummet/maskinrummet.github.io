@@ -125,7 +125,7 @@ import {
 import DatasetModal from "@/components/DatasetModal.vue";
 
 export default {
-  name: "TextCleaning",
+  name: "EmbodiedSentenceGeneration",
   components: {
     DatasetSelection,
     DatasetModal,

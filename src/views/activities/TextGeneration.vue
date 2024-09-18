@@ -159,7 +159,7 @@ import TextGenerationVis from "@/components/TextGenerationVis.vue";
 import DatasetModal from "@/components/DatasetModal.vue";
 
 export default {
-  name: "TextCleaning",
+  name: "TextGeneration",
   components: {
     DatasetSelection,
     TextGenerationVis,
