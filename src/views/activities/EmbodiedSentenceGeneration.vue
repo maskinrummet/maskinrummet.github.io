@@ -32,7 +32,7 @@
           <div v-if="randomWords">
             <Button
               v-for="word in randomWords"
-              :key="word"
+              :key="word + Math.random().toString(12)"
               class="m-2"
               severity="info"
               >{{ word }}</Button

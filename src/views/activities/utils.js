@@ -258,33 +258,37 @@ export function greedyChoice(probabilities) {
   return sentence;
 }
 
-export function getRandomKeyProportionateToValue(dictionary) {
-  let totalSum = 0;
-  for (let key in dictionary) {
-    totalSum += dictionary[key];
+export function getRandomKey(dictionary, useWeights) {
+  let opts = [];
+  if (useWeights) {
+    console.log(dictionary);
+    // add V number of Ks to opts
+    opts = Object.keys(dictionary).reduce(
+      (acc, k) => acc.concat(Array(dictionary[k]).fill(k)),
+      []
+    );
+    console.log(opts);
+  } else {
+    opts = Object.keys(dictionary);
   }
 
-  const randomNum = Math.random() * totalSum;
+  const randomNum = Math.random() * opts.length;
 
-  let currentSum = 0;
-  for (let key in dictionary) {
-    currentSum += dictionary[key];
-    if (randomNum < currentSum) {
-      return key;
+  for (let i = 0; i < opts.length; i++) {
+    if (randomNum < i + 1) {
+      return opts[i];
     }
   }
 }
 
-export function weightedRandomChoice(probabilities) {
+export function weightedRandomChoice(probabilities, useWeights = true) {
   let N = Object.keys(probabilities)[0].split(/\s+/).length;
   let prevN = [];
   for (let i = 0; i < N; i++) {
     prevN.push(i18n.global.t("startToken"));
   }
   let sentence = [];
-  let nextWord = getRandomKeyProportionateToValue(
-    probabilities[prevN.join(" ")]
-  );
+  let nextWord = getRandomKey(probabilities[prevN.join(" ")], useWeights);
   while (
     nextWord !== i18n.global.t("endToken") &&
     sentence.length < MAX_SENTENCE_LENGTH
@@ -298,7 +302,7 @@ export function weightedRandomChoice(probabilities) {
     });
     prevN.shift();
     prevN.push(nextWord);
-    nextWord = getRandomKeyProportionateToValue(probabilities[prevN.join(" ")]);
+    nextWord = getRandomKey(probabilities[prevN.join(" ")], useWeights);
   }
   sentence.push({
     word: nextWord,
@@ -308,52 +312,10 @@ export function weightedRandomChoice(probabilities) {
     prevN: prevN.join(" "),
   });
   return sentence;
-}
-
-export function getRandomKey(dictionary) {
-  let keys = Object.keys(dictionary);
-
-  const randomNum = Math.random() * keys.length;
-
-  for (let i = 0; i < keys.length; i++) {
-    if (randomNum < i + 1) {
-      return keys[i];
-    }
-  }
 }
 
 export function randomChoice(probabilities) {
-  //TODO: combine this and above
-  let N = Object.keys(probabilities)[0].split(/\s+/).length;
-  let prevN = [];
-  for (let i = 0; i < N; i++) {
-    prevN.push(i18n.global.t("startToken"));
-  }
-  let sentence = [];
-  let nextWord = getRandomKey(probabilities[prevN.join(" ")]);
-  while (
-    nextWord !== i18n.global.t("endToken") &&
-    sentence.length < MAX_SENTENCE_LENGTH
-  ) {
-    sentence.push({
-      word: nextWord,
-      probs: Object.entries(probabilities[prevN.join(" ")]).sort(
-        ([, a], [, b]) => b - a
-      ),
-      prevN: prevN.join(" "),
-    });
-    prevN.shift();
-    prevN.push(nextWord);
-    nextWord = getRandomKey(probabilities[prevN.join(" ")]);
-  }
-  sentence.push({
-    word: nextWord,
-    probs: Object.entries(probabilities[prevN.join(" ")]).sort(
-      ([, a], [, b]) => b - a
-    ),
-    prevN: prevN.join(" "),
-  });
-  return sentence;
+  return weightedRandomChoice(probabilities, false);
 }
 
 export const selectionMethodOptions = [
@@ -392,5 +354,5 @@ export function getRandomWord(texts, languageStopWords, languageStem) {
 }
 
 export function drawFromBagOfWords(bagOfWords) {
-  return getRandomKeyProportionateToValue(Object.fromEntries(bagOfWords));
+  return getRandomKey(Object.fromEntries(bagOfWords), true);
 }
