@@ -12,6 +12,7 @@ import ProgressBar from "primevue/progressbar";
 import Stepper from "primevue/stepper";
 import StepperPanel from "primevue/stepperpanel";
 import InputText from "primevue/inputtext";
+import InputSwitch from "primevue/inputswitch";
 import FloatLabel from "primevue/floatlabel";
 import InputGroup from "primevue/inputgroup";
 import Message from "primevue/message";
@@ -44,6 +45,7 @@ export default {
   InputText,
   FloatLabel,
   InputGroup,
+  InputSwitch,
   Message,
   Password,
   ToggleButton,

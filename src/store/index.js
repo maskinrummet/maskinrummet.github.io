@@ -36,6 +36,14 @@ export default createStore({
         duration: 20,
       },
     ],
+    singularActivities: [
+      {
+        id: "wordCloud",
+      },
+      {
+        id: "ngramTextGen",
+      },
+    ],
   },
   getters: {
     getActivityById: (state) => (id) => {

@@ -9,7 +9,9 @@
         <p>
           {{ $t("datasetSelectionExplanation") }}
         </p>
-        <div v-if="loading || datasetsLoading">{{ $t("loading") }}</div>
+        <div v-if="loading || datasetsLoading" class="text-center">
+          {{ $t("loading") }}
+        </div>
         <div v-else>
           <div class="p-3 border-round-md surface-200">
             <InputGroup>
@@ -18,6 +20,8 @@
                 :options="datasetsFormatted"
                 optionLabel="formattedName"
                 :placeholder="$t('selectADataset')"
+                :empty-message="$t('emptyDropdown')"
+                :empty-filter-message="$t('noSearchResults')"
                 filter
               />
               <Button
@@ -133,12 +137,9 @@ export default {
     showDatasetModal() {
       this.$refs.datasetModalSD.show();
     },
-    formatName(name, open, maxChars = 50) {
+    formatName(name, open) {
       let tag = `[${open ? this.$t("open") : this.$t("closed")}] `;
-      return (
-        tag +
-        (name.length > maxChars ? name.slice(0, maxChars - 3) + "..." : name)
-      );
+      return tag + name;
     },
     async getDatasets() {
       try {

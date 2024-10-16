@@ -1,5 +1,10 @@
 <template>
-  <Dialog v-model:visible="visible" class="w-9" modal>
+  <Dialog
+    v-model:visible="visible"
+    class="w-9"
+    modal
+    :header="dataset ? dataset.name : $t('Loading')"
+  >
     <ProgressBar v-if="loading" mode="indeterminate"></ProgressBar>
     <ShowDataset
       v-else-if="!editMode"

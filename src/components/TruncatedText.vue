@@ -1,7 +1,7 @@
 <template>
-  <span v-if="text.slice(100, 1000)" class="clickable">
+  <span v-if="text.slice(maxSize, 1000)" class="clickable">
     <span v-if="showTruncated" @click="showTruncated = false"
-      >{{ text.slice(0, 100) }}<b class="text-primary">...</b></span
+      >{{ text.slice(0, maxSize) }}<b class="text-primary">...</b></span
     >
     <span v-else @click="showTruncated = true">{{ text }}</span>
   </span>
@@ -12,6 +12,7 @@
 export default {
   name: "TruncatedText",
   props: {
+    maxSize: { type: Number, default: 100 },
     text: {
       type: String,
       required: true,

@@ -1,6 +1,9 @@
 <template>
   <div v-if="inputTexts">
     <DataTable :value="inputTexts" size="small" paginator :rows="10">
+      <template #empty
+        ><div class="text-center">{{ $t("emptyDataset") }}</div></template
+      >
       <Column field="text"
         ><template #header>
           <div class="flex justify-content-between w-full">
@@ -77,7 +80,7 @@ export default {
           this.error = "";
         })
         .catch((error) => {
-          this.error = error;
+          this.error = error.response.data.error;
         });
     },
   },
@@ -86,8 +89,8 @@ export default {
       if (!this.dataset) {
         return null;
       }
-      return JSON.parse(this.dataset.json_string).map((text) => ({
-        text,
+      return this.dataset.sentences.map((x) => ({
+        text: x.text,
       }));
     },
     open() {

@@ -45,7 +45,7 @@ export default {
         this.error = this.$t("emptySentence");
         return;
       }
-      if (this.value.length > 150) {
+      if (this.value.length >= 250) {
         this.error = this.$t("longSentence");
         return;
       }

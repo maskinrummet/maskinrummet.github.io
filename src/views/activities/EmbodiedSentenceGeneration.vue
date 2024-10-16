@@ -161,8 +161,8 @@ export default {
       return Math.max(...this.bagOfWords.map(([, weight]) => weight));
     },
     sentences() {
-      if (!this.dataset.json_string) return [];
-      return JSON.parse(this.dataset.json_string);
+      if (!this.dataset.sentences) return [];
+      return this.dataset.sentences.map((x) => x.text);
     },
     fiveTopWords() {
       return this.bagOfWords.slice(0, 5).map(([word]) => word);
