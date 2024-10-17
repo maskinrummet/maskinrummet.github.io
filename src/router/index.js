@@ -7,6 +7,7 @@ import NotFound from "@/views/NotFound.vue";
 import HowTo from "@/views/HowTo.vue";
 import i18n from "@/i18n";
 import { DEFAULT_LOCALE, LOCALES } from "@/i18n";
+import SingularActivityDetail from "@/views/SingularActivityDetail.vue";
 
 function getName(key) {
   return () => i18n.global.t("maskinrummet") + " | " + i18n.global.t(key);
@@ -36,6 +37,11 @@ const routes = [
   {
     path: getPath("/activity/:id"),
     component: ActivityDetail,
+    name: getName("activity"),
+  },
+  {
+    path: getPath("/single-activity/:id/:datasetId?"),
+    component: SingularActivityDetail,
     name: getName("activity"),
   },
   {

@@ -49,5 +49,8 @@ export default createStore({
     getActivityById: (state) => (id) => {
       return state.activities.find((activity) => activity.id === id);
     },
+    getSingularActivityById: (state) => (id) => {
+      return state.singularActivities.find((activity) => activity.id === id);
+    },
   },
 });

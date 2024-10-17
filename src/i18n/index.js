@@ -21,7 +21,7 @@ const messages = {
     currLanguage: "English",
     activity: "Activity",
     error404: "Page not found",
-    availableActivities: "Available activities",
+    availableActivities: "Guided activities",
     suggestActivity: "Suggest an activity",
     currentActivity: "Current activity",
     title: "Title",
@@ -185,6 +185,18 @@ const messages = {
     emptyDropdown: "No options available",
     datasetBiasExplained:
       "Dataset bias is when a dataset is skewed towards certain topics, words, or phrases, which can lead to unfair choices or incorrect outputs from an AI trained on the dataset.",
+    singularActivitiesHeading: "Unguided Activities",
+    minWordCloudOccurences:
+      "Minimum number of times a word should appear in the text to appear in the word cloud:",
+    customFilterWords: "Words to exclude from being shown in the word cloud",
+    singularActivities: {
+      wordCloud: {
+        title: "Word Cloud",
+      },
+      ngramTextGen: {
+        title: "N-Gram Text Generation",
+      },
+    },
     activities: {
       textCleaning: {
         title: "How can text be turned into words?",
@@ -327,7 +339,7 @@ const messages = {
     currLanguage: "Dansk",
     activity: "Aktivitet",
     error404: "Side ikke fundet",
-    availableActivities: "Tilgængelige aktiviteter",
+    availableActivities: "Korte forløb",
     suggestActivity: "Foreslå en aktivitet",
     currentActivity: "Aktuel aktivitet",
     title: "Titel",
@@ -492,6 +504,19 @@ const messages = {
     emptyDropdown: "Ingen valgmuligheder",
     datasetBiasExplained:
       "Datasæt bias er, når et datasæt er partisk mod visse emner, ord eller sætninger, hvilket kan føre til uretfærdige valg eller forkerte resultater fra en AI trænet på datasættet.",
+    singularActivitiesHeading: "Fristående Aktiviteter",
+    minWordCloudOccurences:
+      "Minimum antal gange et ord skal optræde i teksten for at vises i vores word cloud",
+    customFilterWords:
+      "Ord, der skal udelukkes fra at blive vist i vores word cloud",
+    singularActivities: {
+      wordCloud: {
+        title: "Word Cloud",
+      },
+      ngramTextGen: {
+        title: "N-Gram Tekstgenerering",
+      },
+    },
     activities: {
       textCleaning: {
         title: "Hvordan kan en tekst laves om til ord?",
