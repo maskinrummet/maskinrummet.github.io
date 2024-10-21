@@ -115,12 +115,13 @@
         </Row>
         <Row v-if="multilineInputEnabled">
           <Column :colspan="3">
-            <template #footer
-              ><Textarea
-                v-model="textInput"
-                rows="5"
-                cols="30"
-                class="w-full"
+            <template #footer>
+              <Codemirror
+                v-model:value="textInput"
+                @change="change"
+                :original-style="true"
+                :height="200"
+                :options="{ lineWrapping: true }"
               />
             </template>
           </Column>
@@ -199,13 +200,23 @@
   </form>
 </template>
 
+<style>
+.CodeMirror {
+  font-family: var(--font-family) !important;
+  font-size: 1rem !important;
+  font-weight: normal !important;
+}
+</style>
+
 <script>
 import TruncatedText from "./TruncatedText.vue";
+import Codemirror from "codemirror-editor-vue3";
 
 export default {
   name: "EditDataset",
   components: {
     TruncatedText,
+    Codemirror,
   },
   props: {
     dataset: {
@@ -253,6 +264,17 @@ export default {
             return { text: x, value: 0 };
           }),
       ];
+      for (let i in newSentences) {
+        if (newSentences[i].text.length > 250) {
+          this.error = this.$t("longSentences") + " (#" + (Number(i) + 1) + ")";
+          this.startingSentences = newSentences
+            .map((x) => x.text)
+            .join(
+              this.splitBy.value !== "\n" ? this.splitBy.value + "\n" : "\n"
+            );
+          return;
+        }
+      }
       this.sentencesList = [...this.sentencesList, ...newSentences];
       this.first = Math.floor((this.sentencesList.length - 1) / 10) * 10;
       this.textInput = "";

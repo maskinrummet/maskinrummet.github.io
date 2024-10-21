@@ -131,12 +131,13 @@
           </Row>
           <Row v-if="multilineInputEnabled">
             <Column :colspan="3">
-              <template #footer
-                ><Textarea
-                  v-model="startingSentences"
-                  rows="5"
-                  cols="30"
-                  class="w-full"
+              <template #footer>
+                <Codemirror
+                  v-model:value="startingSentences"
+                  @change="change"
+                  :original-style="true"
+                  :height="200"
+                  :options="{ lineWrapping: true }"
                 />
               </template>
             </Column>
@@ -210,13 +211,23 @@
   </form>
 </template>
 
+<style>
+.CodeMirror {
+  font-family: var(--font-family) !important;
+  font-size: 1rem !important;
+  font-weight: normal !important;
+}
+</style>
+
 <script>
 import TruncatedText from "./TruncatedText.vue";
+import Codemirror from "codemirror-editor-vue3";
 
 export default {
   name: "CreateDataset",
   components: {
     TruncatedText,
+    Codemirror,
   },
   data() {
     return {
@@ -255,6 +266,17 @@ export default {
             return { text: x };
           }),
       ];
+      for (let i in newSentences) {
+        if (newSentences[i].text.length > 250) {
+          this.error = this.$t("longSentences") + " (#" + (Number(i) + 1) + ")";
+          this.startingSentences = newSentences
+            .map((x) => x.text)
+            .join(
+              this.splitBy.value !== "\n" ? this.splitBy.value + "\n" : "\n"
+            );
+          return;
+        }
+      }
       this.startingSentencesList = [
         ...this.startingSentencesList,
         ...newSentences,
