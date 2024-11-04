@@ -5,7 +5,7 @@
         {{ $t("availableActivities") }}
       </router-link>
       >
-      {{ $t("currentActivity") }}
+      {{ $t(`activities.${activity.id}.title`) }}
     </h3>
     <div v-if="activity">
       <Card class="mb-2 bg-purple-900 text-white">

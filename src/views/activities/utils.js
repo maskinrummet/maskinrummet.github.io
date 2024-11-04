@@ -36,9 +36,16 @@ export const stopwordsOptions = [
   })),
 ];
 
+function sortNumericalThenAlphabetical(a, b) {
+  if (b[1] !== a[1]) {
+    return b[1] - a[1];
+  }
+  return a[0].localeCompare(b[0]);
+}
+
 export function getBagOfWords(texts, stopwords = false, stemmer = false) {
   const fullText = cleanString(texts.join(" "), false);
-  const words = fullText.split(/\s+/);
+  const words = fullText.split(/\s+/).filter((x) => !!x);
 
   const filteredWords = stopwords ? stopwords.removeStopwords(words) : words;
 
@@ -51,24 +58,23 @@ export function getBagOfWords(texts, stopwords = false, stemmer = false) {
     return acc;
   }, {});
 
-  const bagOfWords = Object.entries(wordCount).sort((a, b) => b[1] - a[1]);
+  const bagOfWords = Object.entries(wordCount).sort(
+    sortNumericalThenAlphabetical
+  );
 
   return bagOfWords;
 }
 
 export const categoricalColours = [
-  "#e41a1c", //red
-  "#377eb8", //blue
-  "#ff7f00", //orange
-  "#184716", //green
-  "#984ea3", //purple
-  "#06ba7b", //turquoise
-  "#ba06ab", //pink
-  "#ffd500", //yellow
-  "#573c21", //brown
+  "#2d73b9",
+  "#6E64BB",
+  "#9255B5",
+  "#A94AA7",
+  "#B64877",
+  "#B25158",
 ];
 
-export const otherColour = "#bbb";
+export const otherColour = "#6F6F6F";
 
 export const pieChartColors = categoricalColours.concat(otherColour);
 
@@ -97,17 +103,19 @@ export function generateMostCommonWord(inputTexts) {
   let allSentences = inputTexts.map(cleanString);
   let wordCounts = {};
   let maxSentenceLength = Math.max(
-    ...allSentences.map((sentence) => sentence.split(/\s+/).length + 1)
+    ...allSentences.map(
+      (sentence) => sentence.split(/\s+/).filter((x) => !!x).length + 1
+    )
   );
 
   for (let sentence of allSentences) {
-    let words = sentence.split(/\s+/);
+    let words = sentence.split(/\s+/).filter((x) => !!x);
     for (let w of words) {
       wordCounts[w] = wordCounts[w] ? wordCounts[w] + 1 : 1;
     }
   }
 
-  let allProbs = Object.entries(wordCounts).sort(([, a], [, b]) => b - a);
+  let allProbs = Object.entries(wordCounts).sort(sortNumericalThenAlphabetical);
   let allProbsWithOther = getOtheredProbs(allProbs);
   let mostCommonWord = allProbs[0][0];
   let filledArray = [];
@@ -142,7 +150,7 @@ export function generateMostCommonWordByPosition(inputTexts) {
   const wordCounts = {};
 
   allSentences.forEach((sentence) => {
-    const words = sentence.split(/\s+/);
+    const words = sentence.split(/\s+/).filter((x) => !!x);
     words.forEach((word, i) => {
       if (!wordCounts[i]) wordCounts[i] = {};
       wordCounts[i][word] = (wordCounts[i][word] || 0) + 1;
@@ -153,7 +161,7 @@ export function generateMostCommonWordByPosition(inputTexts) {
 
   for (let position of Object.keys(wordCounts)) {
     const words = Object.entries(wordCounts[position]);
-    words.sort(([, a], [, b]) => b - a);
+    words.sort(sortNumericalThenAlphabetical);
     const [mostCommonWord, max] = words[0];
     const allProbsWithOther = getOtheredProbs(words);
 
@@ -193,7 +201,7 @@ export function slidingWindow(sentences, N) {
     for (let i = 0; i < N; i++) {
       prevN.push(i18n.global.t("startToken"));
     }
-    for (let x of s.split(/\s+/)) {
+    for (let x of s.split(/\s+/).filter((x) => !!x)) {
       if (prevN.join(" ") in probabilities) {
         if (x in probabilities[prevN.join(" ")]) {
           probabilities[prevN.join(" ")][x]++;
@@ -222,15 +230,17 @@ export function slidingWindow(sentences, N) {
 }
 
 export function greedyChoice(probabilities) {
-  let N = Object.keys(probabilities)[0].split(/\s+/).length;
+  let N = Object.keys(probabilities)[0]
+    .split(/\s+/)
+    .filter((x) => !!x).length;
   let prevN = [];
   for (let i = 0; i < N; i++) {
     prevN.push(i18n.global.t("startToken"));
   }
   let sentence = [];
-  let nextWord = Object.entries(probabilities[prevN.join(" ")]).reduce((a, b) =>
-    a[1] > b[1] ? a : b
-  )[0];
+  let nextWord = Object.entries(probabilities[prevN.join(" ")]).sort(
+    sortNumericalThenAlphabetical
+  )[0][0];
   while (
     nextWord !== i18n.global.t("endToken") &&
     sentence.length < MAX_SENTENCE_LENGTH
@@ -238,20 +248,20 @@ export function greedyChoice(probabilities) {
     sentence.push({
       word: nextWord,
       probs: Object.entries(probabilities[prevN.join(" ")]).sort(
-        ([, a], [, b]) => b - a
+        sortNumericalThenAlphabetical
       ),
       prevN: prevN.join(" "),
     });
     prevN.shift();
     prevN.push(nextWord);
-    nextWord = Object.entries(probabilities[prevN.join(" ")]).reduce((a, b) =>
-      a[1] > b[1] ? a : b
-    )[0];
+    nextWord = Object.entries(probabilities[prevN.join(" ")]).sort(
+      sortNumericalThenAlphabetical
+    )[0][0];
   }
   sentence.push({
     word: nextWord,
     probs: Object.entries(probabilities[prevN.join(" ")]).sort(
-      ([, a], [, b]) => b - a
+      sortNumericalThenAlphabetical
     ),
     prevN: prevN.join(" "),
   });
@@ -261,13 +271,11 @@ export function greedyChoice(probabilities) {
 export function getRandomKey(dictionary, useWeights) {
   let opts = [];
   if (useWeights) {
-    console.log(dictionary);
     // add V number of Ks to opts
     opts = Object.keys(dictionary).reduce(
       (acc, k) => acc.concat(Array(dictionary[k]).fill(k)),
       []
     );
-    console.log(opts);
   } else {
     opts = Object.keys(dictionary);
   }
@@ -282,7 +290,9 @@ export function getRandomKey(dictionary, useWeights) {
 }
 
 export function weightedRandomChoice(probabilities, useWeights = true) {
-  let N = Object.keys(probabilities)[0].split(/\s+/).length;
+  let N = Object.keys(probabilities)[0]
+    .split(/\s+/)
+    .filter((x) => !!x).length;
   let prevN = [];
   for (let i = 0; i < N; i++) {
     prevN.push(i18n.global.t("startToken"));
@@ -296,7 +306,7 @@ export function weightedRandomChoice(probabilities, useWeights = true) {
     sentence.push({
       word: nextWord,
       probs: Object.entries(probabilities[prevN.join(" ")]).sort(
-        ([, a], [, b]) => b - a
+        sortNumericalThenAlphabetical
       ),
       prevN: prevN.join(" "),
     });
@@ -307,7 +317,7 @@ export function weightedRandomChoice(probabilities, useWeights = true) {
   sentence.push({
     word: nextWord,
     probs: Object.entries(probabilities[prevN.join(" ")]).sort(
-      ([, a], [, b]) => b - a
+      sortNumericalThenAlphabetical
     ),
     prevN: prevN.join(" "),
   });

@@ -150,7 +150,7 @@ const messages = {
     positionalTextGeneration: "Positional Text Generation",
     nGramsGeneration: "N-Grams Text Generation",
     windowSize: "N-Gram size",
-    startToken: "[NOTHING]",
+    startToken: "[START]",
     endToken: "[END]",
     maxSentenceLength: "Maximum allowed length",
     doNoStemming: "Perform no stemming",
@@ -189,6 +189,11 @@ const messages = {
     minWordCloudOccurences:
       "Minimum number of times a word should appear in the text to appear in the word cloud:",
     customFilterWords: "Words to exclude from being shown in the word cloud",
+    printOrSave: "Print or save as PDF",
+    fontSize: "Font size",
+    numColumns: "Number of columns",
+    minOccurences:
+      "Minimum number of times a word should appear to be included",
     singularActivities: {
       wordCloud: {
         title: "Word Cloud",
@@ -196,6 +201,7 @@ const messages = {
       ngramTextGen: {
         title: "N-Gram Text Generation",
       },
+      bagOfWordsPrintout: { title: "Bag of Words prinout" },
     },
     activities: {
       textCleaning: {
@@ -274,7 +280,7 @@ const messages = {
           stopwordsExplained:
             'We know that the most popular words in text are probably "the", "and", "is", "in", etc. These are called "stop words", and they don\'t tell us much about the meaning of the text, and really clog the word cloud. Therefore, we can filter them out from our word cloud to get a better idea of what the dataset is about. You can choose a stop words list to use on our word cloud using the dropdown below.',
           positionalGeneration:
-            'One of the simplest ways to start to generate text is to take the most common first word across the dataset, then the most common second word, then third, and so on. You can click generate below to see how it looks for this dataset, and the "how" button shows the words which were at position 0, 1, 2 (computers actually start counting at 0) and so on.',
+            'One of the simplest ways to start to generate text is to take the most common first word across the dataset, then the most common second word, then third, and so on. You can click generate below to see how it looks for this dataset, and the "how" button shows the words which were at position 1, 2, 3 and so on.',
           nGramGeneration:
             'While positional generation is simple, as we get further into the text, stop words become the most likely, and the text often starts to make less sense. Also, if we see "Ready, steady," in a text, we always know "go" is coming next, no matter what position in the sentence it is. Therefore, it\'s useful to think of words in groups called n-grams. An n-gram is n-words that appeared one after another. So, if we had a 2-gram of "Ready, steady", we could predict "go" is the most likely next word. Below we will do n-grams on the dataset you selected, and you can experiment with different sizes to see how it changes the output. When you\'ve done that, you can also decide how you want to choose what the next word is. When we take the most likely word, we call that a "greedy" approach. This is effective, but can lead to unoriginal text. Therefore, adding randomness, either by randomly choosing a word or choosing one according to probability weights (imagine spinning the pie chart), we can make it easier to get an original sentence, which isn\'t always the same. In language models, how much randomness there is in a model is called the \'temperature\'.',
         },
@@ -465,16 +471,16 @@ const messages = {
     position: "Position",
     previous: "Forrige",
     other: "Andet",
-    wordCloud: "Word Cloud",
+    wordCloud: "Ordsky",
     positionalTextGeneration: "Positional Tekstgenerering",
     nGramsGeneration: "N-Grams Tekstgenerering",
     windowSize: "N-Gram størrelse",
-    startToken: "[INGENTING]",
+    startToken: "[START]",
     endToken: "[SLUT]",
     maxSentenceLength: "Maksimal tilladt længde",
-    doNoStemming: "Udfør ingen stemming",
+    doNoStemming: "Udfør ingen stamning",
     doNoStopwords: "Filtrer ingen stopord",
-    stemming: "Stemming",
+    stemming: "Stamning",
     stopwords: "Stopord",
     english: "Engelsk",
     danish: "Dansk",
@@ -497,25 +503,31 @@ const messages = {
     either: "Enten",
     sentences: "Sætninger",
     wordFrequency: "Ordfrekvens",
-    bagOfWords: "Bag of Words",
+    bagOfWords: "Ordpose",
     originalText: "Dette er en ny sætning, der ikke findes i datasættet",
     unoriginalText: "Dette er en sætning, der allerede findes i datasættet",
     noSearchResults: "Ingen resultater",
     emptyDropdown: "Ingen valgmuligheder",
     datasetBiasExplained:
       "Datasæt bias er, når et datasæt er partisk mod visse emner, ord eller sætninger, hvilket kan føre til uretfærdige valg eller forkerte resultater fra en AI trænet på datasættet.",
-    singularActivitiesHeading: "Fristående Aktiviteter",
+    singularActivitiesHeading: "Værktøjer",
     minWordCloudOccurences:
-      "Minimum antal gange et ord skal optræde i teksten for at vises i vores word cloud",
+      "Minimum antal gange et ord skal optræde i teksten for at vises i vores ordsky",
     customFilterWords:
-      "Ord, der skal udelukkes fra at blive vist i vores word cloud",
+      "Ord, der skal udelukkes fra at blive vist i vores ordsky",
+    printOrSave: "Udskriv eller gem som PDF",
+    fontSize: "Skriftstørrelse",
+    numColumns: "Antal kolonner",
+    minOccurences:
+      "Minimum antal gange et ord skal optræde for at blive inkluderet",
     singularActivities: {
       wordCloud: {
-        title: "Word Cloud",
+        title: "Ordsky",
       },
       ngramTextGen: {
         title: "N-Gram Tekstgenerering",
       },
+      bagOfWordsPrintout: { title: "Ordpose udskrift" },
     },
     activities: {
       textCleaning: {
@@ -543,7 +555,7 @@ const messages = {
           removePuncBelow:
             'Nu ser vores ord rigtige ud, men tegnsætning kan stadig forårsage problemer. For eksempel er "hej" og "hej!" stadig forskellige ord for en computer. Nogle gange kan det være fint at fjerne tegnsætningen, men vi kan også have brug for tegnsætningen for at forstå sætningerne. For eksempel er sætningen "Lad os spise, bedstemor!" meget forskellig fra "Lad os spise bedstemor!". Derfor, for at håndtere dette, vil vi beholde tegnsætningen, men markere det som ikke værende en del af de individuelle ord. Klik nedenfor for at markere tegnsætningen og afslut rensningen af din "string".',
           introToTokenisation:
-            'Godt gået! Du har nu renset din tekst til ord og tegnsætning. Denne proces kaldes "tokenisering", hvor vi omdanner tekster til lister af "tokens", som bidrager til tekstens betydning. Dette er en vigtig del, og normalt det første skridt, i tekstbearbejdning i AI. Mens vores var rimeligt effektiv, var der nogle forenklinger for at gøre tingene lettere. For eksempel ville ordet "ikk\'å" blive delt i ordene "Ikk" og "å", på grund af tegnsætningen, når vi sandsynligvis ville behandle det som ét ord eller "ikke" og "også". Derfor er den sædvanlige måde at lave tokenisering på en tekst at bruge "Machine Learning" på et stort datasæt for at lade tekstbearbejdsnings-AI\'er automatisk lære mønstrene af, hvordan ord deles op.',
+            'Godt gået! Du har nu renset din tekst til ord og tegnsætning. Denne proces kaldes "tokenisering", hvor vi omdanner tekster til lister af "tokens", som bidrager til tekstens betydning. Dette er en vigtig del, og normalt det første skridt, i tekstbearbejdning i AI. Mens vores var rimeligt effektiv, var der nogle forenklinger for at gøre tingene lettere. For eksempel ville ordet "ikk\'å" blive delt i ordene "Ikk" og "å", på grund af tegnsætningen, når vi sandsynligvis ville behandle det som ét ord eller "ikke" og "også". Derfor er den sædvanlige måde at lave tokenisering på en tekst at bruge "maskinlæring" på et stort datasæt for at lade tekstbearbejdsnings-AI\'er automatisk lære mønstrene af, hvordan ord deles op.',
         },
       },
       embodiedSentenceGeneration: {
@@ -552,7 +564,7 @@ const messages = {
           "I denne lektion spiller du rollen som AI, der genererer sætninger fra de mest almindelige ord i et datasæt, for at få indsigt i, hvordan tekstgenerering fungerer på egen hånd.",
         whatYouNeed: "Intet :)",
         learningGoals:
-          "<ul><li>Forstå gennem legemliggørelse forskellen mellem tilfældig og sandsynlighedsdrevet generering</li><li>Oplev begrænsningerne og bias i et datasæt på egen hånd</li><li>Få en introduktion til word clouds og stopord</li></ul>",
+          "<ul><li>Forstå gennem legemliggørelse forskellen mellem tilfældig og sandsynlighedsdrevet generering</li><li>Oplev begrænsningerne og bias i et datasæt på egen hånd</li><li>Få en introduktion til ordskyer og stopord</li></ul>",
         intro:
           "Her bruger vi et datasæt til at opleve lidt af, hvordan computere genererer tekst. Du kan også vælge at følge med praktisk - skriv blot nogle sætninger på papir og klip dem op i ord.<br><br>Det kan være interessant at prøve dette to gange med datasæt med forskellige bias for at se, hvor forskellig oplevelsen er.<br><br>For at starte, vælg et datasæt nedenfor (du kan bruge det som et eksempel, hvis du følger med praktisk).",
         learningOutcomes:
@@ -565,9 +577,9 @@ const messages = {
           repeat:
             "Du kan gentage dette så mange gange, du vil, og se, hvor forskellige sætningerne bliver hver gang.",
           stopwordsExplained:
-            'Vi ved, at de mest populære ord i teksten sandsynligvis er "den", "og", "er", "i", osv. Disse ord kaldes "stopord", og de fortæller os ikke meget om tekstens betydning og fylder virkelig meget i vores word cloud. Derfor kan vi filtrere dem ud fra vores word cloud for at få en bedre idé om, hvad datasættet handler om. I den fysiske bunke af ord svarer dette til at fjerne de uinteressante ord. Du kan vælge en liste over stopord til at bruge på vores word cloud ved hjælp af dropdown-menuen nedenfor, hvorefter vores word cloud og de mest almindelige ord ovenfor opdateres.',
+            'Vi ved, at de mest populære ord i teksten sandsynligvis er "den", "og", "er", "i", osv. Disse ord kaldes "stopord", og de fortæller os ikke meget om tekstens betydning og fylder virkelig meget i vores ordsky. Derfor kan vi filtrere dem ud fra vores ordsky for at få en bedre idé om, hvad datasættet handler om. I den fysiske bunke af ord svarer dette til at fjerne de uinteressante ord. Du kan vælge en liste over stopord til at bruge på vores ordsky ved hjælp af dropdown-menuen nedenfor, hvorefter vores ordsky og de mest almindelige ord ovenfor opdateres.',
           wordCloud:
-            "Nedenfor har vi repræsenteret datasættet som en word cloud. Med en bunke af udklippede ord svarer dette til at arrangere dem alle med forsiden opad på bordet foran dig.",
+            "Nedenfor har vi repræsenteret datasættet som en ordsky. Med en bunke af udklippede ord svarer dette til at arrangere dem alle med forsiden opad på bordet foran dig.",
           topWords:
             'Nedenfor er de 5 mest almindelige ord i det valgte datasæt. Dette kunne opnås ved at tælle ordene i bunken foran dig og derefter vælge de mest almindelige. Dette ville være tidskrævende selv med 10 sætninger, men computere kan bearbejde tusindvis af sætninger på et sekund. Da vi tager de 5 største ord, kaldes dette typisk en "grådig" tilgang. Mens ordene ændrede sig hver gang, vi tilfældigt valgte dem, vil de her være de samme hver gang. Prøv at gentage processen med at skabe en sætning ved hjælp af disse ord fra før. Forhåbentlig er det en mere præcis repræsentation af datasættet, men vi kan kun gøre dette én gang.',
           bias: "Nu hvor du har skrevet et par sætninger ned, er det værd at tænke over, hvordan det valgte datasæt påvirkede de sætninger, du lavede. Mens din forståelse af sprog var ansvarlig for at sætte disse sætninger sammen, ligesom en AI har en generel forståelse af sprog, kom sandsynlighederne for de ord, vi valgte, fra datasættet og påvirkede sandsynligvis, hvad du ville sige. Hvis du ikke er sikker, så prøv at gentage processen, men brug et nyt datasæt med et andet tema. Dette svarer til, hvordan AI'er kan være partisk af de datasæt, de er trænet på, og utilsigtet hælder mod datasættets meninger eller temaer.",
@@ -576,25 +588,25 @@ const messages = {
       textGeneration: {
         title: "Hvordan kan en computer forstå og generere tekst?",
         description:
-          "I denne lektion udforsker vi, hvordan datasæt kan opsummeres med word clouds, hvordan en computer kan generere tekst ved hjælp af et datasæt, og hvordan sprogmodeller balancerer kreativitet og sandhed.",
+          "I denne lektion udforsker vi, hvordan datasæt kan opsummeres med ordskyer, hvordan en computer kan generere tekst ved hjælp af et datasæt, og hvordan sprogmodeller balancerer kreativitet og sandhed.",
         whatYouNeed: "Intet :)",
         learningGoals:
-          "<ul><li>Lær, hvad stemming og stopord er, og hvordan vi kan forstå tekst ved hjælp af word clouds.</li><li>Udforsk hvordan tekst kan genereres af computere med forskellige metoder.</li><li>Få en fornemmelse af, hvordan tilfældighed spiller ind i god (og upålidelig) tekstgenerering.</li></ul>",
+          "<ul><li>Lær, hvad stamning og stopord er, og hvordan vi kan forstå tekst ved hjælp af ordskyer.</li><li>Udforsk hvordan tekst kan genereres af computere med forskellige metoder.</li><li>Få en fornemmelse af, hvordan tilfældighed spiller ind i god (og upålidelig) tekstgenerering.</li></ul>",
         intro:
-          "Hvordan genererer computere tekst? Hvordan kan de forstå tekstens mening? I denne lektion bruger vi word clouds til at visualisere et datasæt og derefter generere tekst ved hjælp af det. Vi vil se, hvordan computere kan generere tekst, der er kreativ, men også hvordan de kan tage fejl.<br><br> For at komme i gang, skal du vælge eller oprette et datasæt at arbejde med.",
+          "Hvordan genererer computere tekst? Hvordan kan de forstå tekstens mening? I denne lektion bruger vi ordskyer til at visualisere et datasæt og derefter generere tekst ved hjælp af det. Vi vil se, hvordan computere kan generere tekst, der er kreativ, men også hvordan de kan tage fejl.<br><br> For at komme i gang, skal du vælge eller oprette et datasæt at arbejde med.",
         learningOutcomes:
-          "Forhåbentlig efter at have gennemført denne lektion, kan du forstå:<ul><li>Hvad stemming og stop ord er, og hvordan de kan bruges i tekstbearbejdning</li><li> Hvordan computere kan generere tekst, og hvordan de kan være kreative, men også upålidelige</li><li> Hvordan tilfældighed kan påvirke tekstgenerering og medføre interessante og nogle gange uforudsigelige resultater.</li><li>Have en bedre forståelse af, hvordan tilfældighed spiller ind i tekst generering, og hvordan det kan bruges til at gøre tekstgenerering mere kreativ.</li></ul>",
+          "Forhåbentlig efter at have gennemført denne lektion, kan du forstå:<ul><li>Hvad stamning og stop ord er, og hvordan de kan bruges i tekstbearbejdning</li><li> Hvordan computere kan generere tekst, og hvordan de kan være kreative, men også upålidelige</li><li> Hvordan tilfældighed kan påvirke tekstgenerering og medføre interessante og nogle gange uforudsigelige resultater.</li><li>Have en bedre forståelse af, hvordan tilfældighed spiller ind i tekst generering, og hvordan det kan bruges til at gøre tekstgenerering mere kreativ.</li></ul>",
         readMore:
           'Du kan prøve en stemmer direkte her: <a href="http://text-processing.com/demo/stem/" target="_blank">http://text-processing.com/demo/stem/</a><br><br>En god forklarende video om ngrams er tilfængelig her: <a href="https://www.youtube.com/watch?v=E_mN90TYnlg" target="_blank">https://www.youtube.com/watch?v=E_mN90TYnlg</a>',
         custom: {
           wordCloudBelow:
-            'Nedenfor kan du se en word cloud genereret fra det valgte datasæt. Størrelsen af ordene repræsenterer, hvor ofte de optræder i datasættet. Allerede ud fra dette kan computere begynde at forstå, hvad datasættet handler om, og hvilke ord der er de vigtigste. For eksempel, hvis vi prøver at finde ud af, om et datasæt handler om dyr, kunne vi se efter ord som "hund", "kat", "fugl", der bruges flere gange. Gennem denne teknik, som en computer i stedet registrerer som ord og antallet af gange de optræder, kan en computer bedre forstå, hvad et datasæt handler om.',
+            'Nedenfor kan du se en ordsky genereret fra det valgte datasæt. Størrelsen af ordene repræsenterer, hvor ofte de optræder i datasættet. Allerede ud fra dette kan computere begynde at forstå, hvad datasættet handler om, og hvilke ord der er de vigtigste. For eksempel, hvis vi prøver at finde ud af, om et datasæt handler om dyr, kunne vi se efter ord som "hund", "kat", "fugl", der bruges flere gange. Gennem denne teknik, som en computer i stedet registrerer som ord og antallet af gange de optræder, kan en computer bedre forstå, hvad et datasæt handler om.',
           stemmingExplained:
-            'I en word cloud vil vi sandsynligvis have, at ordene "elske", "elskede" og "elsker" tælles som "elsk-". Heldigvis kan vi gennem et sæt regler kaldet "stemming", som skærer et ord ned til dets rod, gøre dette. Dette forbedrer nøjagtigheden af vores word cloud, og du kan vælge en stemming-metode til at bruge på vores word cloud ved hjælp af dropdown-menuen, hvis du ønsker det.',
+            'I en ordsky vil vi sandsynligvis have, at ordene "elske", "elskede" og "elsker" tælles som "elsk-". Heldigvis kan vi gennem et sæt regler kaldet "stamning", som skærer et ord ned til dets rod, gøre dette. Dette forbedrer nøjagtigheden af vores ordsky, og du kan vælge en Stamning-metode til at bruge på vores ordsky ved hjælp af dropdown-menuen, hvis du ønsker det.',
           stopwordsExplained:
-            'Vi ved, at de mest populære ord i teksten sandsynligvis er "den", "og", "er", "i", osv. Disse kaldes "stopord", og de fortæller os ikke meget om tekstens betydning og fylder virkelig meget i ordskyen. Derfor kan vi filtrere dem ud fra vores ordsky for at få en bedre idé om, hvad datasættet handler om. Du kan vælge en liste over stopord til at bruge på vores word cloud ved hjælp af dropdown-menuen nedenfor.',
+            'Vi ved, at de mest populære ord i teksten sandsynligvis er "den", "og", "er", "i", osv. Disse kaldes "stopord", og de fortæller os ikke meget om tekstens betydning og fylder virkelig meget i ordskyen. Derfor kan vi filtrere dem ud fra vores ordsky for at få en bedre idé om, hvad datasættet handler om. Du kan vælge en liste over stopord til at bruge på vores ordsky ved hjælp af dropdown-menuen nedenfor.',
           positionalGeneration:
-            'En af de enkleste måder at begynde at generere tekst på er at tage det mest almindelige første ord i hele datasættet, derefter det mest almindelige andet ord, derefter det tredje, og så videre. Du kan klikke på "generer" nedenfor for at se, hvordan det ser ud for dette datasæt, og knappen "hvordan" viser de ord, der var på position 0, 1, 2 (computere begynder faktisk at tælle fra 0) og så videre.',
+            'En af de enkleste måder at begynde at generere tekst på er at tage det mest almindelige første ord i hele datasættet, derefter det mest almindelige andet ord, derefter det tredje, og så videre. Du kan klikke på "generer" nedenfor for at se, hvordan det ser ud for dette datasæt, og knappen "hvordan" viser de ord, der var på position 1, 2, 3 osv.',
           nGramGeneration:
             'Mens positionsgenerering er enkel, bliver stopord de mest sandsynlige, jo længere vi kommer ind i teksten, og teksten begynder ofte at give mindre mening. Hvis vi ser "Klar, parat," i en tekst, ved vi altid, at "start" kommer bagefter, uanset hvilken position det er i sætningen. Derfor er det nyttigt at tænke på ord i grupper kaldet n-grammer. Et n-gram er n-ord, der optræder efter hinanden. Så hvis vi havde et 2-gram af "Klar, parat", kunne vi forudsige, at "start" er det mest sandsynlige næste ord. Nedenfor vil vi lave n-grammer på det valgte datasæt, og du kan eksperimentere med forskellige størrelser for at se, hvordan det ændrer outputtet. Når du har gjort det, kan du også beslutte, hvordan du vil vælge, hvad det næste ord er. Når vi tager det mest sandsynlige ord, kalder vi det en "grådig" tilgang. Dette er effektivt, men kan føre til uoriginal tekst. Derfor kan vi ved at tilføje tilfældighed, enten ved at vælge et ord tilfældigt eller vælge et i henhold til sandsynlighedsvægte (forestil dig at dreje på et cirkel diagram), gøre det lettere at få en original sætning, som ikke altid er den samme. I sprogmodeller kaldes graden af tilfældighed i en model for "temperatur".',
         },
@@ -606,13 +618,13 @@ const messages = {
         whatYouNeed:
           'Til denne lektion har du brug for en måde at skrive sætninger ned og klippe dem op i ord (f.eks. papir, saks, kuglepen). Det kan være almindeligt papir, men vi tilbyder også følgende skabeloner: <ul><li>Farve - 12 sætninger pr. side, 10 ord pr. sætning, op til 6 sider (71 sætninger) [<a href="/sentence-template.pdf" target="_blank">pdf</a>] [<a href="/sentence-template.docx" target="_blank">docx</a>]</li><li>Blækbesparende - 12 sætninger pr. side, 10 ord pr. sætning, op til 2 sider (23 sætninger) [<a href="/sentence-template-inksaver.pdf" target="_blank">pdf</a>] [<a href="/sentence-template-inksaver.docx" target="_blank">docx</a>]</li></ul>',
         learningGoals:
-          "I denne lektion vil vi forsøge at: <ul><li>Forstå hvordan tekst kan bearbejdes</li><li>Få en introduktion til tokenisering</li><li>Få en introduktion til Bag of Words som en teknik til at forstå, hvad en tekst handler om</li><li>Begynd at tænke på at generere tekst</li></ul>",
+          "I denne lektion vil vi forsøge at: <ul><li>Forstå hvordan tekst kan bearbejdes</li><li>Få en introduktion til tokenisering</li><li>Få en introduktion til ordposen som en teknik til at forstå, hvad en tekst handler om</li><li>Begynd at tænke på at generere tekst</li></ul>",
         intro:
           'I denne lektion lærer vi, hvordan computere kan forstå tekst og generere ny tekst. For at gøre det, har vi brug for et sæt sætninger (5 er nok minimum, men flere er bedre og der er ingen maksimum). Før du starter, overvej at have et tema for sætningerne f.eks. "folk introducerer sig selv" eller "meninger om en bog, du har læst for nylig". Det er ikke strengt nødvendigt, men det gør de ideer, vi underviser i, mere tydelige.',
         learningOutcomes:
-          "Forhåbentlig har du efter at have gennemført denne lektion: <ul><li>En forståelse for, hvordan tekstbearbejdning kan se ud</li><li>Evnen til at genkende ordet tokenisering</li><li>Har set og forstået bag of words og dets formål.</li><li>Har nogle ideer til hvad der giver god (og dårlig) tekst generering</li></ul>",
+          "Forhåbentlig har du efter at have gennemført denne lektion: <ul><li>En forståelse for, hvordan tekstbearbejdning kan se ud</li><li>Evnen til at genkende ordet tokenisering</li><li>Har set og forstået ordposen og dets formål.</li><li>Har nogle ideer til hvad der giver god (og dårlig) tekst generering</li></ul>",
         readMore:
-          'Du kan se præcis hvordan ChatGPT og OpenAIs GPT-modeller vil tokenisere tekst her: <a href="https://platform.openai.com/tokenizer" target="_blank">https://platform.openai.com/tokenizer</a><br><br>Denne hjemmeside vil automatisk oprette en bag of words med sandsynligheder baseret på enhver tekst, du giver den: <a href="https://www.online-utility.org/text/analyzer.jsp" target="_blank">https://www.online-utility.org/text/analyzer.jsp</a>',
+          'Du kan se præcis hvordan ChatGPT og OpenAIs GPT-modeller vil tokenisere tekst her: <a href="https://platform.openai.com/tokenizer" target="_blank">https://platform.openai.com/tokenizer</a><br><br>Denne hjemmeside vil automatisk oprette en ordpose med sandsynligheder baseret på enhver tekst, du giver den: <a href="https://www.online-utility.org/text/analyzer.jsp" target="_blank">https://www.online-utility.org/text/analyzer.jsp</a>',
         custom: {
           createSentences:
             "For at starte aktiviteten skal du skrive hver sætning på en separat linje og derefter skære hver sætning op i ord",
@@ -626,14 +638,14 @@ const messages = {
           whatFrequencySays:
             'Dette hjælper os med at se nogle ting. For det første ved vi nu, hvilke ord der er mest almindelige. Dette kan hjælpe os med at forstå, hvad teksten handler om. For eksempel, hvis vi ser ordene "papegøje" og "kanin" meget, kan vi gætte på, at teksten handler om dyr. Men udover dette kan de unikke ord fortælle os noget. Hvis vi kan se, at ordet "indhegning" kun bruges én gang, kan vi gætte på, at teksten handler om en zoologisk have i stedet for at handle om kæledyr. Så ved blot at se på ordene uden deres sætninger, kan vi stadig se hints til, hvad sætningerne oprindeligt handlede om. En begrænsning er, at hvis vi sagde, at vi IKKE var glade i en sætning, ville "glad" være i vores diagram, og vi ville ikke have nogen måde at vide, at det skulle betyde det modsatte.',
           createBagOfWords:
-            "En bag of words er en tekstbearbejdningsteknik, der går helt tilbage til 1950'erne. Ideen er, at ved at tælle antallet af gange hvert ord optræder, kan vi begynde at forstå, hvad teksten handler om. For at skabe din egen bag of words, samler du dit frekvensdiagram sammen til en bunke, eller en pose, hvis du har en",
-          bagOfWordsAlt: "Billede-eksempel af en bag of words",
+            "En ordpose er en tekstbearbejdningsteknik, der går helt tilbage til 1950'erne. Ideen er, at ved at tælle antallet af gange hvert ord optræder, kan vi begynde at forstå, hvad teksten handler om. For at skabe din egen ordpose, samler du dit frekvensdiagram sammen til en bunke, eller en pose, hvis du har en",
+          bagOfWordsAlt: "Billede-eksempel af en ordpose",
           whatBagOfWordsDoes:
             'Når en computer tokeniserer (splitter) en tekst, er det dette, den ender med. Hvad kan du tænke dig, at dette kunne bruges til? En anvendelse var i e-mail sikkerhed, hvor Gmail i årevis brugte det til at opdage spam - fordi spammere ville bruge ord som "penge", "nu" og "fare" meget mere end en almindelig e-mail ville. Det er også værd at tænke på, at selvom disse er individuelle ord som "hold", "mål", "leder", hvis disse individuelle ord optræder med ordet "bold", kan vi antage, at det handler om fodbold. Men "kontor" kan få os til at tænke, at det handler om arbejde. Så ord, der optræder sammen, er også vigtige, selvom vi mister den nøjagtige rækkefølge ved at klippe ordene over.',
           generateText:
             'Vi kan allerede generere tekst nu! Vælg et antal ord at trække, og træk dem tilfældigt ud fra posen eller bunken. Selvom vores "sætning" måske ikke giver mening, har vi stadig genereret ny tekst. Du kan fortsætte, indtil du løber tør for ord, eller tilføje ordet tilbage hver gang for at generere for evigt.',
           textGenerationAlt:
-            "Billede-eksempel af en person, der genererer tekst fra bag of words",
+            "Billede-eksempel af en person, der genererer tekst fra ordpose",
           probabilities:
             "Det kan også være nyttigt at overveje, at der faktisk er en meget lille chance for, at du ville trække en sætning, der gik ind i posen, i sin nøjagtige rækkefølge, og dermed generere en perfekt (men uoriginal) sætning. Der er også en lidt større, men stadig lille chance for, at du trækker noget nyt, der giver mening. Vi kan tænke på målet med tekstgenerering som at øge den sandsynlighed, at noget nyt og meningsfuldt genereres baseret på vores inputdata.",
         },

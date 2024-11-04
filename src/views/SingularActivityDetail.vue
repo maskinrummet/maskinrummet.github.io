@@ -11,9 +11,11 @@
         >
           {{ $t("selectADataset") }}
         </router-link>
-        >
+        > {{ $t(`singularActivities.${activity.id}.title`) }}
       </span>
-      {{ $t("currentActivity") }}
+      <span v-else>
+        {{ $t("selectADataset") }}
+      </span>
     </h3>
     <div v-if="activity">
       <div v-if="loading">

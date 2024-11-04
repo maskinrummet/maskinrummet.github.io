@@ -15,9 +15,8 @@
             </div>
           </div>
         </template>
-        <template #body="slotProps">
-          <TruncatedText :text="slotProps.data.text"></TruncatedText> </template
-      ></Column>
+        ></Column
+      >
     </DataTable>
     <form @submit="verify">
       <div class="flex justify-content-between">
@@ -48,11 +47,9 @@
 
 <script>
 import { verifyPassword } from "@/api";
-import TruncatedText from "./TruncatedText.vue";
 
 export default {
   name: "ShowDataset",
-  components: { TruncatedText },
   props: {
     dataset: {
       type: Object,

@@ -18,14 +18,21 @@
       <Button
         v-if="word.show"
         class="m-1"
-        severity="info"
+        :style="
+          word.backgroundColor
+            ? {
+                backgroundColor: word.backgroundColor,
+                border: '1px solid ' + word.backgroundColor,
+              }
+            : {}
+        "
         :disabled="!finishedGenerating"
         @click="(e) => $refs['pie_' + word.pos][0].show(e)"
         :ref="'button_' + word.pos"
       >
         {{ word.word }}
       </Button>
-      <!-- TODO: would be nice to have right left arrow keys to select, and would be nice to place overlay floating without w-full (currently a bug in PrimeVue) -->
+      <!-- TODO: would be nice to have right left arrow keys to select -->
       <OverlayPanel :ref="'pie_' + word.pos" class="w-30rem max-w-full">
         <div class="flex justify-content-between">
           <Button
@@ -60,7 +67,7 @@
         </div>
         <div class="flex justify-content-center m-2">
           <Button severity="contrast">
-            {{ $t("position") }}: {{ word.pos }}
+            {{ $t("position") }}: {{ word.pos + 1 }}
             {{
               word.pos === MAX_SENTENCE_LENGTH
                 ? `(${$t("maxSentenceLength")})`
@@ -75,12 +82,30 @@
             </Button>
           </div>
           <Button severity="contrast">=></Button>
-          <Button severity="help">
+          <Button
+            :style="
+              word.backgroundColor
+                ? {
+                    backgroundColor: word.backgroundColor,
+                    border: '1px solid ' + word.backgroundColor,
+                  }
+                : {}
+            "
+          >
             {{ word.word }}
           </Button>
         </div>
         <div v-else class="flex justify-content-center">
-          <Button severity="help">
+          <Button
+            :style="
+              word.backgroundColor
+                ? {
+                    backgroundColor: word.backgroundColor,
+                    border: '1px solid ' + word.backgroundColor,
+                  }
+                : {}
+            "
+          >
             {{ word.word }}
           </Button>
         </div>
@@ -89,23 +114,23 @@
     <Button
       v-if="generatedSentence.some((word) => !word.show)"
       class="m-1"
-      severity="info"
+      severity="contrast"
       :disabled="true"
     >
       <span class="loading"></span>
     </Button>
   </div>
   <div class="flex align-items-center" v-if="finishedGenerating">
-    <Button
+    <Message
       severity="success"
+      :closable="false"
       v-if="originalSentence"
-      disabled
       class="ml-auto"
-      >{{ $t("originalText") }}</Button
+      >{{ $t("originalText") }}</Message
     >
-    <Button severity="warning" v-else disabled class="ml-auto">{{
+    <Message severity="warn" v-else :closable="false" class="ml-auto">{{
       $t("unoriginalText")
-    }}</Button>
+    }}</Message>
     <Button
       class="my-3 ml-2 mr-auto"
       @click="
@@ -209,6 +234,19 @@ export default {
 </script>
 
 <style>
+.p-overlaypanel {
+  border: 2px solid var(--text-color-secondary);
+}
+
+.p-overlaypanel.p-overlaypanel::before {
+  border-bottom-color: var(--text-color-secondary);
+}
+
+.p-overlaypanel.p-overlaypanel-flipped::before {
+  border-top-color: var(--text-color-secondaryr);
+  border-bottom-color: transparent;
+}
+
 .loading::after {
   display: inline-block;
   animation: dotty steps(1, end) 1s infinite;

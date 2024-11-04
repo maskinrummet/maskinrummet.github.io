@@ -43,6 +43,9 @@ export default createStore({
       {
         id: "ngramTextGen",
       },
+      {
+        id: "bagOfWordsPrintout",
+      },
     ],
   },
   getters: {
