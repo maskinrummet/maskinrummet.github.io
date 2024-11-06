@@ -515,7 +515,7 @@ const messages = {
       "Minimum antal gange et ord skal optræde i teksten for at vises i vores ordsky",
     customFilterWords:
       "Ord, der skal udelukkes fra at blive vist i vores ordsky",
-    printOrSave: "Udskriv eller gem som PDF",
+    printOrSave: "Print eller gem som PDF",
     fontSize: "Skriftstørrelse",
     numColumns: "Antal kolonner",
     minOccurences:
@@ -527,7 +527,7 @@ const messages = {
       ngramTextGen: {
         title: "N-Gram Tekstgenerering",
       },
-      bagOfWordsPrintout: { title: "Ordpose udskrift" },
+      bagOfWordsPrintout: { title: "Print Ordpose" },
     },
     activities: {
       textCleaning: {

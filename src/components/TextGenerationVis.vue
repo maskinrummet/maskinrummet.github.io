@@ -18,14 +18,7 @@
       <Button
         v-if="word.show"
         class="m-1"
-        :style="
-          word.backgroundColor
-            ? {
-                backgroundColor: word.backgroundColor,
-                border: '1px solid ' + word.backgroundColor,
-              }
-            : {}
-        "
+        :style="getButtonColour(word)"
         :disabled="!finishedGenerating"
         @click="(e) => $refs['pie_' + word.pos][0].show(e)"
         :ref="'button_' + word.pos"
@@ -82,30 +75,12 @@
             </Button>
           </div>
           <Button severity="contrast">=></Button>
-          <Button
-            :style="
-              word.backgroundColor
-                ? {
-                    backgroundColor: word.backgroundColor,
-                    border: '1px solid ' + word.backgroundColor,
-                  }
-                : {}
-            "
-          >
+          <Button :style="getButtonColour(word)">
             {{ word.word }}
           </Button>
         </div>
         <div v-else class="flex justify-content-center">
-          <Button
-            :style="
-              word.backgroundColor
-                ? {
-                    backgroundColor: word.backgroundColor,
-                    border: '1px solid ' + word.backgroundColor,
-                  }
-                : {}
-            "
-          >
+          <Button :style="getButtonColour(word)">
             {{ word.word }}
           </Button>
         </div>
@@ -194,6 +169,7 @@ export default {
           },
         },
       },
+      otherColour: "#6F6F6F",
     };
   },
   methods: {
@@ -210,6 +186,13 @@ export default {
     },
     hideOverlay(pos) {
       this.$refs["pie_" + pos][0].hide();
+    },
+    getButtonColour(w) {
+      let c = w.backgroundColor ?? this.otherColour;
+      return {
+        backgroundColor: c,
+        border: "1px solid " + c,
+      };
     },
   },
   computed: {
