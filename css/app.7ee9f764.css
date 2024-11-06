@@ -1,1 +1,0 @@
-.clickable{cursor:pointer}.CodeMirror{font-family:var(--font-family)!important;font-size:1rem!important;font-weight:400!important}.loading:after{display:inline-block;animation:dotty 1s step-end infinite;content:""}@keyframes dotty{0%{content:""}25%{content:"."}50%{content:".."}75%{content:"..."}to{content:""}}
