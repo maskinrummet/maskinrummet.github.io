@@ -145,18 +145,25 @@ const messages = {
     how: "How?",
     position: "Position",
     previous: "Previous",
-    other: "Other",
+    othersWith: "Others with",
+    occurences: "occurences",
     wordCloud: "Word Cloud",
+    wordCloudExplained:
+      'In a word cloud, the more times a word appears, the larger it is shown. Using a word cloud, computers can start to understand what the dataset is about, and what the most important words are. For example, if we\'re trying to tell if a dataset is about animals, we might look for words like "dog", "cat", "bird", being used multiple times. Through this technique, which a computer instead records as words and the number of times they appear, a computer can better understand what a dataset is about.',
     positionalTextGeneration: "Positional Text Generation",
-    nGramsGeneration: "N-Grams Text Generation",
-    windowSize: "N-Gram size",
+    nGramsGeneration: "N-grams Text Generation",
+    windowSize: "N-gram size",
     startToken: "[START]",
     endToken: "[END]",
     maxSentenceLength: "Maximum allowed length",
     doNoStemming: "Perform no stemming",
     doNoStopwords: "Filter no stopwords",
     stemming: "Stemming",
+    stemmingExample:
+      "<b>lov<span style='color: red'>e</span><br/>lov<span style='color: red'>ing</span><br/>lov<span style='color: red'>ed</span><hr/>lov-",
     stopwords: "Stopwords",
+    stopwordsExample:
+      "<b>Denmark <span style='color: red'>is a</span> Nordic country <span style='color: red'>in the</span> south-central portion <span style='color: red'>of</span> Northern Europe <span style='color: red'>with a</span> population <span style='color: red'>of</span> nearly 6 million</b>",
     english: "English",
     danish: "Danish",
     french: "French",
@@ -168,6 +175,22 @@ const messages = {
     swedish: "Swedish",
     norwegian: "Norwegian",
     selectMethod: "Select method",
+    randomness: "Randomness",
+    randomnessExplained:
+      "Greedy, weighted random, and random are three options for how we can make our choice of word more or less random.",
+    greedyExplained:
+      "When we make a greedy choice, we choose whatever has the highest probability/slice in the pie chart, and therefore the selection is not random (doing it multiple times will result in the same choice).",
+    weightedRandomExplained:
+      "By using weighted random, we choose randomly based on the probabilities (imagine spinning the pie chart for each choice).",
+    randomExplained:
+      "In random, we select randomly based on all the options, ignoring the probabilities.",
+    whatIsTemperature:
+      "In large language models, they don't use these exact ways of choosing, but the amount of randomness the model uses is called: Temperature",
+    chooseWord: "Select word",
+    clear: "Clear",
+    ngrams: "N-grams",
+    leastLikely: "Less Likely",
+    mostLikely: "More Likely",
     greedy: "Greedy",
     random: "Random",
     weightedRandom: "Weighted Random",
@@ -187,7 +210,7 @@ const messages = {
       "Dataset bias is when a dataset is skewed towards certain topics, words, or phrases, which can lead to unfair choices or incorrect outputs from an AI trained on the dataset.",
     singularActivitiesHeading: "Unguided Activities",
     minWordCloudOccurences:
-      "Minimum number of times a word should appear in the text to appear in the word cloud:",
+      "Minimum antal forekomster i teksten for at være vist i ordskyen (brug dette til store, langsomme datasæt)",
     customFilterWords: "Words to exclude from being shown in the word cloud",
     printOrSave: "Print or save as PDF",
     fontSize: "Font size",
@@ -199,7 +222,10 @@ const messages = {
         title: "Word Cloud",
       },
       ngramTextGen: {
-        title: "N-Gram Text Generation",
+        title: "N-gram Text Generation",
+      },
+      positionalTextGen: {
+        title: "Positional Text Generation",
       },
       bagOfWordsPrintout: { title: "Bag of Words prinout" },
     },
@@ -271,18 +297,23 @@ const messages = {
         learningOutcomes:
           "Hopefully after completing this lesson you: <ul><li>Understand what stemming and stop words are, and how they can be used in text processing.</li><li>Have a better understanding of how computers can generate text, and how they can be creative, but also unreliable.</li><li>You should also have a better understanding of how randomness plays into text generation, and how it can be used to make text generation more creative.</li></ul>",
         readMore:
-          'You can try out a stemmer directly here: <a href="http://text-processing.com/demo/stem/" target="_blank">http://text-processing.com/demo/stem/</a><br><br>A nice explainer video on ngrams is available here: <a href="https://www.youtube.com/watch?v=E_mN90TYnlg" target="_blank">https://www.youtube.com/watch?v=E_mN90TYnlg</a>',
+          'You can try out a stemmer directly here: <a href="http://text-processing.com/demo/stem/" target="_blank">http://text-processing.com/demo/stem/</a><br><br>A nice explainer video on N-grams is available here: <a href="https://www.youtube.com/watch?v=E_mN90TYnlg" target="_blank">https://www.youtube.com/watch?v=E_mN90TYnlg</a>',
         custom: {
           wordCloudBelow:
-            'Below you can see a word cloud generated from the dataset you selected. The size of the words represents how often they appear in the dataset. Already from this, computers can start to understand what the dataset is about, and what the most important words are. For example, if we\'re trying to tell if a dataset is about animals, we might look for words like "dog", "cat", "bird", being used multiple times. Through this technique, which a computer instead records as words and the number of times they appear, a computer can better understand what a dataset is about.',
+            "Below you can see a word cloud generated from the dataset you selected",
           stemmingExplained:
             'In a word cloud, we probably want the words "love","loved" and "loving" to count as "lov-". Luckily, through a set of rules called "stemming", which cuts a word down to its root, we can do this. This improves the accuracy of the word cloud, and you can choose a stemming method to use on our word cloud using the dropdown if you like.',
           stopwordsExplained:
             'We know that the most popular words in text are probably "the", "and", "is", "in", etc. These are called "stop words", and they don\'t tell us much about the meaning of the text, and really clog the word cloud. Therefore, we can filter them out from our word cloud to get a better idea of what the dataset is about. You can choose a stop words list to use on our word cloud using the dropdown below.',
           positionalGeneration:
             'One of the simplest ways to start to generate text is to take the most common first word across the dataset, then the most common second word, then third, and so on. You can click generate below to see how it looks for this dataset, and the "how" button shows the words which were at position 1, 2, 3 and so on.',
+          positionalTextGenBreakdown:
+            "While positional generation works well at the start, you might notice as we get further into the sentence the probabilities and the positions become more messy. Therefore it might make sense to look at which words appear together, rather than when they appear. One way to do this is N-grams: groups of words appearing in the text. Below you can see  your datasets N-grams in a word cloud:",
+          topX: "How many of the most common N-grams to show",
+          introToSankey:
+            'As an example for how N-grams helps us generate text, if we see the 2-gram "Ready, steady," in a text, we know "go" will probably come next, no matter if that\'s position 1, 2, 3 or 5, 6, 7 or even 112, 113, 114. Below you can see the most common N-grams from your dataset, and the words which appeared after them.',
           nGramGeneration:
-            'While positional generation is simple, as we get further into the text, stop words become the most likely, and the text often starts to make less sense. Also, if we see "Ready, steady," in a text, we always know "go" is coming next, no matter what position in the sentence it is. Therefore, it\'s useful to think of words in groups called n-grams. An n-gram is n-words that appeared one after another. So, if we had a 2-gram of "Ready, steady", we could predict "go" is the most likely next word. Below we will do n-grams on the dataset you selected, and you can experiment with different sizes to see how it changes the output. When you\'ve done that, you can also decide how you want to choose what the next word is. When we take the most likely word, we call that a "greedy" approach. This is effective, but can lead to unoriginal text. Therefore, adding randomness, either by randomly choosing a word or choosing one according to probability weights (imagine spinning the pie chart), we can make it easier to get an original sentence, which isn\'t always the same. In language models, how much randomness there is in a model is called the \'temperature\'.',
+            "Below we will use N-grams for text generation on your dataset, and you can experiment with different Ns and randomness to see how it changes the output.",
         },
       },
       bagOfWordsPractical: {
@@ -470,18 +501,25 @@ const messages = {
     how: "Hvordan?",
     position: "Position",
     previous: "Forrige",
-    other: "Andet",
+    othersWith: "Andre med",
+    occurences: "optrædener",
     wordCloud: "Ordsky",
-    positionalTextGeneration: "Positional Tekstgenerering",
-    nGramsGeneration: "N-Grams Tekstgenerering",
-    windowSize: "N-Gram størrelse",
+    wordCloudExplained:
+      'I en ordsky: Jo flere gange ordet optræder i teksten, jo større er det. Fra en ordsky kan computere begynde at forstå, hvad datasættet handler om, og hvilke ord der er de vigtigste. For eksempel, hvis vi prøver at finde ud af, om et datasæt handler om dyr, kunne vi se efter ord som "hund", "kat", "fugl", der bruges flere gange. Gennem denne teknik, som en computer i stedet registrerer som ord og antallet af gange de optræder, kan en computer bedre forstå, hvad et datasæt handler om.',
+    positionalTextGeneration: "Positionstekstgenerering",
+    nGramsGeneration: "N-grams Tekstgenerering",
+    windowSize: "N-gram størrelse",
     startToken: "[START]",
     endToken: "[SLUT]",
     maxSentenceLength: "Maksimal tilladt længde",
     doNoStemming: "Udfør ingen stamning",
     doNoStopwords: "Filtrer ingen stopord",
     stemming: "Stamning",
+    stemmingExample:
+      "<b>elsk<span style='color: red'>er</span><br/>elsk<span style='color: red'>ede</span><br/>elsk<span style='color: red'>et</span><hr/>elsk-",
     stopwords: "Stopord",
+    stopwordsExample:
+      "<b>Danmark <span style='color: red'>er et</span> land <span style='color: red'>i</span> Skandinavien. <span style='color: red'>Det er den</span> sydligste <span style='color: red'>af de</span> skandinaviske nationer, sydvest <span style='color: red'>for</span> Sverige <span style='color: red'>og</span> syd <span style='color: red'>for</span> Norge, <span style='color: red'>og det</span> grænser <span style='color: red'>op til</span> Tyskland <span style='color: red'>mod</span> syd.</b>",
     english: "Engelsk",
     danish: "Dansk",
     french: "Fransk",
@@ -493,6 +531,22 @@ const messages = {
     swedish: "Svensk",
     norwegian: "Norsk",
     selectMethod: "Vælg metode",
+    randomness: "Tilfældighed",
+    randomnessExplained:
+      "Grådig, vægtet tilfældigt og tilfældig er tre muligheder for, hvordan vi kan gøre vores valg af ord mere eller mindre tilfældigt.",
+    greedyExplained:
+      "Når vi foretager et grådigt valg, vælger vi det, der har den højeste sandsynlighed/skive i cirkeldiagrammet, og derfor er valget ikke tilfældigt (dvs hvis vi gør det flere gange, vil det resultere i det samme valg).",
+    weightedRandomExplained:
+      "Ved at bruge vægtet tilfældighed vælger vi baseret på sandsynlighederne (forestil dig, at du drejer cirkeldiagrammet for hvert valg).",
+    randomExplained:
+      "I tilfældig vælger vi tilfældigt ud fra alle mulighederne og ignorerer sandsynlighederne.",
+    whatIsTemperature:
+      "I store sprogmodeller bruger de ikke helt disse måder at vælge ord på, men mængden af tilfældighed, som modellen bruger, kaldes: temperatur",
+    chooseWord: "Vælg ord",
+    clear: "Slet",
+    ngrams: "N-grams",
+    leastLikely: "Mindre sandsynligt",
+    mostLikely: "Mere sandsynligt",
     greedy: "Grådig",
     random: "Tilfældig",
     weightedRandom: "Vægtet tilfældigt",
@@ -512,7 +566,7 @@ const messages = {
       "Datasæt bias er, når et datasæt er partisk mod visse emner, ord eller sætninger, hvilket kan føre til uretfærdige valg eller forkerte resultater fra en AI trænet på datasættet.",
     singularActivitiesHeading: "Værktøjer",
     minWordCloudOccurences:
-      "Minimum antal gange et ord skal optræde i teksten for at vises i vores ordsky",
+      "Minimum antal gange et ord skal optræde i teksten for at vises i vores ordsky (brug dette til store, langsom datasæt)",
     customFilterWords:
       "Ord, der skal udelukkes fra at blive vist i vores ordsky",
     printOrSave: "Print eller gem som PDF",
@@ -525,7 +579,10 @@ const messages = {
         title: "Ordsky",
       },
       ngramTextGen: {
-        title: "N-Gram Tekstgenerering",
+        title: "N-gram Tekstgenerering",
+      },
+      positionalTextGen: {
+        title: "Positionstekstgenerering",
       },
       bagOfWordsPrintout: { title: "Print Ordpose" },
     },
@@ -597,18 +654,23 @@ const messages = {
         learningOutcomes:
           "Forhåbentlig efter at have gennemført denne lektion, kan du forstå:<ul><li>Hvad stamning og stop ord er, og hvordan de kan bruges i tekstbearbejdning</li><li> Hvordan computere kan generere tekst, og hvordan de kan være kreative, men også upålidelige</li><li> Hvordan tilfældighed kan påvirke tekstgenerering og medføre interessante og nogle gange uforudsigelige resultater.</li><li>Have en bedre forståelse af, hvordan tilfældighed spiller ind i tekst generering, og hvordan det kan bruges til at gøre tekstgenerering mere kreativ.</li></ul>",
         readMore:
-          'Du kan prøve en stemmer direkte her: <a href="http://text-processing.com/demo/stem/" target="_blank">http://text-processing.com/demo/stem/</a><br><br>En god forklarende video om ngrams er tilfængelig her: <a href="https://www.youtube.com/watch?v=E_mN90TYnlg" target="_blank">https://www.youtube.com/watch?v=E_mN90TYnlg</a>',
+          'Du kan prøve en stemmer direkte her: <a href="http://text-processing.com/demo/stem/" target="_blank">http://text-processing.com/demo/stem/</a><br><br>En god forklarende video om N-grams er tilfængelig her: <a href="https://www.youtube.com/watch?v=E_mN90TYnlg" target="_blank">https://www.youtube.com/watch?v=E_mN90TYnlg</a>',
         custom: {
           wordCloudBelow:
-            'Nedenfor kan du se en ordsky genereret fra det valgte datasæt. Størrelsen af ordene repræsenterer, hvor ofte de optræder i datasættet. Allerede ud fra dette kan computere begynde at forstå, hvad datasættet handler om, og hvilke ord der er de vigtigste. For eksempel, hvis vi prøver at finde ud af, om et datasæt handler om dyr, kunne vi se efter ord som "hund", "kat", "fugl", der bruges flere gange. Gennem denne teknik, som en computer i stedet registrerer som ord og antallet af gange de optræder, kan en computer bedre forstå, hvad et datasæt handler om.',
+            "Nedenfor kan du se en ordsky genereret fra det valgte datasæt",
           stemmingExplained:
             'I en ordsky vil vi sandsynligvis have, at ordene "elske", "elskede" og "elsker" tælles som "elsk-". Heldigvis kan vi gennem et sæt regler kaldet "stamning", som skærer et ord ned til dets rod, gøre dette. Dette forbedrer nøjagtigheden af vores ordsky, og du kan vælge en Stamning-metode til at bruge på vores ordsky ved hjælp af dropdown-menuen, hvis du ønsker det.',
           stopwordsExplained:
             'Vi ved, at de mest populære ord i teksten sandsynligvis er "den", "og", "er", "i", osv. Disse kaldes "stopord", og de fortæller os ikke meget om tekstens betydning og fylder virkelig meget i ordskyen. Derfor kan vi filtrere dem ud fra vores ordsky for at få en bedre idé om, hvad datasættet handler om. Du kan vælge en liste over stopord til at bruge på vores ordsky ved hjælp af dropdown-menuen nedenfor.',
           positionalGeneration:
             'En af de enkleste måder at begynde at generere tekst på er at tage det mest almindelige første ord i hele datasættet, derefter det mest almindelige andet ord, derefter det tredje, og så videre. Du kan klikke på "generer" nedenfor for at se, hvordan det ser ud for dette datasæt, og knappen "hvordan" viser de ord, der var på position 1, 2, 3 osv.',
+          positionalTextGenBreakdown:
+            "Mens positionsgenerering fungerer godt i starten, vil du måske bemærke, at når vi kommer længere ind i sætningen, bliver sandsynlighederne og positionerne mere rodede. Derfor kan det give mening at se på, hvilke ord der optræder sammen, i stedet for hvornår de optræder. En måde at gøre dette på er N-grammer: grupper af ord, der optræder i teksten. Nedenfor kan du se dine datasæts N-grammer i en ordsky:",
+          topX: "Hvor mange af de mest almindelige N-grammer, der skal vises",
+          introToSankey:
+            'Som et eksempel på, hvordan N-grammer hjælper os med at generere tekst, hvis vi ser 2-grammet "Klar, parat" i en tekst, ved vi, at "start" sandsynligvis kommer bagefter, uanset om det er position 1, 2, 3 eller 5, 6, 7 eller endda 112, 113, 114. Nedenfor kan du se de mest almindelige N-grammer fra dit datasæt og ordet, der kom efter dem.',
           nGramGeneration:
-            'Mens positionsgenerering er enkel, bliver stopord de mest sandsynlige, jo længere vi kommer ind i teksten, og teksten begynder ofte at give mindre mening. Hvis vi ser "Klar, parat," i en tekst, ved vi altid, at "start" kommer bagefter, uanset hvilken position det er i sætningen. Derfor er det nyttigt at tænke på ord i grupper kaldet n-grammer. Et n-gram er n-ord, der optræder efter hinanden. Så hvis vi havde et 2-gram af "Klar, parat", kunne vi forudsige, at "start" er det mest sandsynlige næste ord. Nedenfor vil vi lave n-grammer på det valgte datasæt, og du kan eksperimentere med forskellige størrelser for at se, hvordan det ændrer outputtet. Når du har gjort det, kan du også beslutte, hvordan du vil vælge, hvad det næste ord er. Når vi tager det mest sandsynlige ord, kalder vi det en "grådig" tilgang. Dette er effektivt, men kan føre til uoriginal tekst. Derfor kan vi ved at tilføje tilfældighed, enten ved at vælge et ord tilfældigt eller vælge et i henhold til sandsynlighedsvægte (forestil dig at dreje på et cirkel diagram), gøre det lettere at få en original sætning, som ikke altid er den samme. I sprogmodeller kaldes graden af tilfældighed i en model for "temperatur".',
+            "Nedenfor bruger vi N-grammer til tekstgenerering på dit datasæt, og du kan eksperimentere med forskellige N'er og tilfældigheder for at se, hvordan det ændrer resultatet.",
         },
       },
       bagOfWordsPractical: {

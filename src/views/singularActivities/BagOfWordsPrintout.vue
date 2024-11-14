@@ -4,7 +4,12 @@
       {{ $t("minOccurences") }}: {{ minOccurrences }}
     </p>
     <div class="flex justify-content-center mb-6">
-      <Slider v-model="minOccurrences" :min="1" :max="10" class="w-7" />
+      <Slider
+        v-model="minOccurrences"
+        :min="1"
+        :max="10"
+        class="w-7 max-w-20rem"
+      />
     </div>
     <p class="text-center mt-3 mb-3">{{ $t("numColumns") }}</p>
     <div class="flex justify-content-center mb-6">
@@ -49,13 +54,9 @@
 
 <script>
 import { getBagOfWords } from "@/views/activities/utils";
-import InputNumber from "primevue/inputnumber";
 
 export default {
   name: "WordCloud",
-  components: {
-    InputNumber,
-  },
   props: {
     dataset: {
       required: true,
@@ -94,6 +95,7 @@ export default {
     },
   },
   methods: {
+    // TODO: colour, font selection options? Could it be possible to download a DOCX instead?
     printBoW() {
       var prtContent = document.getElementById("printbox");
       var WinPrint = window.open(
@@ -102,6 +104,10 @@ export default {
         "left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0"
       );
       WinPrint.document.write(prtContent.innerHTML);
+      WinPrint.document.body.setAttribute(
+        "style",
+        "font-family: Inter var, sans-serif !important"
+      );
       WinPrint.document.close();
       WinPrint.focus();
       WinPrint.print();

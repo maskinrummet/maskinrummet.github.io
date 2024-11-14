@@ -1,17 +1,49 @@
 <template>
   <h5 v-if="techniqueName">{{ techniqueName }}</h5>
   <p v-if="techniqueName">{{ techniqueDescription }}</p>
-  <div class="flex justify-content-center">
+  <div class="flex justify-content-center align-items-center">
+    <Dropdown
+      v-model="selectionMethod"
+      :options="selectionMethodOptions"
+      :placeholder="$t('selectMethod')"
+      :optionLabel="({ i18nKey }) => $t(i18nKey)"
+      optionValue="value"
+      :disabled="generatedSentence.some((word) => !word.show)"
+    />
     <Button
       class="m-1"
       severity="success"
       @click="generate"
       :disabled="
-        disableGenerate || generatedSentence.some((word) => !word.show)
+        disableGenerate ||
+        !selectionMethod ||
+        generatedSentence.some((word) => !word.show)
       "
     >
       {{ $t("generate") }}
     </Button>
+  </div>
+  <div
+    class="flex my-3 mx-auto"
+    style="max-width: 50rem"
+    v-if="generatedSentence.length !== 0"
+  >
+    <div class="flex w-3 justify-content-start">
+      <p>{{ $t("mostLikely") }}</p>
+    </div>
+    <div class="flex w-6 justify-content-center mx-1">
+      <div
+        v-for="c in categoricalColours"
+        :style="{
+          backgroundColor: c,
+          width: 100 / categoricalColours.length + '%',
+        }"
+        :key="c"
+      ></div>
+    </div>
+    <div class="flex w-3 justify-content-end">
+      <p class="text-right">{{ $t("leastLikely") }}</p>
+    </div>
   </div>
   <div class="mt-2">
     <span v-for="word in generatedSentence" :key="word.pos">
@@ -122,7 +154,13 @@
 </template>
 
 <script>
-import { MAX_SENTENCE_LENGTH, cleanString } from "@/views/activities/utils";
+import {
+  MAX_SENTENCE_LENGTH,
+  categoricalColours,
+  cleanString,
+  otherColour,
+  selectionMethodOptions,
+} from "@/views/activities/utils";
 import {
   Chart as ChartJS,
   ArcElement,
@@ -159,6 +197,9 @@ export default {
   data() {
     return {
       MAX_SENTENCE_LENGTH,
+      selectionMethodOptions,
+      selectionMethod: null,
+      categoricalColours,
       generatedSentence: [],
       chartOptions: {
         responsive: true,
@@ -169,12 +210,12 @@ export default {
           },
         },
       },
-      otherColour: "#6F6F6F",
+      otherColour,
     };
   },
   methods: {
     generate() {
-      this.generatedSentence = this.generateFn();
+      this.generatedSentence = this.generateFn(this.selectionMethod);
       for (let i in this.generatedSentence) {
         setTimeout(() => {
           this.generatedSentence[i].show = true;

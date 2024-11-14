@@ -27,6 +27,7 @@ import Textarea from "primevue/textarea";
 import VueWordCloud from "vuewordcloud";
 
 import StepperButtons from "@/components/StepperButtons.vue";
+import InputNumber from "primevue/inputnumber";
 
 export default {
   Button,
@@ -54,6 +55,7 @@ export default {
   Dialog,
   Checkbox,
   Textarea,
+  InputNumber,
   VueWordCloud,
   StepperButtons,
 };

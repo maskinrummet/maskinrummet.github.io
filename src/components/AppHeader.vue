@@ -4,7 +4,7 @@
       <router-link :to="'/' + $i18n.locale">
         <Button class="p-button-link p-0 px-2 mr-1">
           <img
-            src="@/assets/logo.png"
+            src="@/assets/logo.svg"
             alt="Logo"
             class="h-8"
             width="35"

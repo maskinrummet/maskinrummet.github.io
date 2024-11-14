@@ -11,6 +11,7 @@
   "dependencies": {
     "axios": "^1.7.2",
     "chart.js": "^4.4.2",
+    "chartjs-chart-sankey": "^0.13.0",
     "codemirror": "^5.65.18",
     "codemirror-editor-vue3": "^2.8.0",
     "core-js": "^3.8.3",

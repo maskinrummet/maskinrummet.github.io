@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="flex justify-content-center">
-      <div class="w-9 p-3 h-15rem border-2 border-round-md">
+      <div class="w-9 p-3 h-30rem border-2 border-round-md">
         <VueWordCloud
           :spacing="1 / 2"
           :words="bagOfWords"
@@ -13,8 +13,8 @@
         <ProgressBar
           v-if="loading"
           mode="indeterminate"
-          class="w-6 m-auto"
-          style="margin-top: -7rem !important"
+          class="w-9 m-auto h-2rem"
+          style="margin-top: -15rem !important"
         >
         </ProgressBar>
       </div>
@@ -23,7 +23,12 @@
       {{ $t("minWordCloudOccurences") }}: {{ minOccurrences }}
     </p>
     <div class="flex justify-content-center mb-6">
-      <Slider v-model="minOccurrences" :min="1" :max="10" class="w-7" />
+      <Slider
+        v-model="minOccurrences"
+        :min="1"
+        :max="10"
+        class="w-7 max-w-20rem"
+      />
     </div>
     <div class="flex justify-content-center">
       <Dropdown
