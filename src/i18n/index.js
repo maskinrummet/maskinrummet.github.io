@@ -215,6 +215,7 @@ const messages = {
     printOrSave: "Print or save as PDF",
     fontSize: "Font size",
     numColumns: "Number of columns",
+    numRows: "Number of rows per table",
     minOccurences:
       "Minimum number of times a word should appear to be included",
     singularActivities: {
@@ -227,7 +228,15 @@ const messages = {
       positionalTextGen: {
         title: "Positional Text Generation",
       },
-      bagOfWordsPrintout: { title: "Bag of Words prinout" },
+      bagOfWordsPrintout: {
+        title: "Bag of Words printout",
+        custom: {
+          printForCutting: "Print for easy cutting",
+          printAsPage: "Print as a handout",
+          cuttingGuide:
+            "<h1>Bag of Words cutting guide:</h1><h3>Folds:</h3><ul><li><strong>Red Line:</strong> Fold the paper carefully along the red line marked (1). The more neat this fold, the better the cutting will be at the end</li><li><strong>Blue Line:</strong> Fold along the blue line marked (2) next</li><li><strong>Green Line:</strong> Fold along the green line marked (3), so that you can see the coloured table facing you for the next step</li></ul><h3>Cutting:</h3><ul><li><strong>Purple Lines:</strong> Cut along the purple lines <em>all the way to the edges</em> of the paper, to remove the margin from the bottom and left edges.</li><li><strong>Orange Lines:</strong> Cut along the orange lines, but <em>do not cut all the way through to the edge</em>. Stop just at the margin, to make the next step easier</li><li><strong>Yellow Lines:</strong> Cut along the yellow lines, you do not need to cut out any blank boxes - they will all be empty. You should end with neat, same-size words to make your bag of words :)</li></ul>",
+        },
+      },
     },
     activities: {
       textCleaning: {
@@ -572,6 +581,7 @@ const messages = {
     printOrSave: "Print eller gem som PDF",
     fontSize: "Skriftstørrelse",
     numColumns: "Antal kolonner",
+    numRows: "Antal rækker i tabellen",
     minOccurences:
       "Minimum antal gange et ord skal optræde for at blive inkluderet",
     singularActivities: {
@@ -584,7 +594,15 @@ const messages = {
       positionalTextGen: {
         title: "Positionstekstgenerering",
       },
-      bagOfWordsPrintout: { title: "Print Ordpose" },
+      bagOfWordsPrintout: {
+        title: "Print Ordpose",
+        custom: {
+          printForCutting: "Print til nem klipning",
+          printAsPage: "Print som handout",
+          cuttingGuide:
+            "<h1>Vejledning til klipning af ordposen:</h1><h3>Foldning:</h3><ul><li><strong>Rød linje:</strong> Fold papiret langs den røde linje markeret (1). Jo mere nøjagtig denne fold er, desto bedre bliver resultatet, når du klipper til sidst.</li><li><strong>Blå linje:</strong> Fold derefter langs den blå linje markeret (2).</li><li><strong>Grøn linje:</strong> Fold langs den grønne linje markeret (3), så du kan se den farvede tabel til næste trinet.</li></ul><h3>Klipning:</h3><ul><li><strong>Lilla linjer:</strong> Klip langs de lilla linjer <em>hele vejen til kanterne</em> af papiret for at fjerne marginerne fra bunden og venstre kant.</li><li><strong>Orange linjer:</strong> Klip langs de orange linjer, men <em>klip ikke helt igennem til kanten</em>. Stop lige ved margin for at gøre det næste trin nemmere.</li><li><strong>Gule linjer:</strong> Klip langs de gule linjer, du behøver ikke at klippe de blank bokse ud - de er tomme. Du burde ende med pæne ord i samme størrelse til din ordpose :)</li></ul>",
+        },
+      },
     },
     activities: {
       textCleaning: {
