@@ -218,6 +218,12 @@ const messages = {
     numRows: "Number of rows per table",
     minOccurences:
       "Minimum number of times a word should appear to be included",
+    hourOfAI: {
+      hourOfAITitle: "My Paper Language Model",
+      ages: "Ages 10-12 years old",
+      teachingPoint: "Teaching points",
+      questions: "Questions",
+    },
     singularActivities: {
       wordCloud: {
         title: "Word Cloud",
