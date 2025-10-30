@@ -363,6 +363,19 @@ const messages = {
             "It can also be useful to consider the fact that theres actually a very small chance that you would pull out a sentence that went into the bag, in its exact order, and therefore generate a perfect (but unoriginal) sentence. Theres also a slightly bigger, but still small chance that you pull out something new that makes sense. We can think of the goal of text generation as being a task of increasing the probability that something new and that makes sense is generated based on our input data.",
         },
       },
+      wheelOfWords: {
+        title: "Wheel of Words",
+        description:
+          "In this lesson we will look at how probability and pie charts can be used to build text generation systems",
+        whatYouNeed: "For this lesson you will need to print a template",
+        learningGoals: "Probability, Bias, ...",
+        intro: "etc",
+        learningOutcomes: "etc",
+        readMore: "etc",
+        custom: {
+          addAnythingElseHere: "etc",
+        },
+      },
     },
   },
   da: {

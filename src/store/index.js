@@ -35,6 +35,14 @@ export default createStore({
         topics: ["textGeneration", "datasetBias"],
         duration: 20,
       },
+      {
+        id: "wheelOfWords",
+        modality: "practical",
+        subject: "anySubject",
+        age: 6,
+        topics: ["textGeneration", "datasetBias"],
+        duration: 45,
+      },
     ],
     singularActivities: [
       {
