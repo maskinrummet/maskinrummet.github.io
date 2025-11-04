@@ -219,10 +219,70 @@ const messages = {
     minOccurences:
       "Minimum number of times a word should appear to be included",
     hourOfAI: {
-      hourOfAITitle: "My Paper Language Model",
-      ages: "Ages 10-12 years old",
+      hourOfAITitle: "Build your own language model from paper",
+      ages: "Ages 10-16",
       teachingPoint: "Teaching points",
+      acks: "including links to the CSEdWeek and HourofAI.org websites, that says the following: The Hour of AI is a global campaign from CSforALL, in collaboration with Code.org.",
       questions: "Questions",
+      intro:
+        "<b>Invite your students to build their own sentence generator from paper. Students get a hands-on experience seeing how text becomes data and how this data becomes an AI model. Through this, they should learn that AI systems use data to make decisions or predictions [AI Big Ideas TODO], in this case by generating text</b><br><br>In this lesson the students start by writing sentences about themselves, in groups collect their sentences to datasets, and from these datasets create a simple sentence generation model. This is a very open exercise, where you can let the students explore and reflect on the steps independently, and we also provide some reflection questions to help you structure some reflections on how computers can generate text. With this lesson we aim to give them a hands-on experience and sense that they can be part of creating technology like text generation systems, through a simple paper-based example. A lesson plan summarising the content on this page is available here: [TODO], or alternatively you can print this page.",
+      whatYouNeed:
+        "TODOTechnically, you can do this exercise with only blank pieces of paper! But, we have provided a template for the students to write their sentences on (so that it's easier to rip it into words) [Print one per 10 students]; and a template for paper pie charts to visualise their dataset in the optional step 6 [Print one per group].",
+      step: "Step",
+      learningOutcomes:
+        "At the end of this lesson, students should be able to reflect on how text can become data (ripping it, creating piles), and how this data can be used to create models which can generate/predict new data. It may be that they understand language models as probabilistic systems, which do not generate *the* answer, but randomly generate *an* answer based on existing input and data.",
+      steps: [
+        {
+          text: "Each student writes a four-word sentence about themselves on a piece of paper. If using the template [TODO], students should write the first word in the red box.",
+          teachingPoint:
+            "The later steps where we create a model based on this data, in our experience, work best if the sentences end up quite similar, so we ideally want them to be simply structured and using similar words. This happens somewhat automatically when we ask them to write about themselves (the majority write I as the first word and follow this with a verb such as love). You can also further influence the similarities of the sentences, by giving examples: 'I love playing football' and 'I like to swim', or you could specify that the stucture should be <noun> <verb> <adjective> <noun>, but this is not necessary.",
+          questions: "",
+          imageLink: "images/write-slip.jpg",
+        },
+        {
+          text: "The sentence should be ripped into individual words.",
+          teachingPoint: "",
+          questions:
+            "<ul><li>Could a computer split words up like the students can? Usually we train a model to figure this out, but a simple method can be to split sentences by spaces and punctuation.</li><li>What makes something a word? Should “football” be ripped into two words or is it one? This can be interesting to discuss for language teachers, as it hits something fundamental in syntax and word origins and can be different in different languages.</li></ul>",
+          imageLink: "images/ripped-slip.jpg",
+        },
+        {
+          text: "Students work in groups of three or more to create “word piles”: all first words in one pile, all second words in another, and so on. Students should then analyse these piles for patterns, such as common words, unique words, and structures in the sentences. Sample reflection questions are provided below",
+          teachingPoint:
+            "4-5 students is an ideal group size. If the groups are smaller, students can also write multiple sentences so that there are still 4-5 sentences in their group.<br> Here we want to encourage the students to look for patterns and be curious, there are no wrong answers! ",
+          questions:
+            "<ul><li>What is the most common word? This is most likely 'I' based on the task, but there can also be common verbs or prepositions</li><li>Could someone put the sentences back together if they wanted to? This is a key point, something has been lost in the process of ripping the sentences up, so we often can't know how to put the sentences back together (if we ignore handwriting)</li><li>Are there patterns in the piles? For example, we might expect verbs in the second pile, and some mix of nouns, activities, and prepositions in the third and fourth</li><li>Would we know this is people saying something about themselves? Often the answer is yes, as there are words like names, I, and descriptive words or hobbies</li><li>Are these sentences using positive or negative words? Hopefully we get happy sentences, but again we might make the point that this can be tough to know, because we have lost some of the context (e.g. 'I am not happy' would give us the very positive word 'happy' but we don't know it was followed by NOT</li></ul>",
+          imageLink: "images/pooled-slip.jpg",
+        },
+        {
+          text: 'Students can draw one word from each pile randomly to "generate" a new sentence, considering whether these combinations make sense and how probable they are.',
+          teachingPoint: "TODO",
+          questions: "",
+          imageLink: "images/pool-generation.jpg",
+        },
+        {
+          text: 'Optionally, each pile can be visualised with a pie chart, which can be spun like a "wheel of fortune" sequentially to generate a new sentence',
+          teachingPoint:
+            "There is a printout available so that the students can draw and create their own pie charts, and we really recommend this [Printout2_ProbabilityWheels.pdf]. To “spin” the pie charts, we typically put a paper clip in the centre, hold it still with a pen, and flick it so that it spins around. You can also just spin them on a table or use a thumbtack.",
+          questions: "",
+          imageLink: "images/pies.jpg",
+        },
+        {
+          text: "Using either the text generation method from step 5 (pulling a random word) or step 6 (spinning the pie charts) students should generate and write down 5-10 new sentences. Finally, the groups can reflect on their personal small language model",
+          teachingPoint:
+            "Sample questions are provided below. In general, we want to engage them as designers - what is good. Is a model with one word per position good because it will always make sense? Or is a good model interesting, even though it means sometimes it may not make complete sense?",
+          questions:
+            "When will this model work well? (luck and probability, data quality)<br>How could we improve this model? (more data? rules?)<br>Could this generate a sentence about you? How could you use it?",
+          imageLink: "images/spinning-wheels.jpg",
+        },
+        {
+          text: "[Optional extensions] Redesigning new, better piles/pie charts or making a model for a specific purpose:",
+          teachingPoint:
+            "Here is an example of our “once upon a billion” model which is an extension of this concept. With 9 wheels of 10 words, there are a billion possible stories to be generated here.",
+          questions: "",
+          imageLink: "images/once-upon-a-billion.jpg",
+        },
+      ],
     },
     singularActivities: {
       wordCloud: {
