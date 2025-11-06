@@ -1,19 +1,12 @@
 <template>
-  <div
-    class="flex align-items-center justify-content-center flex-wrap pt-5 gap-4"
-  >
+  <div class="flex justify-content-center pt-5">
     <img
       class="h-3rem"
-      src="@/assets/hour-of-ai-logo.png"
-      alt="Hour of AI logo"
-    />
-    <p class="h-3rem text-4xl font-bold m-1">X</p>
-    <img
-      class="h-3rem"
-      src="@/assets/au-logo.png"
-      alt="Aarhus University Logo"
+      src="@/assets/kombineretlogo.jpg"
+      alt="Aarhus University and Hour of AI logo"
     />
   </div>
+
 
   <div class="flex align-items-center justify-content-center flex-wrap p-5">
     <div class="text-4xl mr-5">
@@ -54,7 +47,7 @@
       <div
         v-for="({ text, teachingPoint, questions, imageLink }, i) in steps"
         :key="i"
-        class="flex flex-row flex-wrap w-full h-full bg-white border-solid border-gray-200 border-round p-3 mb-3"
+        class="flex lg:flex-row flex-column w-full h-full bg-white border-solid border-gray-200 border-round p-3 mb-3"
       >
         <!-- Left side -->
         <div
@@ -69,7 +62,8 @@
           />
         </div>
 
-        <Divider layout="vertical" />
+        <Divider class="block lg:hidden" layout='horizontal' />
+        <Divider class="hidden lg:block" layout='vertical'/>
         <!-- Right side -->
         <div
           class="flex flex-column align-items-center justify-content-start flex-1 gap-4"
