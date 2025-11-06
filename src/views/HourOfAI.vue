@@ -5,7 +5,7 @@
     <img
       class="h-3rem"
       src="@/assets/hour-of-ai-logo.png"
-      alt="Hour of AI logo"
+      alt="Hour of AI Logo"
     />
     <p class="h-3rem text-4xl font-bold m-1">X</p>
     <img
@@ -50,13 +50,11 @@
 
   <Fieldset legend="Steps" :toggleable="true" class="mb-3 surface-100">
     <div class="flex flex-row flex-wrap w-full h-full">
-      <!-- Step 1 -->
       <div
         v-for="({ text, teachingPoint, questions, imageLink }, i) in steps"
         :key="i"
         class="flex flex-row flex-wrap w-full h-full bg-white border-solid border-gray-200 border-round p-3 mb-3"
       >
-        <!-- Left side -->
         <div
           class="flex flex-column align-items-center justify-content-start flex-1"
         >
@@ -70,7 +68,6 @@
         </div>
 
         <Divider layout="vertical" />
-        <!-- Right side -->
         <div
           class="flex flex-column align-items-center justify-content-start flex-1 gap-4"
         >

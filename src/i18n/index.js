@@ -218,22 +218,23 @@ const messages = {
     numRows: "Number of rows per table",
     minOccurences:
       "Minimum number of times a word should appear to be included",
+    hourOfAILink: "Hour of AI",
     hourOfAI: {
       hourOfAITitle: "Build your own language model from paper",
       ages: "Ages 10-16",
       teachingPoint: "Teaching points",
-      acks: "including links to the CSEdWeek and HourofAI.org websites, that says the following: The Hour of AI is a global campaign from CSforALL, in collaboration with Code.org.",
-      questions: "Questions",
+      acks: 'These activities are developed at <a href="https://cctd.au.dk" target="_blank">the Center for Computational Thinking and Design at Aarhus University</a> in collaboration with the <a href="https://www.tekforstaa.dk" target="_blank">Research Center for Technology Comprehension</a>, contact us here: <a href="mailto:luke@cs.au.dk">luke@cs.au.dk</a><br><br><a href="https://hourofai.org" target="_blank">The Hour of AI</a> is a global campaign from <a href="https://csforall.org" target="_blank">CSforALL</a>, in collaboration with <a href="https://code.org" target="_blank">Code.org</a>. Take part in <a href="https://csedweek.org" target="_blank">CS Ed Week</a>!',
+      questions: "Questions to ask students",
       intro:
-        "<b>Invite your students to build their own sentence generator from paper. Students get a hands-on experience seeing how text becomes data and how this data becomes an AI model. Through this, they should learn that AI systems use data to make decisions or predictions [AI Big Ideas TODO], in this case by generating text</b><br><br>In this lesson the students start by writing sentences about themselves, in groups collect their sentences to datasets, and from these datasets create a simple sentence generation model. This is a very open exercise, where you can let the students explore and reflect on the steps independently, and we also provide some reflection questions to help you structure some reflections on how computers can generate text. With this lesson we aim to give them a hands-on experience and sense that they can be part of creating technology like text generation systems, through a simple paper-based example. A lesson plan summarising the content on this page is available here: [TODO], or alternatively you can print this page.",
+        "<b>Invite your students to build their own sentence generator from paper. Students get a hands-on experience seeing how text becomes data and how this data becomes an AI model. Through this, they should learn that AI systems use data to make decisions or predictions, in this case generating text by predicting the words in a sentence</b><br><br>In this lesson the students start by writing sentences about themselves, in groups collect their sentences to datasets, and from these datasets create a simple sentence generation model. This is a very open exercise, where you can let the students explore and reflect on the steps independently, and we also provide some reflection questions to help you structure some reflections on how computers can generate text. With this lesson we aim to give them a hands-on experience and sense that they can be part of creating technology like text generation systems, through a simple paper-based example. A lesson plan summarising the content on this page is available here: [TODO], or alternatively you can print this page.",
       whatYouNeed:
-        "TODOTechnically, you can do this exercise with only blank pieces of paper! But, we have provided a template for the students to write their sentences on (so that it's easier to rip it into words) [Print one per 10 students]; and a template for paper pie charts to visualise their dataset in the optional step 6 [Print one per group].",
+        'Before getting started, read the activity steps below. You can do this exercise with only blank pieces of paper! But, we have provided <a href="https://drive.google.com/file/d/1g0yrUjSlLW2x-ilAPSOxN2mFeggisYWh/view?usp=sharing" target="_blank">a template for the students to write their sentences on in step 1</a> [Print one copy per 12 students]; and <a href="https://drive.google.com/file/d/1GyLYVv1v0kkl8hay1X_GdnYpRvv-SrZ0/view?usp=sharing" target="_blank">a template for paper pie charts to visualise their dataset in the optional step 5</a> [Print one copy per group]. When they should write the sentences down in step 6, you could make a worksheet for reflection either on the model, or some subject -  here are examples/inspiration for <a href="https://drive.google.com/file/d/1Dw8oK5EXz3JpQ-2ek3JcNKnSJkFoo3zh/view?usp=sharing" target="_blank">language subjects</a> and <a href="https://drive.google.com/file/d/1gw5-MWAP-Z_92y9njckY4etJjCqsEiBL/view?usp=sharing" target="_blank">mathematics</a>.',
       step: "Step",
       learningOutcomes:
         "At the end of this lesson, students should be able to reflect on how text can become data (ripping it, creating piles), and how this data can be used to create models which can generate/predict new data. It may be that they understand language models as probabilistic systems, which do not generate *the* answer, but randomly generate *an* answer based on existing input and data.",
       steps: [
         {
-          text: "Each student writes a four-word sentence about themselves on a piece of paper. If using the template [TODO], students should write the first word in the red box.",
+          text: 'Each student writes a four-word sentence about themselves on a piece of paper. If using <a href="https://drive.google.com/file/d/1g0yrUjSlLW2x-ilAPSOxN2mFeggisYWh/view?usp=sharing" target="_blank">the template</a>, students should write the first word in the red box.',
           teachingPoint:
             "The later steps where we create a model based on this data, in our experience, work best if the sentences end up quite similar, so we ideally want them to be simply structured and using similar words. This happens somewhat automatically when we ask them to write about themselves (the majority write I as the first word and follow this with a verb such as love). You can also further influence the similarities of the sentences, by giving examples: 'I love playing football' and 'I like to swim', or you could specify that the stucture should be <noun> <verb> <adjective> <noun>, but this is not necessary.",
           questions: "",
@@ -243,11 +244,11 @@ const messages = {
           text: "The sentence should be ripped into individual words.",
           teachingPoint: "",
           questions:
-            "<ul><li>Could a computer split words up like the students can? Usually we train a model to figure this out, but a simple method can be to split sentences by spaces and punctuation.</li><li>What makes something a word? Should “football” be ripped into two words or is it one? This can be interesting to discuss for language teachers, as it hits something fundamental in syntax and word origins and can be different in different languages.</li></ul>",
+            "<ul><li><b>Could a computer split words up like we can?</b> Usually we train a model to figure this out, but a simple method can be to split sentences by spaces and punctuation.</li><li><b>What makes something a word? Should “football” be ripped into two words or is it one?</b> This can be interesting to discuss for language teachers, as it hits something fundamental in syntax and word origins and can be different in different languages.</li></ul>",
           imageLink: "images/ripped-slip.jpg",
         },
         {
-          text: "Students work in groups of three or more to create “word piles”: all first words in one pile, all second words in another, and so on. Students should then analyse these piles for patterns, such as common words, unique words, and structures in the sentences. Sample reflection questions are provided below",
+          text: "Students work in groups of three or more to create “word piles”: all first words in one pile, all second words in another, and so on. Students should then analyse these piles for patterns, such as common words, unique words, and structures in the sentences. Sample reflection questions are provided.",
           teachingPoint:
             "4-5 students is an ideal group size. If the groups are smaller, students can also write multiple sentences so that there are still 4-5 sentences in their group.<br> Here we want to encourage the students to look for patterns and be curious, there are no wrong answers! ",
           questions:
@@ -256,29 +257,38 @@ const messages = {
         },
         {
           text: 'Students can draw one word from each pile randomly to "generate" a new sentence, considering whether these combinations make sense and how probable they are.',
-          teachingPoint: "TODO",
+          teachingPoint:
+            "The key thing to highlight here is that the number of times words are used impacts the probability that we draw them, which impacts the sentences we can generate. The sentences which are wrong or weird can be the most engaging for students, and also help to show how mistakes happen when we use probability as a basis for text generation.",
           questions: "",
           imageLink: "images/pool-generation.jpg",
         },
         {
           text: 'Optionally, each pile can be visualised with a pie chart, which can be spun like a "wheel of fortune" sequentially to generate a new sentence',
           teachingPoint:
-            "There is a printout available so that the students can draw and create their own pie charts, and we really recommend this [Printout2_ProbabilityWheels.pdf]. To “spin” the pie charts, we typically put a paper clip in the centre, hold it still with a pen, and flick it so that it spins around. You can also just spin them on a table or use a thumbtack.",
+            '<a href="https://drive.google.com/file/d/1GyLYVv1v0kkl8hay1X_GdnYpRvv-SrZ0/view?usp=sharing" target="_blank">There is a printout available so that the students can draw and create their own pie charts here</a>. To “spin” the pie charts, we typically put a paper clip in the centre, hold it still with a pen, and flick it so that it spins around. You can also just spin them on a table or use a thumbtack.',
           questions: "",
           imageLink: "images/pies.jpg",
         },
         {
-          text: "Using either the text generation method from step 5 (pulling a random word) or step 6 (spinning the pie charts) students should generate and write down 5-10 new sentences. Finally, the groups can reflect on their personal small language model",
+          text: "Using either the text generation method from step 5 (pulling a random word) or step 6 (spinning the pie charts) students should generate and write down 5-10 new sentences.",
           teachingPoint:
-            "Sample questions are provided below. In general, we want to engage them as designers - what is good. Is a model with one word per position good because it will always make sense? Or is a good model interesting, even though it means sometimes it may not make complete sense?",
+            'Remember to walk around and observe what the students do - are there interesting sentences or mistakes? These can be valuable to bring up in reflecting together as a class later. They can write their sentences down anywhere, but we also have example templates for how you might make it more subject relevant for <a href="https://drive.google.com/file/d/1Dw8oK5EXz3JpQ-2ek3JcNKnSJkFoo3zh/view?usp=sharing" target="_blank">language subjects</a> and <a href="https://drive.google.com/file/d/1gw5-MWAP-Z_92y9njckY4etJjCqsEiBL/view?usp=sharing" target="_blank">mathematics</a>.',
           questions:
-            "When will this model work well? (luck and probability, data quality)<br>How could we improve this model? (more data? rules?)<br>Could this generate a sentence about you? How could you use it?",
+            "<ul><li>What was the most likely sentence? Did you generate it? Sometimes this won't happen - we are dealing with trials here rather than probability directly</li><li>Who got the funniest/silliest/most interesting sentence?</li><li>Would a person make the same mistakes as this model? The answer is probably not, because as people we understand relationships between words and grammar, but this model has no way to understand that, it only sees words and their positions in the sentence</li></ul>",
           imageLink: "images/spinning-wheels.jpg",
+        },
+        {
+          text: "Finally, the groups can reflect on their personal small language model",
+          teachingPoint:
+            'Sample questions are provided below. In general, we want to engage them as designers - what is a "good" language model. Is a model with one word per position good because it will always make sense? Or is a good model interesting, even though it means sometimes it may not make complete sense?',
+          questions:
+            '<ul><li>When will this model work well? It will work well with quality data for this specific domain. If the question was "Explain what science is", our model would not work as well</li><li>How many of the 5-10 sentences you generated made sense?</li><li>How could we make the model better? One way would be to increase the probability that the sentences make sense. We could collect more data, make some rules for what kinds of words come after each other, or we limit the domain even more than "Something about yourself" to for example how old you are</li></ul>',
+          imageLink: "images/create-new.jpg",
         },
         {
           text: "[Optional extensions] Redesigning new, better piles/pie charts or making a model for a specific purpose:",
           teachingPoint:
-            "Here is an example of our “once upon a billion” model which is an extension of this concept. With 9 wheels of 10 words, there are a billion possible stories to be generated here.",
+            "This can be a fun final step in the activity - give them extra wheels or pieces of paper and ask them to make wheels, piles, or rules that result in a better text generation model (better can be many things - more creative, better grammar, more sentences that are true - you can either define this for the students or ask them afterwards what they took better to mean). Here is an example of our “once upon a billion” model which is an extension of this concept. With 9 wheels of 10 words, there are a billion possible stories to be generated here.",
           questions: "",
           imageLink: "images/once-upon-a-billion.jpg",
         },

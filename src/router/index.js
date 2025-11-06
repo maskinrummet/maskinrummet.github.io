@@ -54,7 +54,7 @@ const routes = [
   {
     path: getPath("/hour-of-ai"),
     component: HourOfAI,
-    name: getName("hour-of-ai"),
+    name: getName("hourOfAILink"),
   },
   {
     path: getPath("/:pathMatch(.*)*"),

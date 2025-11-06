@@ -68,7 +68,10 @@ export default {
         },
         { label: this.$t("about"), route: `/${this.$i18n.locale}/about` },
         { label: this.$t("contact"), route: `/${this.$i18n.locale}/contact` },
-        { label: this.$t("Hour of AI"), route: `/${this.$i18n.locale}/hour-of-ai` },
+        {
+          label: this.$t("hourOfAILink"),
+          route: `/${this.$i18n.locale}/hour-of-ai`,
+        },
 
         {
           label: "GitHub",
