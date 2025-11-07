@@ -23,6 +23,7 @@ import Row from "primevue/row";
 import Dialog from "primevue/dialog";
 import Checkbox from "primevue/checkbox";
 import Textarea from "primevue/textarea";
+import Divider from "primevue/divider";
 
 import VueWordCloud from "vuewordcloud";
 
@@ -58,4 +59,5 @@ export default {
   InputNumber,
   VueWordCloud,
   StepperButtons,
+  Divider,
 };
