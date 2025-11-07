@@ -40,6 +40,13 @@
     </template>
   </Card>
 
+  <Card class="my-3 border-solid border-primary bg-primary-reverse">
+    <template #title>{{ $t("hourOfAI.surveyTitle") }}</template>
+    <template #content>
+      <div v-html="$t(`hourOfAI.surveyText`)"></div>
+    </template>
+  </Card>
+
   <Fieldset legend="Steps" :toggleable="true" class="mb-3 surface-100">
     <div class="flex flex-row flex-wrap w-full h-full">
       <div
