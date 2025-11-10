@@ -1,4 +1,5 @@
 <template>
+  <img src="https://studio.code.org/api/hour/begin_paperlm.png" />
   <div class="flex justify-content-center pt-5">
     <img
       class="h-3rem"
