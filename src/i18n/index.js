@@ -661,8 +661,83 @@ const messages = {
     fontSize: "Skriftstørrelse",
     numColumns: "Antal kolonner",
     numRows: "Antal rækker i tabellen",
-    minOccurences:
-      "Minimum antal gange et ord skal optræde for at blive inkluderet",
+    minOccurences: "Minimum antal gange et ord skal optræde for at blive inkluderet",
+    hourOfAILink: "Hour of AI",
+    hourOfAI: {
+      hourOfAITitle: "Byg Din Egen Sprogmodel Med Papir",
+      surveyTitle: "Disse aktiviteter er udviklet med kærlighed gennem forskning",
+      surveyText:
+      "... Og det ville være en stor hjælp for os i vores videre forskning, hvis du vil svare på dette korte spørgeskema! <ul><li>Link til spørgeskema til lærere inden undervisningen (5 minutter)</li><li>Link til spørgeskema til lærere efter undervisningen (5 minutter)</li><li>Link til spørgeskema, som lærere kan dele med eleverne inden undervisningen (2 minutter) </li><li> Link til spørgeskema, som lærere kan dele med eleverne efter undervisningen (2 minutter) </li></ul>",      
+      ages: "10-16 år",
+      teachingPoint: "Tips til læreren",
+      acks: 'These activities are developed at <a href="https://cctd.au.dk" target="_blank">the Center for Computational Thinking and Design at Aarhus University</a> in collaboration with the <a href="https://www.tekforstaa.dk" target="_blank">Research Center for Technology Comprehension</a>, contact us here: <a href="mailto:luke@cs.au.dk">luke@cs.au.dk</a><br><br><a href="https://hourofai.org" target="_blank">The Hour of AI</a> is a global campaign from <a href="https://csforall.org" target="_blank">CSforALL</a>, in collaboration with <a href="https://code.org" target="_blank">Code.org</a>. Take part in <a href="https://csedweek.org" target="_blank">CS Ed Week</a>!',
+      questions: "Spørgsmål, du kan stille eleverne",
+      intro:
+      '<b> Inviter dine elever til at bygge deres egen sætningsgenerator med papir. Eleverne får praktisk erfaring med at se, hvordan tekst bliver til data, og hvordan disse data bliver til en AI-model. Gennem dette lærer dine elever, at AI-systemer bruger data til at træffe beslutninger eller forudsigelser – i dette tilfælde ved at generere tekst ved at forudsige ordene i en sætning </b><br><br> I denne lektion starter eleverne med at skrive sætninger om sig selv, som de derefter i grupper samler til et datasæt. Ud fra dette datasæt skaber de en simpel sætningsgenerator-model. Dette er en meget åben øvelse, hvor du kan lade eleverne udforske og reflektere over trinene enkeltvis. Vi giver også reflekterende spørgsmål, der kan hjælpe dig med at strukturere en diskussion om, hvordan computere genererer tekst. Med denne øvelse ønsker vi at give eleverne praktisk erfaring og en fornemmelse af, at de kan være med til at skabe teknologi, så som tekstgenererings systemer, gennem et simpelt papirbaseret eksempel. <br><br> Vi præsenterer denne aktivitet i trin, som eleverne skal følge, samt tips til læreren og spørgsmål, læreren kan stille for at få eleverne til at reflektere. <a href="https://docs.google.com/document/d/1XDV2fF8GeeJqHnkGKSHzRrmT0tnbB4MxfIw0a7i4720/edit?usp=sharing" target="_blank"> En undervisningsplan, der opsummerer indholdet af denne side, er tilgængelig her</a>, og alternativt kan du printe denne side.',
+      whatYouNeed:
+      'Før du går i gang, skal du læse trinene til aktiviteten nedenfor. Vi har leveret: <ul><li>En skabelon, som eleverne kan skrive deres sætninger på i trin 1 [<a href="https://drive.google.com/file/d/1g0yrUjSlLW2x-ilAPSOxN2mFeggisYWh/view?usp=sharing" target="_blank">Udskriv og klip én kopi pr. 12 elever</a>]</li><li>En skabelon til papircirkeldiagrammer til at visualisere elevernes datasæt i det valgfrie trin 5 [<a href="https://drive.google.com/file/d/1GyLYVv1v0kkl8hay1X_GdnYpRvv-SrZ0/view?usp=sharing" target="_blank">Udskriv én kopi pr gruppe</a>]</li></ul> Når eleverne skriver deres sætninger ned i trin 6, kan du vælge at lave et arbejdsark til refleksion - enten over modellen eller over sætningerne fra et fagligt perspektiv. Her er nogle eksempler og inspiration til <a href="https://drive.google.com/file/d/1Dw8oK5EXz3JpQ-2ek3JcNKnSJkFoo3zh/view?usp=sharing" target="_blank">sprogfag</a> og <a href="https://drive.google.com/file/d/1gw5-MWAP-Z_92y9njckY4etJjCqsEiBL/view?usp=sharing" target="_blank">matematik</a>.<br><br>Skabelonerne ovenfor er anbefalede, men frivillige – du kan udføre denne øvelse med blot et stykke blankt papir!',
+      step: "Trin",
+      learningOutcomes:
+      'I slutningen af denne øvelse bør eleverne kunne reflektere over, hvordan tekst kan blive til data (ved at rive det i stykker og lave bunker), og hvordan disse data kan bruges til at skabe modeller, der kan generere eller forudsige nyt data. Eleverne kan få en forståelse af, at sprogmodeller er probabilistiske systemer, som ikke genererer det *rigtige* svar, men tilfældigt generer *et* svar baseret på eksisterende input og data.',
+      steps: [
+        {
+          text: 'Hver elev skriver en sætning på fire ord om sig selv på et stykke papir. Hvis du bruger <a href="https://drive.google.com/file/d/1g0yrUjSlLW2x-ilAPSOxN2mFeggisYWh/view?usp=sharing" target="_blank">skabelonen</a>, skal eleverne skrive det første ord i den røde boks.',
+          teachingPoint: 'Trin 3-5 fungerer bedst, hvis sætningerne ender med at være nogenlunde ens, så vi ønsker helst, at sætningerne har en enkelt struktur og bruger lignende ord. <br><br>Dette sker nærmest automatisk, når eleverne bliver bedt om at skrive om sig selv (størstedelen vil skrive ’Jeg’ som det første ord og vil følge det op med et udsagnsord som ’elsker’). <br><br> Du kan også påvirke ligheden mellem sætningerne ved at give eksempler: ’Jeg elsker at spille fodbold’ og ’Jeg kan godt lide at svømme’. Alternativt kan du angive en fast struktur, fx navneord-udsagnsord-tillægsord-navneord, men det er ikke nødvendigt.',           
+          questions: "",
+          imageLink: "images/write-slip.jpg",
+        },
+        {
+          text: "Sætningen skal rives i stykker, så hvert ord får sit eget stykke papir.",
+          teachingPoint: "",
+          questions: '<ul><li><b>Kan en computer dele ord op, som vi kan?</b> Nogle gange, men den kan ikke gøre det naturligt, som vi lærer at gøre! Typisk vil vi træne en machine-learning model til at finde ud af, hvordan man gør det, men en simpel metode er at dele sætninger op ved mellemrum og tegnsætning.</li><li><b>Hvad gør noget til et ord? Bør ’fodbold’ deles op i to ord, eller er det et enkelt?</b>Dette kan være en interessant diskussion for sproglærere, fordi det berører noget grundlæggende i syntaks og ords oprindelse, og fordi det kan variere mellem forskellige sprog. Det hjælper med at illustrere, hvorfor tekst er komplekse data, og hvorfor andre fagområder kan hjælpe programmører med at designe tekstgenereringssystemer. </li></ul>',
+          imageLink: "images/ripped-slip.jpg",
+        },
+        {
+          text: 'Eleverne arbejder sammen i grupper af tre eller flere for at lave ”ordbunker”: Alle første ord samles i én bunke, alle andet ord i en anden, og så videre. Derefter skal eleverne analysere disse bunker efter mønstre, såsom almindelige ord, unikke ord og sætningsstrukturer. Der gives eksempler på refleksionsspørgsmål.',
+          teachingPoint:
+          '4-5 elever er en ideel gruppestørrelse. Hvis grupperne er mindre, kan eleverne skrive flere sætninger, så der stadig er 4-5 sætninger i hver gruppe. <br> Vi ønsker at opfordre eleverne til at lede efter mønstre og være nysgerrige - der er ingen forkerte svar!',
+          questions:
+          '<ul><li><b>Hvad er det mest almindelige ord? </b> Det er højst sandsynligst ‘jeg’ i denne øvelse, men der kan også være almindelige udsagnsord eller forholdsord. </li><li><b>Kunne nogen sætte sætningerne sammen igen, hvis de ville? </b>Dette er en vigtig pointe. Noget er gået tabt i processen med at rive sætningerne op, så ofte ved vi ikke, hvordan vi sætter sætninger sammen igen (hvis vi ignorerer håndskrift).</li><li><b>Er der mønstre i bunkerne?</b> Vi forventer for eksempel måske udsagnsord i bunke nr. 2 og en blanding af navneord, aktiviteter og forholdsord i den tredje og fjerde. </li><li><b>Ville vi vide, at det er mennesker, der siger noget om sig selv? </b> Ofte vil svaret være ja, fordi der er ord som navne, ’jeg’, andre beskrivende ord eller hobbyer. </li><li><b>Bruger sætningerne positive eller negative ord? </b>Forhåbentlig får vi glade sætninger, men igen kan dette bruges som en pointe, da det kan være svært at vide, fordi vi har mistet noget af konteksten (fx, ’Jeg er ikke glad’ vil give os et meget positivt ord ’glad’, men vi ved ikke, at ’ikke’ kom før) </li></ul>',
+          imageLink: "images/pooled-slip.jpg",
+        },
+        {
+          text: 'Eleverne trækker et tilfældigt ord fra hver bunke for at ”generere” en ny sætning. De skal overveje om kombinationerne giver mening, og hvor sandsynlige de er.',
+          teachingPoint:'Det vigtigste her er er at fremhæve, at antallet af gange et ord bliver brugt, påvirker sandsynligheden for, at vi trækker det, hvilket påvirker sætningerne, vi kan generere. Sætningerne, som er forkerte eller mærkelige, kan være de mest spændende for eleverne, og hjælper også med at vise dem, hvordan fejl kan opstå, når vi bruger sandsynlighed som udgangspunkt for tekstgenerering.',
+          questions: "",
+          imageLink: "images/pool-generation.jpg",
+        },
+        {
+          text: 
+          'Eventuelt kan hver bunke visualiseres med et cirkeldiagram, hvor størrelsen på sektorerne repræsenterer ordets frekvens. Diagrammerne kan derefter drejes som et ”wheel of fortune” for at generere en ny sætning.',
+          teachingPoint:
+          'Det er her, du kan bruge <a href="https://drive.google.com/file/d/1GyLYVv1v0kkl8hay1X_GdnYpRvv-SrZ0/view?usp=sharing" target="_blank">skabelonen</a>, så de studerende kan tegne og lave deres egne cirkeldiagrammer. For at ”dreje” cirkeldiagrammerne plejer vi at sætte en papirclips i midten, holde den fast med en kuglepen og give den et skub med finger. Du kan også bare dreje dem på et bord eller ved at bruge en tegnestift.',
+          questions: "",
+          imageLink: "images/pies.jpg",
+        },
+        {
+          text: 'Eleverne skal nu generere og skrive 5-10 nye sætninger ned ved enten at bruge tekstgenereringsmetoden fra trin 5 (ved at trække et tilfældigt ord) eller trin 6 (ved at dreje cirkeldiagrammerne).',
+          teachingPoint:
+          'Husk at gå rundt og observere, hvad eleverne gør – er der nogle interessante sætninger eller fejl? Disse kan være værdifulde at bringe op i en fælles refleksion i klassen senere. <br><br> Eleverne kan skrive sætningerne ned på hvad som helst, men vi har eksempler på skabeloner, der viser, hvordan du kan gøre det mere relevant for <a href="https://drive.google.com/file/d/1Dw8oK5EXz3JpQ-2ek3JcNKnSJkFoo3zh/view?usp=sharing" target="_blank">sprogfag</a> og <a href="https://drive.google.com/file/d/1gw5-MWAP-Z_92y9njckY4etJjCqsEiBL/view?usp=sharing" target="_blank">matematik</a>.',
+          questions:
+          "<ul><li><b>Hvad var den mest sandsynlige sætning? Genererede du den?</b> Det er ikke altid, det sker – her arbejder vi med forsøg frem for direkte sandsynlighed. </li><li><b> Hvem fik den sjoveste/skøreste/mest interessante sætning?</b></li><li><b> Ville et menneske lave de same fejl som denne model?</b> Svaret er højst sandsynligt nej, fordi vi mennesker forstår forholdet mellem ord og grammatik, mens denne model ikke har nogen måde at forstå det på. Den ser kun ordene og deres placering i sætningerne.</li></ul>",
+          imageLink: "images/spinning-wheels.jpg",
+        },
+        {
+          text: 'Endelig skal grupperne reflektere over deres egne små sprogmodeller.',
+          teachingPoint:
+          'Vi ønsker at engagere eleverne som designere – hvad er en “god” sprogmodel? Er en model, der kun har ét ord pr. position god, fordi den altid giver mening? Eller er en god model interessant, selvom det betyder, at den ikke altid giver mening? Eksempler på spørgsmål er givet nedenfor.',
+          questions:
+          '<ul><li><b>Hvornår virker denne model godt? </b> Den bør fungere godt med kvalitetsdata for dette specifikke domæne. Hvis spørgsmålet var ”Forklar, hvad videnskab er” eller hvis vores sætninger var tilfældige/forkerte, ville vores model ikke fungere lige så godt. </li><li><b>Hvor mange af de 5-10 sætninger, I har genereret, giver mening?</b></li><li><b>Hvordan kunne vi gøre denne model bedre? </b> En mulighed ville være at øge sandsynligheden for, at sætningerne giver mening. Vi kunne indsamle mere data, opstille nogle regler for, hvilke typer ord der kan komme efter hinanden, eller vi kunne indsnævre domænet endnu mere fra ”Noget om dig selv” til for eksempel ”Hvor gammel er du?” </li></ul>',
+          imageLink: "images/create-new.jpg",
+        },
+        {
+          text: '[Valgfrit] Udvid aktiviteten ved at bede eleverne designe nye, bedre bunker eller cirkeldiagrammer, eller udvikle en model til et bestemt formål. Her er et eksempel af vores ”Once upon a billion”-model, som er en udvidelse af dette koncept. Med 9 hjul med 10 ord er der en milliard mulige historier, der kan genereres her. ',
+          teachingPoint: 'Dette kan være et sjovt, afsluttende trin i aktiviteten. Giv dem et par ekstra hjul eller stykker papir, og bed dem om at lave hjul, bunker eller regler, der resulterer i en bedre tekstgenereringsmodel. <br><br> ”Bedre” kan betyde mange ting – mere kreativ, bedre grammatik eller flere sætninger, der er sande. Du kan definere dette for eleverne eller bede dem om efterfølgende at forklare, hvad de forstår som ”bedre”.',
+          questions: "",
+          imageLink: "images/once-upon-a-billion.jpg",
+        },
+      ],
+    },
     singularActivities: {
       wordCloud: {
         title: "Ordsky",
