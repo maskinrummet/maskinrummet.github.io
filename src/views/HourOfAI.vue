@@ -48,7 +48,7 @@
     </template>
   </Card>
 
-  <Fieldset legend="Steps" :toggleable="true" class="mb-3 surface-100">
+  <Fieldset :legend="$t('steps')" :toggleable="true" class="mb-3 surface-100">
     <div class="flex flex-row flex-wrap w-full h-full">
       <div
         v-for="({ text, teachingPoint, questions, imageLink }, i) in steps"
