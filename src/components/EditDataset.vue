@@ -97,85 +97,12 @@
           ></Button>
         </template>
       </Column>
-      <ColumnGroup type="footer">
-        <Row>
-          <Column :colspan="3"
-            ><template #footer>
-              <span class="flex justify-content-center">
-                <label class="my-auto">{{ $t("inputSentence") }}</label>
-                <InputSwitch
-                  v-model="multilineInputEnabled"
-                  @change="splitBy = ''"
-                  class="my-auto mx-3"
-                />
-                <label class="my-auto">{{ $t("inputText") }}</label></span
-              >
-            </template>
-          </Column>
-        </Row>
-        <Row v-if="multilineInputEnabled">
-          <Column :colspan="3">
-            <template #footer>
-              <Codemirror
-                v-model:value="textInput"
-                @change="change"
-                :original-style="true"
-                :height="200"
-                :options="{ lineWrapping: true }"
-              />
-            </template>
-          </Column>
-        </Row>
-        <Row v-if="multilineInputEnabled">
-          <Column :colspan="3"
-            ><template #footer>
-              <div class="mb-1">{{ $t("selectSplitter") }}:</div>
-              <InputGroup v-if="multilineInputEnabled">
-                <Dropdown
-                  v-model="splitBy"
-                  :options="splitByOptions"
-                  optionLabel="name"
-                ></Dropdown>
-                <Button
-                  :label="$t('add')"
-                  :disabled="!splitBy"
-                  @click="splitNewSentences"
-                /> </InputGroup
-            ></template>
-          </Column>
-        </Row>
-        <Row v-else>
-          <Column :colspan="2"
-            ><template #footer>
-              <form
-                @submit="
-                  (e) => {
-                    e.preventDefault();
-                    if (!addDisabled) {
-                      splitNewSentences();
-                    }
-                  }
-                "
-              >
-                <InputText
-                  v-model="textInput"
-                  class="w-full"
-                /></form></template
-          ></Column>
-          <Column>
-            <template #footer>
-              <Button
-                :label="
-                  this.textInput.length >= 250 ? $t('tooLong') : $t('add')
-                "
-                @click="splitNewSentences"
-                class="w-full"
-                :disabled="addDisabled"
-              ></Button>
-            </template>
-          </Column>
-        </Row>
-      </ColumnGroup>
+      <template #footer>
+        <DatasetBulkInsert
+          @update:sentences="onSentenceInserted"
+          @update:error="error = $event"
+        ></DatasetBulkInsert>
+      </template>
     </DataTable>
     <transition-group name="p-message" tag="div">
       <Message severity="error" v-if="error" :closable="false">
@@ -210,13 +137,13 @@
 
 <script>
 import TruncatedText from "./TruncatedText.vue";
-import Codemirror from "codemirror-editor-vue3";
+import DatasetBulkInsert from "@/components/DatasetBulkInsert.vue";
 
 export default {
   name: "EditDataset",
   components: {
     TruncatedText,
-    Codemirror,
+    DatasetBulkInsert,
   },
   props: {
     dataset: {
@@ -240,44 +167,15 @@ export default {
       sentencesList: this.dataset.sentences.map((x) => {
         return { text: x.text, id: x.id, value: x.value || 0 };
       }),
-      textInput: "",
       numRows: 10,
-      splitBy: "",
-      splitByOptions: [
-        { name: this.$i18n.t("newline"), value: "\n" },
-        { name: this.$i18n.t("period"), value: "." },
-        { name: this.$i18n.t("comma"), value: "," },
-      ],
       editingRows: [],
-      multilineInputEnabled: false,
       deletedIds: [],
     };
   },
   methods: {
-    splitNewSentences() {
-      let newSentences = [
-        ...this.textInput
-          .split(this.splitBy.value)
-          .map((sentence) => sentence.trim())
-          .filter((sentence) => sentence)
-          .map((x) => {
-            return { text: x, value: 0 };
-          }),
-      ];
-      for (let i in newSentences) {
-        if (newSentences[i].text.length > 250) {
-          this.error = this.$t("longSentences") + " (#" + (Number(i) + 1) + ")";
-          this.startingSentences = newSentences
-            .map((x) => x.text)
-            .join(
-              this.splitBy.value !== "\n" ? this.splitBy.value + "\n" : "\n"
-            );
-          return;
-        }
-      }
-      this.sentencesList = [...this.sentencesList, ...newSentences];
+    onSentenceInserted(newSentence) {
+      this.sentencesList.push(...newSentence.map((x) => ({ text: x, value: 0 })));
       this.first = Math.floor((this.sentencesList.length - 1) / 10) * 10;
-      this.textInput = "";
     },
     checkDataset(e) {
       e.preventDefault();
@@ -335,11 +233,6 @@ export default {
       if (window.confirm(this.$i18n.t("areYouSureDelete")))
         this.$emit("delete");
     },
-  },
-  computed: {
-    addDisabled() {
-      return !this.textInput || this.textInput.length >= 250;
-    },
-  },
+  }
 };
 </script>
