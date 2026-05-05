@@ -244,6 +244,7 @@ export default {
         { name: this.$i18n.t("newline"), value: "\n" },
         { name: this.$i18n.t("period"), value: "." },
         { name: this.$i18n.t("comma"), value: "," },
+        { name: this.$i18n.t("intelligentSentence"), value: "intelligent-sentence" },
       ],
       editingRows: [],
       multilineInputEnabled: false,
@@ -256,10 +257,25 @@ export default {
     },
   },
   methods: {
+    sentenceSplitter(inputString, splitBy) {
+      switch (splitBy) {
+        case "\n":
+        case ".":
+        case ",":
+          return inputString.split(splitBy);
+        case "intelligent-sentence": {
+          const segmenter = new Intl.Segmenter(this.$i18n.locale, { granularity: "sentence" });
+          const segments = segmenter.segment(inputString);
+          
+          return Array.from(segments, s => s.segment);
+        }
+        default:
+          return [inputString];
+      }
+    },
     splitStartingSentences() {
       let newSentences = [
-        ...this.startingSentences
-          .split(this.splitBy.value)
+        ...this.sentenceSplitter(this.startingSentences, this.splitBy.value)
           .map((sentence) => sentence.trim())
           .filter((sentence) => sentence)
           .map((x) => {
