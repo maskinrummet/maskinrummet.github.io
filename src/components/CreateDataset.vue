@@ -121,7 +121,7 @@
                   <label class="my-auto">{{ $t("inputSentence") }}</label>
                   <InputSwitch
                     v-model="multilineInputEnabled"
-                    @change="splitBy = ''"
+                    @change="splitBy = defaultSplitBy"
                     class="my-auto mx-3"
                   />
                   <label class="my-auto">{{ $t("inputText") }}</label></span
@@ -230,6 +230,14 @@ export default {
     Codemirror,
   },
   data() {
+    const splitByOptions = [
+      { name: this.$t("newline"), value: "\n" },
+      { name: this.$t("period"), value: "." },
+      { name: this.$t("comma"), value: "," },
+      { name: this.$t("intelligentSentence"), value: "intelligent-sentence" },
+    ];
+    const defaultSplitBy = splitByOptions[3]; // Default to intelligent sentence splitting
+
     return {
       datasetName: "",
       password: "",
@@ -238,13 +246,10 @@ export default {
       startEmpty: true,
       startingSentences: "",
       startingSentencesList: [],
-      splitBy: "",
+      defaultSplitBy,
+      splitBy: defaultSplitBy,
       error: "",
-      splitByOptions: [
-        { name: this.$i18n.t("newline"), value: "\n" },
-        { name: this.$i18n.t("period"), value: "." },
-        { name: this.$i18n.t("comma"), value: "," },
-      ],
+      splitByOptions,
       editingRows: [],
       multilineInputEnabled: false,
       first: 0,
@@ -256,10 +261,25 @@ export default {
     },
   },
   methods: {
+    sentenceSplitter(inputString, splitBy) {
+      switch (splitBy) {
+        case "\n":
+        case ".":
+        case ",":
+          return inputString.split(splitBy);
+        case "intelligent-sentence": {
+          const segmenter = new Intl.Segmenter(this.$i18n.locale, { granularity: "sentence" });
+          const segments = segmenter.segment(inputString);
+          
+          return Array.from(segments, s => s.segment);
+        }
+        default:
+          return [inputString];
+      }
+    },
     splitStartingSentences() {
       let newSentences = [
-        ...this.startingSentences
-          .split(this.splitBy.value)
+        ...this.sentenceSplitter(this.startingSentences, this.splitBy.value)
           .map((sentence) => sentence.trim())
           .filter((sentence) => sentence)
           .map((x) => {
