@@ -18,12 +18,42 @@
               <Dropdown
                 v-model="selectedDataset"
                 :options="datasetsFormatted"
-                optionLabel="formattedName"
                 :placeholder="$t('selectADataset')"
                 :empty-message="$t('emptyDropdown')"
                 :empty-filter-message="$t('noSearchResults')"
                 filter
-              />
+                style="height: 48px;"
+              >
+                <template #option="dataset">
+                  <Badge
+                    v-if="dataset.option.is_example"
+                    :value="$t('example')"
+                    class="mr-2"
+                  />
+                  {{ dataset.option.name }}
+                  <div v-if="!dataset.option.is_example" class="flex-grow-1 justify-content-end flex">
+                    <i v-if="dataset.option.is_open" v-tooltip.left="$t('open')" class="pi pi-unlock pl-1" style="color: #98C379;"></i>
+                    <i v-else v-tooltip.left="$t('closed')" class="pi pi-lock pl-1" style="color: #E06C75;"></i>
+                  </div>
+                </template>
+                <template #value="dataset">
+                  <div v-if="dataset.value" class="flex align-items-center h-full">
+                    <Badge
+                      v-if="dataset.value.is_example"
+                      :value="$t('example')"
+                      class="mr-2"
+                    />
+                    {{ dataset.value.name }}
+                    <div v-if="!dataset.value.is_example && selectedDatasetId" class="flex-grow-1 justify-content-end flex">
+                      <i v-if="dataset.value.is_open" v-tooltip.left="$t('open')" class="pi pi-unlock pl-1" style="color: #98C379;"></i>
+                      <i v-else v-tooltip.left="$t('closed')" class="pi pi-lock pl-1" style="color: #E06C75;"></i>
+                    </div>
+                  </div>
+                  <span v-else>
+                    {{ slotProps.placeholder }}
+                  </span>
+                </template>
+              </Dropdown>
               <Button
                 :disabled="!selectedDatasetId"
                 @click="showDatasetModal"
@@ -92,12 +122,20 @@
   </Card>
 </template>
 
+<style>
+  .p-tooltip-text {
+    padding: 0.5rem 0.75rem;
+  }
+</style>
+
 <script>
 import { getDatasetNames, postDataset, addSentenceToDataset } from "@/api";
 import InputGroup from "primevue/inputgroup";
 import CreateDataset from "@/components/CreateDataset.vue";
 import DatasetModal from "@/components/DatasetModal.vue";
 import SingleSentenceInput from "@/components/SingleSentenceInput.vue";
+import Badge from "primevue/badge";
+import Tooltip from "primevue/tooltip";
 
 export default {
   name: "DatasetSelection",
@@ -106,6 +144,10 @@ export default {
     InputGroup,
     CreateDataset,
     SingleSentenceInput,
+    Badge,
+  },
+  directives: {
+    tooltip: Tooltip
   },
   data() {
     return {
@@ -136,10 +178,6 @@ export default {
     },
     showDatasetModal() {
       this.$refs.datasetModalSD.show();
-    },
-    formatName(name, open) {
-      let tag = `[${open ? this.$t("open") : this.$t("closed")}] `;
-      return tag + name;
     },
     async getDatasets() {
       try {
@@ -183,10 +221,14 @@ export default {
       if (!this.datasets) {
         return null;
       }
-      return this.datasets.map((dataset) => ({
-        formattedName: this.formatName(dataset.name, dataset.is_open),
-        ...dataset,
-      }));
+
+      // Sort datasets so that example datasets are always at the top, and the rest are sorted by index
+      return [...this.datasets].sort((a, b) => {
+        if (a.is_example === b.is_example) {
+          return a.index - b.index;
+        }
+        return a.is_example ? -1 : 1;
+      })
     },
     selectedDatasetId() {
       if (!this.selectedDataset) {
