@@ -32,8 +32,8 @@
                   />
                   {{ dataset.option.name }}
                   <div v-if="!dataset.option.is_example" class="flex-grow-1 justify-content-end flex">
-                    <i v-if="dataset.option.is_open" v-tooltip.left="$t('open')" class="pi pi-unlock pl-1"></i>
-                    <i v-else v-tooltip.left="$t('closed')" class="pi pi-lock pl-1"></i>
+                    <i v-if="dataset.option.is_open" v-tooltip.left="$t('open')" class="pi pi-unlock pl-1" style="color: #98C379;"></i>
+                    <i v-else v-tooltip.left="$t('closed')" class="pi pi-lock pl-1" style="color: #E06C75;"></i>
                   </div>
                 </template>
                 <template #value="dataset">
@@ -45,8 +45,8 @@
                     />
                     {{ dataset.value.name }}
                     <div v-if="!dataset.value.is_example && selectedDatasetId" class="flex-grow-1 justify-content-end flex">
-                      <i v-if="dataset.value.is_open" v-tooltip.left="$t('open')" class="pi pi-unlock pl-1"></i>
-                      <i v-else v-tooltip.left="$t('closed')" class="pi pi-lock pl-1"></i>
+                      <i v-if="dataset.value.is_open" v-tooltip.left="$t('open')" class="pi pi-unlock pl-1" style="color: #98C379;"></i>
+                      <i v-else v-tooltip.left="$t('closed')" class="pi pi-lock pl-1" style="color: #E06C75;"></i>
                     </div>
                   </div>
                   <span v-else>
