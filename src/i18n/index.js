@@ -90,6 +90,7 @@ const messages = {
     openDataset: "Open dataset for others to contribute?",
     open: "Open",
     closed: "Closed",
+    example: "Example",
     startEmptyDataset: "Start with an empty dataset?",
     startingSentences:
       "Sentences which the dataset will start with: (You can always add more or delete later)",
@@ -534,6 +535,7 @@ const messages = {
     openDataset: "Åbn datasæt så andre kan bidrage?",
     open: "Åben",
     closed: "Lukket",
+    example: "Eksempel",
     startEmptyDataset: "Start med et tomt datasæt?",
     startingSentences:
       "Sætninger, som datasættet starter med: (Du kan altid tilføje flere eller slette senere)",
