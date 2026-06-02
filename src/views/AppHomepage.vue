@@ -2,91 +2,64 @@
   <h1>{{ $t("welcome") }}</h1>
   <div v-html="$t('welcomeText')" class="mb-5"></div>
   <h2>{{ $t("availableActivities") }}</h2>
-  <DataTable
-    :value="activities"
-    v-model:filters="filters"
-    filterDisplay="menu"
-    :globalFilterFields="['topics']"
-    removableSort
-  >
-    <Column field="title" :header="$t('title')">
-      <template #body="{ data }">
-        <router-link :to="`/${$i18n.locale}/activity/${data.id}`">
-          <Button
-            :label="$t(`activities.${data.id}.title`)"
-            class="p-button-link w-full text-left"
-          />
-        </router-link>
-      </template>
-    </Column>
-    <Column field="modality" :header="$t('modality')" sortable>
-      <template #body="{ data }">
-        {{ $t(data.modality) }}
-      </template>
-    </Column>
-    <Column
-      field="topics"
-      :header="$t('topics')"
-      filterField="topics"
-      :showFilterMatchModes="false"
+  <div class="grid align-items-stretch">
+    <router-link
+      v-for="activity in filteredActivities"
+      :key="activity.id"
+      :to="`/${$i18n.locale}/activity/${activity.id}`"
+      :aria-label="$t(`activities.${activity.id}.title`)"
+      class="col-12 md:col-6 xl:col-4 flex no-underline text-color"
     >
-      <template #body="{ data }">
-        <Tag
-          v-for="(t, i) in data.topics"
-          :value="$t(t)"
-          :key="i"
-          severity="secondary"
-          class="mr-1 mb-1 cursor-pointer"
-          @click="(e) => toggle(e, getRef(data.id, t))"
-        ></Tag
-        ><OverlayPanel
-          v-for="(t, i) in data.topics"
-          :key="i"
-          :ref="getRef(data.id, t)"
-          class="max-w-20rem"
-        >
-          <h3 class="m-0">{{ $t(t) }}</h3>
-          <p class="m-0 mt-3">{{ $t(`${t}Explained`) }}</p>
-        </OverlayPanel>
-      </template>
-      <template #filter="{ filterModel }">
-        <MultiSelect
-          v-model="filterModel.value"
-          :options="allTopicOptions"
-          :placeholder="$t('selectTopics')"
-          class="p-column-filter"
-        >
-          <template #value="slotProps">
-            <div
-              v-if="slotProps.value && slotProps.value.length"
-              class="flex align-items-center"
-            >
-              {{ getDenseListString(slotProps.value) }}
-            </div>
-            <span v-else>
-              {{ slotProps.placeholder }}
+      <Card class="w-full h-full">
+        <template #header>
+          <img
+            :src="activity.image"
+            :alt="$t(`activities.${activity.id}.title`)"
+            class="w-full block"
+            style="height: 196px; object-fit: cover; border-radius: 6px 6px 0 0"
+          />
+        </template>
+        <template #title>
+          <div class="flex align-items-baseline justify-content-between gap-3">
+            <span>{{ $t(`activities.${activity.id}.title`) }}</span>
+            <span class="flex align-items-center gap-2 text-sm font-normal flex-shrink-0">
+              <span>{{ activity.duration }}{{ $t("mins").slice(0, 1) }}</span>
+              <i class="pi pi-stopwatch"></i>
             </span>
-          </template>
-          <template #option="slotProps">
-            <div class="flex align-items-center gap-2">
-              <span>{{ $t(slotProps.option) }}</span>
+          </div>
+        </template>
+        <template #subtitle>
+          <span class="text-bluegray-400 font-light">
+            {{ $t(activity.modality) }}
+          </span>
+        </template>
+        <template #content>
+          <p class="m-0 line-height-3">
+            {{ $t(`activities.${activity.id}.description`) }}
+          </p>
+        </template>
+        <template #footer>
+          <div class="flex flex-column gap-3 pt-2 h-full">
+            <div class="flex align-items-center flex-wrap gap-2 mt-auto">
+              <Tag
+                :value="`${activity.age}+ ${$t('years')}`"
+                class="bg-purple-500 text-white border-none"
+              />
+              <span class="text-500 mx-0.5">|</span>
+              <Tag
+                v-for="(topic, index) in activity.topics"
+                :key="index"
+                :value="$t(topic)"
+                severity="secondary"
+                class="cursor-pointer"
+                @click.stop="(e) => toggle(e, getRef(activity.id, topic))"
+              />
             </div>
-          </template>
-        </MultiSelect>
-      </template>
-    </Column>
-    <Column field="subject" :header="$t('subject')" sortable>
-      <template #body="{ data }">
-        <Tag :value="$t(data.subject)" />
-      </template>
-    </Column>
-    <Column field="age" :header="$t('age')" sortable>
-      <template #body="{ data }">{{ data.age }}+</template>
-    </Column>
-    <Column field="duration" :header="$t('duration')" sortable>
-      <template #body="{ data }">{{ data.duration }} {{ $t("mins") }}</template>
-    </Column>
-  </DataTable>
+          </div>
+        </template>
+      </Card>
+    </router-link>
+  </div>
   <!--<h2 class="mt-5">{{ $t("singularActivitiesHeading") }}</h2>
   <DataTable :value="singularActivities">
     <Column field="title" :header="$t('title')">
@@ -107,38 +80,49 @@
   </div>
 </template>
 
+<style>
+.p-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.p-card-body {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.p-card-footer {
+  margin-top: auto;
+}
+</style>
+
 <script>
 import { computed } from "vue";
 import { useStore } from "vuex";
-import { FilterService } from "primevue/api";
-
-FilterService.register("filterBySetMatch", (valueSet, filterSet) => {
-  if (!filterSet) {
-    return false;
-  }
-  if (!valueSet) {
-    return true;
-  }
-  return [...new Set(filterSet)].every((element) =>
-    new Set(valueSet).has(element)
-  );
-});
 
 export default {
   name: "AppHomepage",
   setup() {
     const store = useStore();
     const activities = computed(() => store.state.activities);
-    const singularActivities = computed(() => store.state.singularActivities);
 
     return {
       activities,
-      singularActivities,
     };
   },
   computed: {
     allTopicOptions() {
       return [...new Set(this.activities.flatMap((a) => a.topics))].sort();
+    },
+    filteredActivities() {
+      if (!this.selectedTopics.length) {
+        return this.activities;
+      }
+
+      return this.activities.filter((activity) =>
+        this.selectedTopics.every((topic) => activity.topics.includes(topic))
+      );
     },
   },
   methods: {
@@ -157,9 +141,7 @@ export default {
   },
   data() {
     return {
-      filters: {
-        topics: { value: null, matchMode: "filterBySetMatch" },
-      },
+      selectedTopics: [],
     };
   },
 };

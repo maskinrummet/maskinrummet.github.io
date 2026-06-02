@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const API_URL =
-  "https://maskinrummet-aefmcse5dad0hmbb.northeurope-01.azurewebsites.net/";
+  // "https://maskinrummet-aefmcse5dad0hmbb.northeurope-01.azurewebsites.net/";
+  "http://localhost:5000/";
 
 export function getDatasetNames() {
   return axios(API_URL + "datasets");
