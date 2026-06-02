@@ -87,7 +87,7 @@
       <template #body="{ data }">{{ data.duration }} {{ $t("mins") }}</template>
     </Column>
   </DataTable>
-  <h2 class="mt-5">{{ $t("singularActivitiesHeading") }}</h2>
+  <!--<h2 class="mt-5">{{ $t("singularActivitiesHeading") }}</h2>
   <DataTable :value="singularActivities">
     <Column field="title" :header="$t('title')">
       <template #body="{ data }">
@@ -99,7 +99,7 @@
         </router-link>
       </template>
     </Column>
-  </DataTable>
+  </DataTable> -->
   <div class="flex justify-content-center mt-4">
     <router-link :to="'/' + $i18n.locale + '/contact'" class="no-underline">
       <Button :label="$t('suggestActivity')" />
