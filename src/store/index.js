@@ -4,13 +4,14 @@ import writeSlipImage from "@/assets/activities/write-slip.jpg";
 import bagOfWordsPracticalImage from "@/assets/hq-bag-of-words.jpg";
 import spinningWheelImage from "@/assets/activities/spinning-wheels.jpg";
 import createNewImage from "@/assets/activities/create-new.jpg";
+import { ActicityModality } from "@/constants/activities";
 
 export default createStore({
   state: {
     activities: [
       {
         id: "textCleaning",
-        modality: "digital", // one of: digital, practical, mixed, embodied, resource
+        modality: ActicityModality.DIGITAL,
         subject: "anySubject",
         age: 10, // + will be appended e.g. 10+
         topics: ["textCleaning", "tokenisation"],
@@ -19,7 +20,7 @@ export default createStore({
       },
       {
         id: "bagOfWordsPractical",
-        modality: "practical",
+        modality: ActicityModality.PRACTICAL,
         subject: "anySubject",
         age: 8,
         topics: ["textCleaning", "tokenisation", "textGeneration"],
@@ -28,7 +29,7 @@ export default createStore({
       },
       {
         id: "textGeneration",
-        modality: "digital",
+        modality: ActicityModality.DIGITAL,
         subject: "anySubject",
         age: 14,
         topics: ["textGeneration"],
@@ -37,7 +38,7 @@ export default createStore({
       },
       {
         id: "embodiedSentenceGeneration",
-        modality: "either",
+        modality: ActicityModality.EITHER,
         subject: "anySubject",
         age: 6,
         topics: ["textGeneration", "datasetBias"],

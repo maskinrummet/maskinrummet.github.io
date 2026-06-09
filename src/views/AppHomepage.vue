@@ -108,7 +108,7 @@
 <style>
 .activity-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(370px, 1fr));
   gap: 1rem;
 }
 
@@ -119,6 +119,13 @@
 .p-card {
   display: flex;
   flex-direction: column;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    transform: translateY(-2px) scale(1.005);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
 }
 
 .p-card-body {
@@ -133,6 +140,7 @@
 </style>
 
 <script>
+import { ActicityModality } from "@/constants/activities";
 import { computed } from "vue";
 import { useStore } from "vuex";
 
@@ -161,20 +169,12 @@ const createFilters = () => [
     key: "modality",
     titleKey: "filterModality",
     options: [
-      { labelKey: "filterPhysical", value: "physical" },
-      { labelKey: "filterDigital", value: "digital" },
+      { labelKey: "filterPractical", value: ActicityModality.PRACTICAL },
+      { labelKey: "filterDigital", value: ActicityModality.DIGITAL },
     ],
     selectedValues: [],
     filterFn(activity, selectedValues) {
-      return selectedValues.some((modality) => {
-        if (modality === "physical") {
-          return ["practical", "embodied", "either"].includes(activity.modality);
-        }
-        if (modality === "digital") {
-          return ["digital", "either"].includes(activity.modality);
-        }
-        return false;
-      });
+      return activity.modality == ActicityModality.EITHER || selectedValues.includes(activity.modality);
     },
   },
   {
