@@ -458,6 +458,11 @@ const messages = {
             "It can also be useful to consider the fact that theres actually a very small chance that you would pull out a sentence that went into the bag, in its exact order, and therefore generate a perfect (but unoriginal) sentence. Theres also a slightly bigger, but still small chance that you pull out something new that makes sense. We can think of the goal of text generation as being a task of increasing the probability that something new and that makes sense is generated based on our input data.",
         },
       },
+      hourOfAI: {
+        title: "Hour of AI",
+        description:
+          "Students create a fun, visual, paper sentence generator: by writing 4-word sentences, splitting this into word piles, and then recombining the words to generate new sentences. They reflect on patterns, probabilities, and what makes a good generation model",
+      }
     },
   },
   da: {
@@ -921,6 +926,11 @@ const messages = {
             "Det kan også være nyttigt at overveje, at der faktisk er en meget lille chance for, at du ville trække en sætning, der gik ind i posen, i sin nøjagtige rækkefølge, og dermed generere en perfekt (men uoriginal) sætning. Der er også en lidt større, men stadig lille chance for, at du trækker noget nyt, der giver mening. Vi kan tænke på målet med tekstgenerering som at øge den sandsynlighed, at noget nyt og meningsfuldt genereres baseret på vores inputdata.",
         },
       },
+      hourOfAI: {
+        title: "Hour of AI",
+        description:
+          "Eleverne laver en sjov, visuel papir-sætningsgenerator: ved at skrive sætninger med 4 ord, dele dem op i ord-bunker og derefter sætte ordene sammen igen for at generere nye sætninger. De reflekterer over mønstre, sandsynligheder og hvad der gør en god genereringsmodel.",
+      }
     },
   },
 };

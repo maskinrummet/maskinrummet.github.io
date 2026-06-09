@@ -30,7 +30,7 @@
       <router-link
         v-for="activity in filteredActivities"
         :key="activity.id"
-        :to="`/${$i18n.locale}/activity/${activity.id}`"
+        :to="getActivityLink(activity)"
         :aria-label="$t(`activities.${activity.id}.title`)"
         class="activity-card flex no-underline text-color"
       >
@@ -233,6 +233,9 @@ export default {
     getRef(id, topic) {
       return `${id}-${topic}`;
     },
+    getActivityLink(activity) {
+      return activity.link ? `/${this.$i18n.locale}/${activity.link}` : `/${this.$i18n.locale}/activity/${activity.id}`;
+    }
   },
   data() {
     return {

@@ -4,6 +4,7 @@ import writeSlipImage from "@/assets/activities/write-slip.jpg";
 import bagOfWordsPracticalImage from "@/assets/hq-bag-of-words.jpg";
 import spinningWheelImage from "@/assets/activities/spinning-wheels.jpg";
 import createNewImage from "@/assets/activities/create-new.jpg";
+import hourOfAIImage from "@/assets/activities/hour-of-ai-banner.png";
 import { ActicityModality } from "@/constants/activities";
 
 export default createStore({
@@ -45,6 +46,16 @@ export default createStore({
         duration: 20,
         image: createNewImage,
       },
+      {
+        id: "hourOfAI",
+        modality: ActicityModality.PRACTICAL,
+        subject: "anySubject",
+        age: 10,
+        topics: ["textGeneration", "datasetBias"],
+        duration: 60,
+        image: hourOfAIImage,
+        link: "hour-of-ai"
+      }
     ],
     singularActivities: [
       {
