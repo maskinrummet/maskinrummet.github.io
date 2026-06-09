@@ -67,6 +67,7 @@ export default {
           route: `/${this.$i18n.locale}/how-to`,
         },
         { label: this.$t("about"), route: `/${this.$i18n.locale}/about` },
+        { label: this.$t("singularActivitiesHeading"), route: `/${this.$i18n.locale}/tools` },
         { label: this.$t("contact"), route: `/${this.$i18n.locale}/contact` },
         {
           label: this.$t("hourOfAILink"),

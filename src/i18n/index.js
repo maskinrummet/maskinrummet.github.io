@@ -226,6 +226,7 @@ const messages = {
     datasetBiasExplained:
       "Dataset bias is when a dataset is skewed towards certain topics, words, or phrases, which can lead to unfair choices or incorrect outputs from an AI trained on the dataset.",
     singularActivitiesHeading: "Unguided Activities",
+    singularActivitiesDescription: "These activities are more open-ended and exploratory, and can be used once you have a good understanding of the basics of text processing and AI. They are designed to encourage creativity and critical thinking, and can be adapted to different subjects and age groups.",
     minWordCloudOccurences:
       "Minimum antal forekomster i teksten for at være vist i ordskyen (brug dette til store, langsomme datasæt)",
     customFilterWords: "Words to exclude from being shown in the word cloud",
@@ -691,6 +692,7 @@ const messages = {
     datasetBiasExplained:
       "Datasæt bias er, når et datasæt er partisk mod visse emner, ord eller sætninger, hvilket kan føre til uretfærdige valg eller forkerte resultater fra en AI trænet på datasættet.",
     singularActivitiesHeading: "Værktøjer",
+    singularActivitiesDescription: "Disse aktiviteter er mere åbne og udforskningsmæssige og kan bruges, når du har en god forståelse af grundlæggende tekstbehandling og AI. De er designet til at fremme kreativitet og kritisk tænkning og kan tilpasses forskellige fag og aldersgrupper.",
     minWordCloudOccurences:
       "Minimum antal gange et ord skal optræde i teksten for at vises i vores ordsky (brug dette til store, langsom datasæt)",
     customFilterWords:

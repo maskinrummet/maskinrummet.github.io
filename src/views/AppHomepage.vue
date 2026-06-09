@@ -85,19 +85,7 @@
       </router-link>
     </div>
   </div>
-  <!--<h2 class="mt-5">{{ $t("singularActivitiesHeading") }}</h2>
-  <DataTable :value="singularActivities">
-    <Column field="title" :header="$t('title')">
-      <template #body="{ data }">
-        <router-link :to="`/${$i18n.locale}/single-activity/${data.id}`">
-          <Button
-            :label="$t(`singularActivities.${data.id}.title`)"
-            class="p-button-link w-full text-left"
-          />
-        </router-link>
-      </template>
-    </Column>
-  </DataTable> -->
+
   <div class="flex justify-content-center mt-4">
     <router-link :to="'/' + $i18n.locale + '/contact'" class="no-underline">
       <Button :label="$t('suggestActivity')" />
@@ -239,7 +227,6 @@ export default {
   },
   data() {
     return {
-      selectedTopics: [],
       filters: createFilters(),
     };
   },
