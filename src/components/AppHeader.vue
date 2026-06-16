@@ -68,7 +68,6 @@ export default {
         },
         { label: this.$t("about"), route: `/${this.$i18n.locale}/about` },
         { label: this.$t("singularActivitiesHeading"), route: `/${this.$i18n.locale}/tools` },
-        { label: this.$t("contact"), route: `/${this.$i18n.locale}/contact` },
         {
           label: this.$t("hourOfAILink"),
           route: `/${this.$i18n.locale}/hour-of-ai`,
@@ -82,7 +81,7 @@ export default {
       ];
     },
     breakpoint() {
-      return this.$i18n.locale === "en" ? "1195px" : "1140px";
+      return this.$i18n.locale === "en" ? "1100px" : "1060px";
     },
   },
   data() {

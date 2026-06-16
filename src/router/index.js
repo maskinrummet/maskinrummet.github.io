@@ -1,7 +1,6 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 import AppHomepage from "@/views/AppHomepage.vue";
 import ActivityDetail from "@/views/ActivityDetail.vue";
-import ContactUs from "@/views/ContactUs.vue";
 import AboutUs from "@/views/AboutUs.vue";
 import NotFound from "@/views/NotFound.vue";
 import HowTo from "@/views/HowTo.vue";
@@ -26,11 +25,6 @@ const routes = [
     path: getPath(""),
     component: AppHomepage,
     name: getName("home"),
-  },
-  {
-    path: getPath("/contact"),
-    component: ContactUs,
-    name: getName("contact"),
   },
   {
     path: getPath("/about"),

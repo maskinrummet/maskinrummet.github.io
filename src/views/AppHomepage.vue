@@ -98,7 +98,7 @@
   </div>
 
   <div class="flex justify-content-center mt-4">
-    <router-link :to="'/' + $i18n.locale + '/contact'" class="no-underline">
+    <router-link :to="'/' + $i18n.locale + '/about'" class="no-underline">
       <Button :label="$t('suggestActivity')" />
     </router-link>
   </div>
