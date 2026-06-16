@@ -4,10 +4,9 @@
   <h2>{{ $t("availableActivities") }}</h2>
   <div class="flex flex-column lg:flex-row gap-4 align-items-start">
     <div
-      class="w-full lg:w-15rem lg:flex-shrink-0 flex flex-column gap-4"
-      style="position: sticky; top: 1rem"
+      class="filters-container w-full lg:w-15rem lg:flex-shrink-0 flex flex-wrap gap-4"
     >
-      <div v-for="filter in filters" :key="filter.key">
+      <div v-for="filter in filters" :key="filter.key" class="filter-container">
         <h4 class="m-0 mb-2">{{ $t(filter.titleKey) }}</h4>
         <div class="flex flex-column gap-2">
           <div
@@ -45,7 +44,7 @@
           </template>
           <template #title>
             <div class="flex align-items-baseline justify-content-between gap-3">
-              <span>{{ $t(`activities.${activity.id}.title`) }}</span>
+              <span class="activity-title">{{ $t(`activities.${activity.id}.title`) }}</span>
               <span class="flex align-items-center gap-2 text-sm font-normal flex-shrink-0">
                 <span>{{ activity.duration }}{{ $t("mins").slice(0, 1) }}</span>
                 <i class="pi pi-stopwatch"></i>
@@ -98,10 +97,19 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(370px, 1fr));
   gap: 1rem;
+
+  @media (max-width: 450px) {
+    grid-template-columns: 1fr;
+  }
 }
 
 .activity-card {
   min-width: 0;
+
+  .activity-title {
+    word-break: break-word;
+    hyphens: auto;
+  }
 }
 
 .p-card {
@@ -124,6 +132,17 @@
 
 .p-card-footer {
   margin-top: auto;
+}
+
+.filter-container {
+  min-width: 150px;
+}
+
+@media (min-width: 992px) {
+  .filters-container {
+    position: sticky;
+    top: 1rem;
+  }
 }
 </style>
 
