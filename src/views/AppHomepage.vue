@@ -241,7 +241,7 @@ const createFilters = () => [
     key: "modality",
     titleKey: "filterModality",
     options: [
-      { labelKey: "filterPractical", value: ActicityModality.PRACTICAL },
+      { labelKey: "filterPractical", value: ActicityModality.PHYSICAL },
       { labelKey: "filterDigital", value: ActicityModality.DIGITAL },
     ],
     selectedValues: [],

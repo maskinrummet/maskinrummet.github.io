@@ -21,7 +21,7 @@ export default createStore({
       },
       {
         id: "bagOfWordsPractical",
-        modality: ActicityModality.PRACTICAL,
+        modality: ActicityModality.PHYSICAL,
         subject: "anySubject",
         age: 8,
         topics: ["textCleaning", "tokenisation", "textGeneration"],
@@ -48,7 +48,7 @@ export default createStore({
       },
       {
         id: "hourOfAI",
-        modality: ActicityModality.PRACTICAL,
+        modality: ActicityModality.PHYSICAL,
         subject: "anySubject",
         age: 10,
         topics: ["textGeneration", "datasetBias"],

@@ -1,5 +1,5 @@
 export const ActicityModality = Object.freeze({
   DIGITAL: "digital",
-  PRACTICAL: "practical",
+  PHYSICAL: "physical",
   EITHER: "either",
 });
