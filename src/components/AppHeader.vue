@@ -1,5 +1,5 @@
 <template>
-  <Menubar :model="items">
+  <Menubar :key="breakpoint" :model="items" :breakpoint="breakpoint">
     <template #start>
       <router-link :to="'/' + $i18n.locale">
         <Button class="p-button-link p-0 px-2 mr-1">
@@ -80,6 +80,9 @@ export default {
           link: "https://github.com/maskinrummet/maskinrummet.github.io",
         },
       ];
+    },
+    breakpoint() {
+      return this.$i18n.locale === "en" ? "1195px" : "1140px";
     },
   },
   data() {
