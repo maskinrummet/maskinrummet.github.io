@@ -86,8 +86,6 @@
                   :key="index"
                   :value="$t(topic)"
                   severity="secondary"
-                  class="cursor-pointer"
-                  @click.stop="(e) => toggle(e, getRef(activity.id, topic))"
                 />
               </div>
             </div>
@@ -298,9 +296,6 @@ export default {
       return listString.length > maxChars
         ? listString.slice(0, maxChars - 3) + "..."
         : listString;
-    },
-    toggle(e, ref) {
-      this.$refs[ref][0].toggle(e);
     },
     getRef(id, topic) {
       return `${id}-${topic}`;
