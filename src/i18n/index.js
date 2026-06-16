@@ -7,12 +7,14 @@ const messages = {
     about: "About",
     contact: "Contact",
     luke: "Luke Connelly",
-    student: "Computer Science Masters Student at Aarhus University",
-    phoneNumber: "+45 93 87 34 09",
+    student: "PHD Student at Aarhus University Computer Science",
     email: "lukejconnelly1{'@'}gmail.com",
     welcome: "Welcome to the Engine Room!",
+    areYouReadyToLearn: "Are you ready to learn about learn about <span>AI</span>?",
+    // welcomeText:
+    //   'This is an educational resource designed at Aarhus University to teach how text processing and AI systems work<br><br>Teachers: we hope you can use the site in your classroom - our activities allow students to get hands-on with data and AI<br><br>Please <a href="/#/en/contact">get in contact</a> with suggestions, questions, or feedback! I would love to hear it!<br><br>Below you\'ll find a list of our activities, and if you\'d like more on how to use the site or inspiration, check out our <a href="/#/en/how-to">how to use the site video</a>',
     welcomeText:
-      'This is an educational resource designed at Aarhus University to teach how text processing and AI systems work<br><br>Teachers: we hope you can use the site in your classroom - our activities allow students to get hands-on with data and AI<br><br>Please <a href="/#/en/contact">get in contact</a> with suggestions, questions, or feedback! I would love to hear it!<br><br>Below you\'ll find a list of our activities, and if you\'d like more on how to use the site or inspiration, check out our <a href="/#/en/how-to">how to use the site video</a>',
+      'This is an educational resource designed at Aarhus University to teach how text processing and AI systems work<br><br>Below you\'ll find a list of our activities, and if you\'d like more on how to use the site or inspiration, check out our <a href="/#/en/how-to">how to use the site video</a>',
     aboutLuke:
       "Please get in contact with me with suggestions, questions, or feedback! I would love to hear it!",
     thanks:
@@ -28,7 +30,21 @@ const messages = {
     modality: "Modality",
     subject: "Subject",
     age: "Age",
+    years: "years",
     duration: "Duration",
+    filterAge: "Age",
+    filterModality: "Modality",
+    filterDuration: "Duration",
+    filterAge6To8: "6 - 8 years",
+    filterAge8To10: "8 - 10 years",
+    filterAge10To12: "10 - 12 years",
+    filterAge12Plus: "12+ years",
+    filterPractical: "Physical",
+    filterDigital: "Digital",
+    filterDurationLt20: "<20 minutes",
+    filterDuration20To40: "20 - 40 minutes",
+    filterDuration40To60: "40 - 60 minutes",
+    filterDurationGt60: ">60 minutes",
     topics: "Topics",
     textCleaning: "Text cleaning",
     textCleaningExplained:
@@ -39,7 +55,7 @@ const messages = {
     tokenisation: "Tokenisation",
     tokenisationExplained:
       "Tokenisation is the process of splitting text into meaningful units, such as words, for further processing.",
-    practical: "Practical",
+    physical: "Physical",
     selectTopics: "Select topics",
     activityNotFound: "Activity not found",
     whatYouNeed: "What you need for this activity",
@@ -212,6 +228,7 @@ const messages = {
     datasetBiasExplained:
       "Dataset bias is when a dataset is skewed towards certain topics, words, or phrases, which can lead to unfair choices or incorrect outputs from an AI trained on the dataset.",
     singularActivitiesHeading: "Unguided Activities",
+    singularActivitiesDescription: "These activities are more open-ended and exploratory, and can be used once you have a good understanding of the basics of text processing and AI. They are designed to encourage creativity and critical thinking, and can be adapted to different subjects and age groups.",
     minWordCloudOccurences:
       "Minimum antal forekomster i teksten for at være vist i ordskyen (brug dette til store, langsomme datasæt)",
     customFilterWords: "Words to exclude from being shown in the word cloud",
@@ -444,6 +461,11 @@ const messages = {
             "It can also be useful to consider the fact that theres actually a very small chance that you would pull out a sentence that went into the bag, in its exact order, and therefore generate a perfect (but unoriginal) sentence. Theres also a slightly bigger, but still small chance that you pull out something new that makes sense. We can think of the goal of text generation as being a task of increasing the probability that something new and that makes sense is generated based on our input data.",
         },
       },
+      hourOfAI: {
+        title: "Hour of AI",
+        description:
+          "Students create a fun, visual, paper sentence generator: by writing 4-word sentences, splitting this into word piles, and then recombining the words to generate new sentences. They reflect on patterns, probabilities, and what makes a good generation model",
+      }
     },
   },
   da: {
@@ -452,12 +474,14 @@ const messages = {
     about: "Om",
     contact: "Kontakt",
     luke: "Luke Connelly",
-    student: "Datalogi kandidatstuderende ved Aarhus Universitet",
-    phoneNumber: "+45 93 87 34 09",
+    student: "PhD-studerende ved Aarhus Universitet Computer Science",
     email: "lukejconnelly1{'@'}gmail.com",
     welcome: "Velkommen til Maskinrummet!",
+    areYouReadyToLearn: "Er du klar til at lære mere om <span>AI</span>?",
+    // welcomeText:
+    //   'Dette er en undervisningsressource designet på Aarhus Universitet til at undervise i, hvordan tekstbehandling og AI-systemer fungerer<br><br>Lærere: vi håber, I kan bruge siden i jeres undervisning - vores aktiviteter giver eleverne mulighed for at arbejde praktisk med data og AI<br><br>Du må meget gerne <a href="/#/da/contact">kontakte os</a> med forslag, spørgsmål eller feedback! Jeg vil meget gerne høre fra jer!<br><br>Nedenfor finder I en liste over vores aktiviteter, og hvis I vil vide mere om, hvordan man bruger siden eller søger inspiration, så tjek vores <a href="/#/da/how-to">vejledningsvideo om brug af siden</a>',
     welcomeText:
-      'Dette er en undervisningsressource designet på Aarhus Universitet til at undervise i, hvordan tekstbehandling og AI-systemer fungerer<br><br>Lærere: vi håber, I kan bruge siden i jeres undervisning - vores aktiviteter giver eleverne mulighed for at arbejde praktisk med data og AI<br><br>Du må meget gerne <a href="/#/da/contact">kontakte os</a> med forslag, spørgsmål eller feedback! Jeg vil meget gerne høre fra jer!<br><br>Nedenfor finder I en liste over vores aktiviteter, og hvis I vil vide mere om, hvordan man bruger siden eller søger inspiration, så tjek vores <a href="/#/da/how-to">vejledningsvideo om brug af siden</a>',
+      'Dette er en undervisningsressource designet på Aarhus Universitet til at undervise i, hvordan tekstbehandling og AI-systemer fungerer<br><br>Nedenfor finder I en liste over vores aktiviteter, og hvis I vil vide mere om, hvordan man bruger siden eller søger inspiration, så tjek vores <a href="/#/da/how-to">vejledningsvideo om brug af siden</a>',
     aboutLuke:
       "Kontakt mig venligst med forslag, spørgsmål eller feedback! Jeg vil meget gerne høre fra dig!",
     thanks:
@@ -473,7 +497,21 @@ const messages = {
     modality: "Modalitet",
     subject: "Fag",
     age: "Alder",
+    years: "år",
     duration: "Varighed",
+    filterAge: "Alder",
+    filterModality: "Modalitet",
+    filterDuration: "Varighed",
+    filterAge6To8: "6 - 8 år",
+    filterAge8To10: "8 - 10 år",
+    filterAge10To12: "10 - 12 år",
+    filterAge12Plus: "12+ år",
+    filterPractical: "Fysisk",
+    filterDigital: "Digital",
+    filterDurationLt20: "<20 minutter",
+    filterDuration20To40: "20 - 40 minutter",
+    filterDuration40To60: "40 - 60 minutter",
+    filterDurationGt60: ">60 minutter",
     topics: "Emner",
     textCleaning: "Tekstrensning",
     textCleaningExplained:
@@ -484,7 +522,7 @@ const messages = {
     tokenisation: "Tokenisering",
     tokenisationExplained:
       "Tokenisering er en proces hvor tekst opdeles i meningsfulde enheder, såsom ord, til videre bearbejdning.",
-    practical: "Praktisk",
+    physical: "Fysisk",
     selectTopics: "Vælg emner",
     activityNotFound: "Aktivitet ikke fundet",
     whatYouNeed: "Hvad du har brug for til denne aktivitet",
@@ -658,6 +696,7 @@ const messages = {
     datasetBiasExplained:
       "Datasæt bias er, når et datasæt er partisk mod visse emner, ord eller sætninger, hvilket kan føre til uretfærdige valg eller forkerte resultater fra en AI trænet på datasættet.",
     singularActivitiesHeading: "Værktøjer",
+    singularActivitiesDescription: "Disse aktiviteter er mere åbne og udforskningsmæssige og kan bruges, når du har en god forståelse af grundlæggende tekstbehandling og AI. De er designet til at fremme kreativitet og kritisk tænkning og kan tilpasses forskellige fag og aldersgrupper.",
     minWordCloudOccurences:
       "Minimum antal gange et ord skal optræde i teksten for at vises i vores ordsky (brug dette til store, langsom datasæt)",
     customFilterWords:
@@ -893,6 +932,11 @@ const messages = {
             "Det kan også være nyttigt at overveje, at der faktisk er en meget lille chance for, at du ville trække en sætning, der gik ind i posen, i sin nøjagtige rækkefølge, og dermed generere en perfekt (men uoriginal) sætning. Der er også en lidt større, men stadig lille chance for, at du trækker noget nyt, der giver mening. Vi kan tænke på målet med tekstgenerering som at øge den sandsynlighed, at noget nyt og meningsfuldt genereres baseret på vores inputdata.",
         },
       },
+      hourOfAI: {
+        title: "Hour of AI",
+        description:
+          "Eleverne laver en sjov, visuel papir-sætningsgenerator: ved at skrive sætninger med 4 ord, dele dem op i ord-bunker og derefter sætte ordene sammen igen for at generere nye sætninger. De reflekterer over mønstre, sandsynligheder og hvad der gør en god genereringsmodel.",
+      }
     },
   },
 };

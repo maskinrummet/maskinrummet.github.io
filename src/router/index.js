@@ -1,7 +1,6 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 import AppHomepage from "@/views/AppHomepage.vue";
 import ActivityDetail from "@/views/ActivityDetail.vue";
-import ContactUs from "@/views/ContactUs.vue";
 import AboutUs from "@/views/AboutUs.vue";
 import NotFound from "@/views/NotFound.vue";
 import HowTo from "@/views/HowTo.vue";
@@ -10,6 +9,7 @@ import HourOfAI from "@/views/HourOfAI.vue";
 import i18n from "@/i18n";
 import { DEFAULT_LOCALE, LOCALES } from "@/i18n";
 import SingularActivityDetail from "@/views/SingularActivityDetail.vue";
+import SingularActivitiesOverview from "@/views/SingularActivitiesOverview.vue";
 
 function getName(key) {
   return () => i18n.global.t("maskinrummet") + " | " + i18n.global.t(key);
@@ -27,11 +27,6 @@ const routes = [
     name: getName("home"),
   },
   {
-    path: getPath("/contact"),
-    component: ContactUs,
-    name: getName("contact"),
-  },
-  {
     path: getPath("/about"),
     component: AboutUs,
     name: getName("about"),
@@ -40,6 +35,11 @@ const routes = [
     path: getPath("/activity/:id"),
     component: ActivityDetail,
     name: getName("activity"),
+  },
+  {
+    path: getPath("/tools"),
+    component: SingularActivitiesOverview,
+    name: getName("singularActivitiesHeading"),
   },
   {
     path: getPath("/single-activity/:id/:datasetId?"),
