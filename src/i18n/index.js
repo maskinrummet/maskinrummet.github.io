@@ -11,8 +11,11 @@ const messages = {
     phoneNumber: "+45 93 87 34 09",
     email: "lukejconnelly1{'@'}gmail.com",
     welcome: "Welcome to the Engine Room!",
+    areYouReadyToLearn: "Are you ready to learn about learn about <span>AI</span>?",
+    // welcomeText:
+    //   'This is an educational resource designed at Aarhus University to teach how text processing and AI systems work<br><br>Teachers: we hope you can use the site in your classroom - our activities allow students to get hands-on with data and AI<br><br>Please <a href="/#/en/contact">get in contact</a> with suggestions, questions, or feedback! I would love to hear it!<br><br>Below you\'ll find a list of our activities, and if you\'d like more on how to use the site or inspiration, check out our <a href="/#/en/how-to">how to use the site video</a>',
     welcomeText:
-      'This is an educational resource designed at Aarhus University to teach how text processing and AI systems work<br><br>Teachers: we hope you can use the site in your classroom - our activities allow students to get hands-on with data and AI<br><br>Please <a href="/#/en/contact">get in contact</a> with suggestions, questions, or feedback! I would love to hear it!<br><br>Below you\'ll find a list of our activities, and if you\'d like more on how to use the site or inspiration, check out our <a href="/#/en/how-to">how to use the site video</a>',
+      'This is an educational resource designed at Aarhus University to teach how text processing and AI systems work<br><br>Below you\'ll find a list of our activities, and if you\'d like more on how to use the site or inspiration, check out our <a href="/#/en/how-to">how to use the site video</a>',
     aboutLuke:
       "Please get in contact with me with suggestions, questions, or feedback! I would love to hear it!",
     thanks:
@@ -476,8 +479,11 @@ const messages = {
     phoneNumber: "+45 93 87 34 09",
     email: "lukejconnelly1{'@'}gmail.com",
     welcome: "Velkommen til Maskinrummet!",
+    areYouReadyToLearn: "Er du klar til at lære mere om <span>AI</span>?",
+    // welcomeText:
+    //   'Dette er en undervisningsressource designet på Aarhus Universitet til at undervise i, hvordan tekstbehandling og AI-systemer fungerer<br><br>Lærere: vi håber, I kan bruge siden i jeres undervisning - vores aktiviteter giver eleverne mulighed for at arbejde praktisk med data og AI<br><br>Du må meget gerne <a href="/#/da/contact">kontakte os</a> med forslag, spørgsmål eller feedback! Jeg vil meget gerne høre fra jer!<br><br>Nedenfor finder I en liste over vores aktiviteter, og hvis I vil vide mere om, hvordan man bruger siden eller søger inspiration, så tjek vores <a href="/#/da/how-to">vejledningsvideo om brug af siden</a>',
     welcomeText:
-      'Dette er en undervisningsressource designet på Aarhus Universitet til at undervise i, hvordan tekstbehandling og AI-systemer fungerer<br><br>Lærere: vi håber, I kan bruge siden i jeres undervisning - vores aktiviteter giver eleverne mulighed for at arbejde praktisk med data og AI<br><br>Du må meget gerne <a href="/#/da/contact">kontakte os</a> med forslag, spørgsmål eller feedback! Jeg vil meget gerne høre fra jer!<br><br>Nedenfor finder I en liste over vores aktiviteter, og hvis I vil vide mere om, hvordan man bruger siden eller søger inspiration, så tjek vores <a href="/#/da/how-to">vejledningsvideo om brug af siden</a>',
+      'Dette er en undervisningsressource designet på Aarhus Universitet til at undervise i, hvordan tekstbehandling og AI-systemer fungerer<br><br>Nedenfor finder I en liste over vores aktiviteter, og hvis I vil vide mere om, hvordan man bruger siden eller søger inspiration, så tjek vores <a href="/#/da/how-to">vejledningsvideo om brug af siden</a>',
     aboutLuke:
       "Kontakt mig venligst med forslag, spørgsmål eller feedback! Jeg vil meget gerne høre fra dig!",
     thanks:

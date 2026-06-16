@@ -1,7 +1,19 @@
 <template>
-  <h1>{{ $t("welcome") }}</h1>
-  <div v-html="$t('welcomeText')" class="mb-5"></div>
+  <header>
+    <div class="flex gap-8 header-content">
+      <div>
+        <h1 class="mt-0 text-6xl" v-html="$t('areYouReadyToLearn')"></h1>
+        <div v-html="$t('welcomeText')" class="mb-5"></div>
+      </div>
+      <video autoplay muted controls>
+        <source src="/maskinrummet_intro.webm" type="video/webm" />
+        <source src="/maskinrummet_intro.mp4" type="video/mp4" />
+      </video>
+    </div>
+  </header>
+
   <h2>{{ $t("availableActivities") }}</h2>
+
   <div class="flex flex-column lg:flex-row gap-4 align-items-start">
     <div
       class="filters-container w-full lg:w-15rem lg:flex-shrink-0 flex flex-wrap gap-4"
@@ -144,6 +156,59 @@
     top: 1rem;
   }
 }
+
+header {
+  padding-block: 4rem;
+  padding-inline: 40px;
+  margin-inline: -40px;
+  display: flex;
+  justify-content: center;
+  color: white;
+  background: linear-gradient(var(--purple-400), var(--purple-600));
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background-color: var(--purple-400);
+    z-index: -1;
+  }
+
+  a {
+    color: white;
+    text-decoration: underline;
+  }
+
+  .header-content {
+    max-width: 1200px;
+  }
+
+  h1 > span {
+    text-decoration: underline;
+    text-decoration-color: var(--purple-600);
+    text-decoration-thickness: 4px;
+  }
+
+  video {
+    flex: 1 1 150%;
+    width: 100%;
+    border-radius: 8px;
+    height: fit-content;
+    min-width: 420px;
+
+    @media (max-width: 1100px) {
+      display: none;
+    }
+  }
+
+  @media (max-width: 700px) {
+    padding-block: 2rem;
+  }
+}
+
 </style>
 
 <script>
