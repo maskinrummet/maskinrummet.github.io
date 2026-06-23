@@ -10,11 +10,11 @@ const messages = {
     student: "PHD Student at Aarhus University Computer Science",
     email: "lukejconnelly1{'@'}gmail.com",
     welcome: "Welcome to the Engine Room!",
-    areYouReadyToLearn: "Are you ready to learn about learn about <span>AI</span>?",
+    areYouReadyToLearn: "Are you ready to learn more about <span>AI</span>?",
     // welcomeText:
     //   'This is an educational resource designed at Aarhus University to teach how text processing and AI systems work<br><br>Teachers: we hope you can use the site in your classroom - our activities allow students to get hands-on with data and AI<br><br>Please <a href="/#/en/contact">get in contact</a> with suggestions, questions, or feedback! I would love to hear it!<br><br>Below you\'ll find a list of our activities, and if you\'d like more on how to use the site or inspiration, check out our <a href="/#/en/how-to">how to use the site video</a>',
     welcomeText:
-      'This is an educational resource designed at Aarhus University to teach how text processing and AI systems work<br><br>Below you\'ll find a list of our activities, and if you\'d like more on how to use the site or inspiration, check out our <a href="/#/en/how-to">how to use the site video</a>',
+      "This is an educational resource designed at Aarhus University to teach how text processing and AI systems work<br><br>Below you'll find a list of our activities, and if you'd like more on how to use the site or inspiration, check out our <a href=\"/#/en/how-to\">how to use the site video</a>",
     aboutLuke:
       "Please get in contact with me with suggestions, questions, or feedback! I would love to hear it!",
     thanks:
@@ -228,7 +228,8 @@ const messages = {
     datasetBiasExplained:
       "Dataset bias is when a dataset is skewed towards certain topics, words, or phrases, which can lead to unfair choices or incorrect outputs from an AI trained on the dataset.",
     singularActivitiesHeading: "Unguided Activities",
-    singularActivitiesDescription: "These activities are more open-ended and exploratory, and can be used once you have a good understanding of the basics of text processing and AI. They are designed to encourage creativity and critical thinking, and can be adapted to different subjects and age groups.",
+    singularActivitiesDescription:
+      "These activities are more open-ended and exploratory, and can be used once you have a good understanding of the basics of text processing and AI. They are designed to encourage creativity and critical thinking, and can be adapted to different subjects and age groups.",
     minWordCloudOccurences:
       "Minimum antal forekomster i teksten for at være vist i ordskyen (brug dette til store, langsomme datasæt)",
     customFilterWords: "Words to exclude from being shown in the word cloud",
@@ -465,7 +466,7 @@ const messages = {
         title: "Hour of AI",
         description:
           "Students create a fun, visual, paper sentence generator: by writing 4-word sentences, splitting this into word piles, and then recombining the words to generate new sentences. They reflect on patterns, probabilities, and what makes a good generation model",
-      }
+      },
     },
   },
   da: {
@@ -696,7 +697,8 @@ const messages = {
     datasetBiasExplained:
       "Datasæt bias er, når et datasæt er partisk mod visse emner, ord eller sætninger, hvilket kan føre til uretfærdige valg eller forkerte resultater fra en AI trænet på datasættet.",
     singularActivitiesHeading: "Værktøjer",
-    singularActivitiesDescription: "Disse aktiviteter er mere åbne og udforskningsmæssige og kan bruges, når du har en god forståelse af grundlæggende tekstbehandling og AI. De er designet til at fremme kreativitet og kritisk tænkning og kan tilpasses forskellige fag og aldersgrupper.",
+    singularActivitiesDescription:
+      "Disse aktiviteter er mere åbne og udforskningsmæssige og kan bruges, når du har en god forståelse af grundlæggende tekstbehandling og AI. De er designet til at fremme kreativitet og kritisk tænkning og kan tilpasses forskellige fag og aldersgrupper.",
     minWordCloudOccurences:
       "Minimum antal gange et ord skal optræde i teksten for at vises i vores ordsky (brug dette til store, langsom datasæt)",
     customFilterWords:
@@ -715,7 +717,7 @@ const messages = {
       surveyText: `... Og det ville være en stor hjælp for os i vores videre forskning, hvis du vil svare på dette korte spørgeskema! <ul><li><a href="https://survey.au.dk/LinkCollector?key=QYK7HER7L61J" target="_blank">Spørgeskema til dig, der er her på siden og overvejer at lave denne aktivitet (4 mins)</a></li><li><a href="https://survey.au.dk/LinkCollector?key=Q6P7HTP7J21P" target="_blank">Spørgskema til efter du har lavet denne aktivitet (6 mins)</a></li></ul>`,
       ages: "10-16 år",
       teachingPoint: "Tips til læreren",
-      acks: "These activities are developed at <a href=\"https://cctd.au.dk\" target=\"_blank\">the Center for Computational Thinking and Design at Aarhus University</a> in collaboration with the <a href=\"https://www.tekforstaa.dk\" target=\"_blank\">Research Center for Technology Comprehension</a>, contact us here: <a href=\"mailto:luke{'@'}cs.au.dk\">luke{'@'}cs.au.dk</a><br><br><a href=\"https://hourofai.org\" target=\"_blank\">The Hour of AI</a> is a global campaign from <a href=\"https://csforall.org\" target=\"_blank\">CSforALL</a>, in collaboration with <a href=\"https://code.org\" target=\"_blank\">Code.org</a>. Take part in <a href=\"https://csedweek.org\" target=\"_blank\">CS Ed Week</a>!",
+      acks: 'These activities are developed at <a href="https://cctd.au.dk" target="_blank">the Center for Computational Thinking and Design at Aarhus University</a> in collaboration with the <a href="https://www.tekforstaa.dk" target="_blank">Research Center for Technology Comprehension</a>, contact us here: <a href="mailto:luke{\'@\'}cs.au.dk">luke{\'@\'}cs.au.dk</a><br><br><a href="https://hourofai.org" target="_blank">The Hour of AI</a> is a global campaign from <a href="https://csforall.org" target="_blank">CSforALL</a>, in collaboration with <a href="https://code.org" target="_blank">Code.org</a>. Take part in <a href="https://csedweek.org" target="_blank">CS Ed Week</a>!',
       questions: "Spørgsmål, du kan stille eleverne",
       intro:
         '<b> Inviter dine elever til at bygge deres egen sætningsgenerator med papir. Eleverne får praktisk erfaring med at se, hvordan tekst bliver til data, og hvordan disse data bliver til en AI-model. Gennem dette lærer dine elever, at AI-systemer bruger data til at træffe beslutninger eller forudsigelser – i dette tilfælde ved at generere tekst ved at forudsige ordene i en sætning </b><br><br> I denne lektion starter eleverne med at skrive sætninger om sig selv, som de derefter i grupper samler til et datasæt. Ud fra dette datasæt skaber de en simpel sætningsgenerator-model. Dette er en meget åben øvelse, hvor du kan lade eleverne udforske og reflektere over trinene enkeltvis. Vi giver også reflekterende spørgsmål, der kan hjælpe dig med at strukturere en diskussion om, hvordan computere genererer tekst. Med denne øvelse ønsker vi at give eleverne praktisk erfaring og en fornemmelse af, at de kan være med til at skabe teknologi, så som tekstgenererings systemer, gennem et simpelt papirbaseret eksempel. <br><br> Vi præsenterer denne aktivitet i trin, som eleverne skal følge, samt tips til læreren og spørgsmål, læreren kan stille for at få eleverne til at reflektere. <a href="https://docs.google.com/document/d/1XDV2fF8GeeJqHnkGKSHzRrmT0tnbB4MxfIw0a7i4720/edit?usp=sharing" target="_blank"> En undervisningsplan, der opsummerer indholdet af denne side, er tilgængelig her</a>, og alternativt kan du printe denne side.',
@@ -936,7 +938,7 @@ const messages = {
         title: "Hour of AI",
         description:
           "Eleverne laver en sjov, visuel papir-sætningsgenerator: ved at skrive sætninger med 4 ord, dele dem op i ord-bunker og derefter sætte ordene sammen igen for at generere nye sætninger. De reflekterer over mønstre, sandsynligheder og hvad der gør en god genereringsmodel.",
-      }
+      },
     },
   },
 };
