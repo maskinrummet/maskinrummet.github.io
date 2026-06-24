@@ -31,7 +31,9 @@
               :inputId="`${filter.key}-${option.value}`"
               :value="option.value"
             />
-            <label :for="`${filter.key}-${option.value}`">{{ $t(option.labelKey) }}</label>
+            <label :for="`${filter.key}-${option.value}`">{{
+              $t(option.labelKey)
+            }}</label>
           </div>
         </div>
       </div>
@@ -51,13 +53,23 @@
               :src="activity.image"
               :alt="$t(`activities.${activity.id}.title`)"
               class="w-full block"
-              style="height: 196px; object-fit: cover; border-radius: 6px 6px 0 0"
+              style="
+                height: 196px;
+                object-fit: cover;
+                border-radius: 6px 6px 0 0;
+              "
             />
           </template>
           <template #title>
-            <div class="flex align-items-baseline justify-content-between gap-3">
-              <span class="activity-title">{{ $t(`activities.${activity.id}.title`) }}</span>
-              <span class="flex align-items-center gap-2 text-sm font-normal flex-shrink-0">
+            <div
+              class="flex align-items-baseline justify-content-between gap-3"
+            >
+              <span class="activity-title">{{
+                $t(`activities.${activity.id}.title`)
+              }}</span>
+              <span
+                class="flex align-items-center gap-2 text-sm font-normal flex-shrink-0"
+              >
                 <span>{{ activity.duration }}{{ $t("mins").slice(0, 1) }}</span>
                 <i class="pi pi-stopwatch"></i>
               </span>
@@ -126,24 +138,23 @@
     flex-direction: column;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     transition: all 0.2s ease-in-out;
-  
+
     &:hover {
       transform: translateY(-2px) scale(1.005);
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
   }
-  
+
   .p-card-body {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
   }
-  
+
   .p-card-footer {
     margin-top: auto;
   }
 }
-
 
 .filter-container {
   min-width: 150px;
@@ -207,11 +218,10 @@ header {
     padding-block: 2rem;
   }
 }
-
 </style>
 
 <script>
-import { ActicityModality } from "@/constants/activities";
+import { ActivityModality } from "@/constants/activities";
 import { computed } from "vue";
 import { useStore } from "vuex";
 
@@ -240,12 +250,15 @@ const createFilters = () => [
     key: "modality",
     titleKey: "filterModality",
     options: [
-      { labelKey: "filterPractical", value: ActicityModality.PHYSICAL },
-      { labelKey: "filterDigital", value: ActicityModality.DIGITAL },
+      { labelKey: "filterPractical", value: ActivityModality.PHYSICAL },
+      { labelKey: "filterDigital", value: ActivityModality.DIGITAL },
     ],
     selectedValues: [],
     filterFn(activity, selectedValues) {
-      return activity.modality == ActicityModality.EITHER || selectedValues.includes(activity.modality);
+      return (
+        activity.modality == ActivityModality.EITHER ||
+        selectedValues.includes(activity.modality)
+      );
     },
   },
   {
@@ -261,8 +274,10 @@ const createFilters = () => [
     filterFn(activity, selectedValues) {
       return selectedValues.some((range) => {
         if (range === "lt20") return activity.duration < 20;
-        if (range === "20-40") return activity.duration >= 20 && activity.duration < 40;
-        if (range === "40-60") return activity.duration >= 40 && activity.duration <= 60;
+        if (range === "20-40")
+          return activity.duration >= 20 && activity.duration < 40;
+        if (range === "40-60")
+          return activity.duration >= 40 && activity.duration <= 60;
         if (range === "gt60") return activity.duration > 60;
         return false;
       });
@@ -286,8 +301,8 @@ export default {
         this.filters.every(
           (filter) =>
             !filter.selectedValues.length ||
-            filter.filterFn(activity, filter.selectedValues)
-        )
+            filter.filterFn(activity, filter.selectedValues),
+        ),
       );
     },
   },
@@ -302,8 +317,10 @@ export default {
       return `${id}-${topic}`;
     },
     getActivityLink(activity) {
-      return activity.link ? `/${this.$i18n.locale}/${activity.link}` : `/${this.$i18n.locale}/activity/${activity.id}`;
-    }
+      return activity.link
+        ? `/${this.$i18n.locale}/${activity.link}`
+        : `/${this.$i18n.locale}/activity/${activity.id}`;
+    },
   },
   data() {
     return {

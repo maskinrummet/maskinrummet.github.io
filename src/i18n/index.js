@@ -463,7 +463,7 @@ const messages = {
         },
       },
       hourOfAI: {
-        title: "Hour of AI",
+        title: "Hour of AI: Build Your Own Language Model From Paper",
         description:
           "Students create a fun, visual, paper sentence generator: by writing 4-word sentences, splitting this into word piles, and then recombining the words to generate new sentences. They reflect on patterns, probabilities, and what makes a good generation model",
       },
@@ -838,7 +838,7 @@ const messages = {
         },
       },
       embodiedSentenceGeneration: {
-        title: "[Legemliggjort] Hvordan kan jeg generere tekst?",
+        title: "[Embodied] Hvordan kan jeg generere tekst?",
         description:
           "I denne lektion spiller du rollen som AI, der genererer sætninger fra de mest almindelige ord i et datasæt, for at få indsigt i, hvordan tekstgenerering fungerer på egen hånd.",
         whatYouNeed: "Intet :)",
@@ -935,7 +935,7 @@ const messages = {
         },
       },
       hourOfAI: {
-        title: "Hour of AI",
+        title: "Hour of AI: Byg Din Egen Sprogmodel Med Papir",
         description:
           "Eleverne laver en sjov, visuel papir-sætningsgenerator: ved at skrive sætninger med 4 ord, dele dem op i ord-bunker og derefter sætte ordene sammen igen for at generere nye sætninger. De reflekterer over mønstre, sandsynligheder og hvad der gør en god genereringsmodel.",
       },
