@@ -8,7 +8,7 @@
       {{ $t(`activities.${activity.id}.title`) }}
     </h3>
     <div v-if="activity">
-      <Card class="mb-2 bg-purple-900 text-white">
+      <Card class="mb-2 bg-purple-900 text-white" v-if="!inProgress">
         <template #header>
           <div class="flex justify-content-between pt-3 px-5">
             <div>
