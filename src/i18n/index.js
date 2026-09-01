@@ -479,10 +479,8 @@ const messages = {
     email: "lukejconnelly1{'@'}gmail.com",
     welcome: "Velkommen til Maskinrummet!",
     areYouReadyToLearn: "Er du klar til at lære mere om <span>AI</span>?",
-    // welcomeText:
-    //   'Dette er en undervisningsressource designet på Aarhus Universitet til at undervise i, hvordan tekstbehandling og AI-systemer fungerer<br><br>Lærere: vi håber, I kan bruge siden i jeres undervisning - vores aktiviteter giver eleverne mulighed for at arbejde praktisk med data og AI<br><br>Du må meget gerne <a href="/#/da/contact">kontakte os</a> med forslag, spørgsmål eller feedback! Jeg vil meget gerne høre fra jer!<br><br>Nedenfor finder I en liste over vores aktiviteter, og hvis I vil vide mere om, hvordan man bruger siden eller søger inspiration, så tjek vores <a href="/#/da/how-to">vejledningsvideo om brug af siden</a>',
     welcomeText:
-      'Dette er en undervisningsressource designet på Aarhus Universitet til at undervise i, hvordan tekstbehandling og AI-systemer fungerer<br><br>Nedenfor finder I en liste over vores aktiviteter, og hvis I vil vide mere om, hvordan man bruger siden eller søger inspiration, så tjek vores <a href="/#/da/how-to">vejledningsvideo om brug af siden</a>',
+      'Dette er en undervisningsressource designet på Aarhus Universitet til at undervise i, hvordan sprogteknlogi og AI-systemer fungerer<br><br>Nedenfor finder I en liste over vores aktiviteter, og hvis I vil vide mere om, hvordan man bruger siden eller søger inspiration, så tjek vores <a href="/#/da/how-to">vejledningsvideo om brug af siden</a>',
     aboutLuke:
       "Kontakt mig venligst med forslag, spørgsmål eller feedback! Jeg vil meget gerne høre fra dig!",
     thanks:
