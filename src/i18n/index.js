@@ -368,7 +368,7 @@ const messages = {
         },
       },
       embodiedSentenceGeneration: {
-        title: "[Embodied] How can I generate text?",
+        title: "How can I generate text?",
         description:
           "In this lesson you play the role of AI, generating sentences from the top words in a dataset, to gain insight into how text generation works firsthand.",
         bannerImgFile: "create-new.jpg",
@@ -815,7 +815,7 @@ const messages = {
       textCleaning: {
         title: "Hvordan kan en tekst laves om til ord?",
         description:
-          'I denne lektion udforsker vi, hvordan tekster kan "renses" til ord for at blive behandlet i tekst-AI.',
+          'Udforsk hvordan tekster kan renses til ord og behandles i tekst-AI.',
         bannerImgFile: "tokenisation-banner-da.png",
         whatYouNeed: "Intet :)",
         learningGoals:
@@ -842,9 +842,8 @@ const messages = {
         },
       },
       embodiedSentenceGeneration: {
-        title: "[Embodied] Hvordan kan jeg generere tekst?",
-        description:
-          "I denne lektion spiller du rollen som AI, der genererer sætninger fra de mest almindelige ord i et datasæt, for at få indsigt i, hvordan tekstgenerering fungerer på egen hånd.",
+        title: "Hvordan kan jeg generere tekst?",
+        description: "Påtag dig rollen som AI og generer sætninger fra de mest almindelige ord i et datasæt, og få en oplevelse af hvordan tesktgenerering fungerer.",
         bannerImgFile: "create-new.jpg",
         whatYouNeed: "Intet :)",
         learningGoals:
@@ -872,7 +871,7 @@ const messages = {
       textGeneration: {
         title: "Hvordan kan en computer forstå og generere tekst?",
         description:
-          "I denne lektion udforsker vi, hvordan datasæt kan opsummeres med ordskyer, hvordan en computer kan generere tekst ved hjælp af et datasæt, og hvordan sprogmodeller balancerer kreativitet og sandhed.",
+          "Udforsk hvordan datasæt kan opsummeres med ordskyer og hvordan en computer kan generere tekst ved hjælp af datasæt. Prøv om du kan skabe en balance mellem pålidelighed og kreativitet i din sprogmodel.",
         bannerImgFile: "ngram_example-da.png",
         whatYouNeed: "Intet :)",
         learningGoals:
@@ -903,8 +902,7 @@ const messages = {
       },
       bagOfWordsPractical: {
         title: "Hvad er tekstbearbejdning?",
-        description:
-          "I denne lektion bruger vi papir og saks til at udforske, hvordan tekst kan opdeles i ord, behandles af en computer og bruges til at generere ny tekst.",
+        description: "Brug saks og papir til at udforske, hvordan en takst kan opdeles i ord, behandles og bruges til at generere ny tekst.",
         bannerImgFile: "hq-bag-of-words.jpg",
         whatYouNeed:
           'Til denne lektion har du brug for en måde at skrive sætninger ned og klippe dem op i ord (f.eks. papir, saks, kuglepen). Det kan være almindeligt papir, men vi tilbyder også følgende skabeloner: <ul><li>Farve - 12 sætninger pr. side, 10 ord pr. sætning, op til 6 sider (71 sætninger) [<a href="/sentence-template.pdf" target="_blank">pdf</a>] [<a href="/sentence-template.docx" target="_blank">docx</a>]</li><li>Blækbesparende - 12 sætninger pr. side, 10 ord pr. sætning, op til 2 sider (23 sætninger) [<a href="/sentence-template-inksaver.pdf" target="_blank">pdf</a>] [<a href="/sentence-template-inksaver.docx" target="_blank">docx</a>]</li></ul>',
@@ -944,7 +942,7 @@ const messages = {
       hourOfAI: {
         title: "Hour of AI: Byg Din Egen Sprogmodel Med Papir",
         description:
-          "Eleverne laver en sjov, visuel papir-sætningsgenerator: ved at skrive sætninger med 4 ord, dele dem op i ord-bunker og derefter sætte ordene sammen igen for at generere nye sætninger. De reflekterer over mønstre, sandsynligheder og hvad der gør en god genereringsmodel.",
+          "Lav din egen papir-sætningsgenerator. Skriv sætninger med 4 ord. Del dem i ordbunker og sammensæt dem på nye måder, så der opstår nye sætninger. Oplev og overvej hvilke mønstre og sandsynligheder der skaber en god sprogmodel?",
         bannerImgFile: "spinning-wheels.jpg",
       },
     },
