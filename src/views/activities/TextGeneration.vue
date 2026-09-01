@@ -1,14 +1,15 @@
 <template>
   <span ref="scrollReset"></span>
-  <div v-if="!dataset">
-    <DatasetSelection @datasetReady="getDataset" />
-  </div>
   <DatasetModal
     @refresh="refreshDataset"
     :datasetId="datasetId"
     ref="datasetModal"
   ></DatasetModal>
-  <Stepper v-if="dataset && !complete" v-model:active-step="currStep">
+  <Stepper v-if="!complete" v-model:active-step="currStep" :linear="!dataset">
+    <StepperPanel header="Into">
+      <ActivityDescriptionCard :activity="activity" />
+      <DatasetSelection @datasetReady="getDataset" />
+    </StepperPanel>
     <StepperPanel :header="$t('wordCloud')">
       <template #content="{ nextCallback }">
         <Fieldset
@@ -420,6 +421,7 @@ import PositionalTextGen from "../singularActivities/PositionalTextGen.vue";
 import { Pie } from "vue-chartjs";
 import RadioButton from "primevue/radiobutton";
 import SankeyChart from "@/components/SankeyChart.vue";
+import ActivityDescriptionCard from "@/components/ActivityDescriptionCard.vue";
 
 export default {
   name: "TextGeneration",
@@ -432,10 +434,15 @@ export default {
     Pie,
     RadioButton,
     SankeyChart,
+    ActivityDescriptionCard
   },
   props: {
     activityID: {
       type: String,
+      required: true,
+    },
+    activity: {
+      type: Object,
       required: true,
     },
   },
@@ -492,7 +499,7 @@ export default {
       return Math.max(...this.bagOfWords.map(([, weight]) => weight));
     },
     sentences() {
-      if (!this.dataset.sentences) return [];
+      if (!this.dataset || !this.dataset.sentences) return [];
       return this.dataset.sentences.map((x) => x.text);
     },
     ngrams() {
@@ -548,6 +555,7 @@ export default {
       this.dataset = (await getDatasetById(datasetId)).data;
       this.$emit("startActivity");
       this.resetScroll();
+      this.currStep++;
     },
     refreshDataset(dataset) {
       this.dataset = dataset;
