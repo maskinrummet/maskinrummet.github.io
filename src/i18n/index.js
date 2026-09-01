@@ -892,12 +892,12 @@ const messages = {
           positionalGeneration:
             'En af de enkleste måder at begynde at generere tekst på er at tage det mest almindelige første ord i hele datasættet, derefter det mest almindelige andet ord, derefter det tredje, og så videre. Du kan klikke på "generer" nedenfor for at se, hvordan det ser ud for dette datasæt, og knappen "hvordan" viser de ord, der var på position 1, 2, 3 osv.',
           positionalTextGenBreakdown:
-            "Mens positionsgenerering fungerer godt i starten, vil du måske bemærke, at når vi kommer længere ind i sætningen, bliver sandsynlighederne og positionerne mere rodede. Derfor kan det give mening at se på, hvilke ord der optræder sammen, i stedet for hvornår de optræder. En måde at gøre dette på er N-grammer: grupper af ord, der optræder i teksten. Nedenfor kan du se dine datasæts N-grammer i en ordsky:",
+            "Positionsgenerering fungerer godt i starten, men du vil opleve, at når du kommer længere ind i sætninger, bliver sandsynlighederne og positonerne mere rodede. derfor det mening at se på, hvilke ord der optræder sammen, i stedet for at hvornår de optæder. En måde at gøre dette på er N-grammer: Grupper af ord, der optræder i teksten. Nederfor kan de se dine datasæts N-grammer i en ordsky:",
           topX: "Hvor mange af de mest almindelige N-grammer, der skal vises",
           introToSankey:
-            'Som et eksempel på, hvordan N-grammer hjælper os med at generere tekst, hvis vi ser 2-grammet "Klar, parat" i en tekst, ved vi, at "start" sandsynligvis kommer bagefter, uanset om det er position 1, 2, 3 eller 5, 6, 7 eller endda 112, 113, 114. Nedenfor kan du se de mest almindelige N-grammer fra dit datasæt og ordet, der kom efter dem.',
+            "N-grammer hjælper os med at generere tekst. Når vi ser 2-grammet \"Klar, parat\" i en tekst, ved vi, at \"start\" sandsynligvis kommer bagefter, uanset om det er position 1, 2, 3 eller 5, 6, 7. Nedenfor kan du se de mest almindelige N-grammer fra dit datasæt og ordet, der kommer efter dem.",
           nGramGeneration:
-            "Nedenfor bruger vi N-grammer til tekstgenerering på dit datasæt, og du kan eksperimentere med forskellige N'er og tilfældigheder for at se, hvordan det ændrer resultatet.",
+            "Nedenfor bruger vi N-grammer til tekstgenerering på dit datasæt. Du kan eksperimentere med forskellige N'er og tilfældigheder for at se, hvordan det ændrer resultatet.",
         },
       },
       bagOfWordsPractical: {
