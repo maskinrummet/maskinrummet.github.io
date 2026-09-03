@@ -7,7 +7,7 @@
   ></DatasetModal>
   <Stepper v-if="!complete" v-model:active-step="currStep" :linear="!dataset">
     <StepperPanel header="Into">
-      <ActivityDescriptionCard :activity="activity" />
+      <ActivityDescriptionCard :activity="activity" :hasRequirements="false" />
       <DatasetSelection @datasetReady="getDataset" />
     </StepperPanel>
     <StepperPanel :header="$t('wordCloud')">
@@ -422,6 +422,7 @@ import { Pie } from "vue-chartjs";
 import RadioButton from "primevue/radiobutton";
 import SankeyChart from "@/components/SankeyChart.vue";
 import ActivityDescriptionCard from "@/components/ActivityDescriptionCard.vue";
+import "../../styles/lesson.css";
 
 export default {
   name: "TextGeneration",
