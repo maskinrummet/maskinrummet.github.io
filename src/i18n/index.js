@@ -170,7 +170,7 @@ const messages = {
     wordCloudExplained:
       'In a word cloud, the more times a word appears, the larger it is shown. Using a word cloud, computers can start to understand what the dataset is about, and what the most important words are. For example, if we\'re trying to tell if a dataset is about animals, we might look for words like "dog", "cat", "bird", being used multiple times. Through this technique, which a computer instead records as words and the number of times they appear, a computer can better understand what a dataset is about.',
     positionalTextGeneration: "Positional Text Generation",
-    nGramsGeneration: "N-grams Text Generation",
+    nGramsGeneration: "N-grams generation",
     windowSize: "N-gram size",
     startToken: "[START]",
     endToken: "[END]",
@@ -639,7 +639,7 @@ const messages = {
     wordCloudExplained:
       'I en ordsky: Jo flere gange ordet optræder i teksten, jo større er det. Fra en ordsky kan computere begynde at forstå, hvad datasættet handler om, og hvilke ord der er de vigtigste. For eksempel, hvis vi prøver at finde ud af, om et datasæt handler om dyr, kunne vi se efter ord som "hund", "kat", "fugl", der bruges flere gange. Gennem denne teknik, som en computer i stedet registrerer som ord og antallet af gange de optræder, kan en computer bedre forstå, hvad et datasæt handler om.',
     positionalTextGeneration: "Positionstekstgenerering",
-    nGramsGeneration: "N-grams Tekstgenerering",
+    nGramsGeneration: "N-grams generering",
     windowSize: "N-gram størrelse",
     startToken: "[START]",
     endToken: "[SLUT]",

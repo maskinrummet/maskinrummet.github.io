@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="activity-detail">
     <h3>
       <router-link :to="'/' + $i18n.locale">
         {{ $t("availableActivities") }}
@@ -7,7 +7,7 @@
       >
       {{ $t(`activities.${activity.id}.title`) }}
     </h3>
-    <div v-if="activity">
+    <template v-if="activity">
       <!-- Switch logic for activity -->
       <component
         :is="currentComponent"
@@ -40,7 +40,7 @@
           </template>
         </Card>
       </div>
-    </div>
+    </template>
     <div v-else>
       <p>{{ $t("activityNotFound") }}</p>
     </div>

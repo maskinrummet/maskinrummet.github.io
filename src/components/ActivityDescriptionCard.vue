@@ -5,7 +5,7 @@
                 <h1 class="p-card-title">{{ $t(`activities.${activity.id}.title`) }}</h1>
                 <span class="modality">{{ $t("modality") }}: {{ $t(activity.modality) }}</span>
             </div>
-            <div class="flex flex-col justify-content-between gap-2">
+            <div class="flex flex-col justify-content-between gap-2 info">
                 <div>
                     {{ $t("age") }} {{ activity.age }}+
                     <i class="pi pi-user"></i>
@@ -65,6 +65,10 @@
         .modality {
             font-size: 0.9rem;
             font-weight: 200;
+        }
+
+        .info {
+            white-space: nowrap;
         }
     }
 
