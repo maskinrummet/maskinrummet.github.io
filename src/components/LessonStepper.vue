@@ -5,13 +5,15 @@
         </Stepper>
         <div class="seperator"></div>
         <div class="sidebar">
-            <LessonSteps :steps="steps" :current-step="step" />
+            <LessonSteps :steps="normalizedSteps" :current-step="step" />
             <hr>
 
             <div class="buttons">
-                <Button icon="pi pi-arrow-left" severity="secondary" outlined @click="() => step--" :disabled="step === 0 || step === steps.length - 1" />
-                <Button class="next" :label="$t('next')" icon="pi pi-arrow-right" iconPos="right"
-                    @click="() => step++" :disabled="!canProgress" />
+                <Button icon="pi pi-arrow-left" severity="secondary" outlined @click="previous"
+                    :disabled="step === 0" />
+                <Button class="next" :label="!loading && currentStepConfig.buttonNextLabel"
+                    :icon="'pi' + (loading ? ' pi-spin pi-spinner' : ' pi-arrow-right')" iconPos="right" @click="next"
+                    :disabled="!canProgress" />
             </div>
         </div>
     </div>
@@ -92,7 +94,7 @@ export default {
             type: Number,
             required: true
         },
-        steps: {
+        steps: { // Either a string or an object with a name and optional configuration
             type: Array,
             required: true
         },
@@ -102,6 +104,23 @@ export default {
         }
     },
     emits: ["update:activeStep"],
+    data() {
+        return {
+            loading: false
+        }
+    },
+    methods: {
+        async next() {
+            const stepConfig = this.currentStepConfig;
+            this.loading = !!stepConfig.beforeNext; // Only show loading if there is a beforeNext function to run
+            await stepConfig.beforeNext?.();
+            this.loading = false;
+            this.step++;
+        },
+        previous() {
+            this.step--;
+        }
+    },
     computed: {
         step: {
             get() {
@@ -110,6 +129,22 @@ export default {
             set(value) {
                 this.$emit("update:activeStep", value);
             }
+        },
+        currentStepConfig() {
+            const currentStep = this.steps[this.step];
+            const stepConfig = typeof currentStep === 'string' ? { name: currentStep } : currentStep;
+
+            return {
+                // Base config
+                buttonNextLabel: this.$t('next'),
+                beforeNext: undefined,
+                ...stepConfig,
+            }
+        },
+        normalizedSteps() {
+            return this.steps.map(step => {
+                return typeof step === 'string' ? step : step.name;
+            })
         }
     }
 }

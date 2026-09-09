@@ -9,18 +9,21 @@
     v-if="!complete"
     v-model:active-step="currStep"
     :linear="!dataset"
-    :canProgress="!!dataset"
+    :canProgress="!!datasetId"
     :steps="[
-      $t('intro'),
+      { name: $t('intro'), beforeNext: fetchDataset },
       $t('wordCloud'),
       $t('positionalTextGeneration'),
       $t('ngrams'),
-      $t('nGramsGeneration'),
+      { name: $t('nGramsGeneration'), buttonNextLabel: $t('completeLesson') },
     ]"
   >
     <StepperPanel header="Into">
       <ActivityDescriptionCard :activity="activity" :hasRequirements="false" />
-      <DatasetSelection @datasetReady="getDataset" />
+      <DatasetSelectionV2
+        @update:selected-dataset-id="datasetId = $event"
+        @update:user-sentence="sentence = $event"
+      />
     </StepperPanel>
     <StepperPanel :header="$t('wordCloud')">
       <template #content>
@@ -378,8 +381,7 @@
   </LessonStepper>
 </template>
 <script>
-import DatasetSelection from "@/components/DatasetSelection.vue";
-import { getDatasetById } from "@/api";
+import { addSentenceToDataset, getDatasetById } from "@/api";
 import i18n from "@/i18n";
 import {
   getBagOfWords,
@@ -400,11 +402,11 @@ import SankeyChart from "@/components/SankeyChart.vue";
 import ActivityDescriptionCard from "@/components/ActivityDescriptionCard.vue";
 import "../../styles/lesson.css";
 import LessonStepper from "@/components/LessonStepper.vue";
+import DatasetSelectionV2 from "@/components/DatasetSelectionV2.vue";
 
 export default {
   name: "TextGeneration",
   components: {
-    DatasetSelection,
     DatasetModal,
     InspirationCard,
     NgramTextGen,
@@ -413,7 +415,8 @@ export default {
     RadioButton,
     SankeyChart,
     ActivityDescriptionCard,
-    LessonStepper
+    LessonStepper,
+    DatasetSelectionV2,
   },
   props: {
     activityID: {
@@ -528,13 +531,14 @@ export default {
     },
   },
   methods: {
-    async getDataset({ datasetId, userSentence }) {
-      this.datasetId = datasetId;
-      this.sentence = userSentence;
-      this.dataset = (await getDatasetById(datasetId)).data;
+    async fetchDataset() {
+      if (!this.datasetId) return;
+      if (this.sentence) {
+        await addSentenceToDataset(this.datasetId, this.sentence);
+      }
+
+      this.dataset = (await getDatasetById(this.datasetId)).data;
       this.$emit("startActivity");
-      this.resetScroll();
-      this.currStep++;
     },
     refreshDataset(dataset) {
       this.dataset = dataset;
