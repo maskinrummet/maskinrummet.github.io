@@ -239,6 +239,25 @@ const messages = {
     numRows: "Number of rows per table",
     minOccurences:
       "Minimum number of times a word should appear to be included",
+    completeLesson: "Complete lesson",
+    datasetSelection: {
+      selectADataset: "Choose a dataset",
+      serverErrorOccurred: "An error occurred, please try again later",
+      datasetSelectionExplanation: "In this activity, we will use a dataset. You can create your own dataset, create a dataset that others can contribute to, or use one of the available datasets.",
+      loading: "Loading dataset...",
+      emptyDropdown: "No datasets...",
+      noSearchResults: "No search results",
+      open: "Open",
+      closed: "Closed",
+      example: "Example",
+      addSentence: "Add your own sentence",
+      removeSentence: "Remove sentence",
+      sentenceCount: "{count} Sentence | {count} Sentences",
+      yourSentence: "Your sentence",
+      userSentenceLabel: "Add your own sentence to the selected dataset",
+      viewDataset: "View dataset",
+      newDataset: "New dataset"
+    },
     hourOfAILink: "Hour of AI",
     hourOfAI: {
       hourOfAITitle: "Build Your Own Language Model From Paper",
@@ -709,6 +728,25 @@ const messages = {
     numRows: "Antal rækker i tabellen",
     minOccurences:
       "Minimum antal gange et ord skal optræde for at blive inkluderet",
+    completeLesson: "Afslut lektion",
+    datasetSelection: {
+      selectADataset: "Vælg et datasæt",
+      serverErrorOccurred: "Der opstod en fejl på serveren",
+      datasetSelectionExplanation: "I denne aktivitet vil vi bruge et datasæt. Du kan oprette dit eget datasæt, oprette et datasæt som andre kan bidrage til, eller bruge et af de tilgængelige datasæt.",
+      loading: "Indlæser datasæt...",
+      emptyDropdown: "Ingen datasæt...",
+      noSearchResults: "Ingen søgeresultater",
+      open: "Åben",
+      closed: "Lukket",
+      example: "Eksempel",
+      addSentence: "Tilføj din egen sætning",
+      removeSentence: "Fjern sætning",
+      sentenceCount: "{count} Sætning | {count} Sætninger",
+      yourSentence: "Din sætning",
+      userSentenceLabel: "Tilføj din egen sætning til det valgte datasæt",
+      viewDataset: "Se datasæt",
+      newDataset: "Nyt datasæt"
+    },
     hourOfAILink: "Hour of AI",
     hourOfAI: {
       hourOfAITitle: "Byg Din Egen Sprogmodel Med Papir",
