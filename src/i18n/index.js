@@ -256,7 +256,8 @@ const messages = {
       yourSentence: "Your sentence",
       userSentenceLabel: "Add your own sentence to the selected dataset",
       viewDataset: "View dataset",
-      newDataset: "New dataset"
+      newDataset: "New dataset",
+      createNewDatasetButton: "Create a new dataset",
     },
     hourOfAILink: "Hour of AI",
     hourOfAI: {
@@ -745,7 +746,8 @@ const messages = {
       yourSentence: "Din sætning",
       userSentenceLabel: "Tilføj din egen sætning til det valgte datasæt",
       viewDataset: "Se datasæt",
-      newDataset: "Nyt datasæt"
+      newDataset: "Nyt datasæt",
+      createNewDatasetButton: "Opret et nyt datasæt",
     },
     hourOfAILink: "Hour of AI",
     hourOfAI: {

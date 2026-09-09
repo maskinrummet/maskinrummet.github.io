@@ -57,7 +57,7 @@
                         <template v-if="!isDatasetNewlyCreated">
                             <div class="seperator"></div>
 
-                            <Button label="Opret et datasæt" class="create-new" severity="info"
+                            <Button :label="$t('datasetSelection.createNewDatasetButton')" class="create-new" severity="info"
                                 @click="showCreateDialog = true" />
                         </template>
                     </div>
