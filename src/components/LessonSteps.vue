@@ -19,11 +19,13 @@
   gap: 1rem;
   position: relative;
 
+  --marker-size: 24px;
+
   &::before {
     content: "";
     position: absolute;
     inset-block: 1rem;
-    left: 13px;
+    left: calc(var(--marker-size) / 2 + 1px);
     width: 2px;
     background-image: linear-gradient(transparent 50%, var(--bluegray-100) 50%);
     background-size: 2px 6px;
@@ -36,12 +38,13 @@
     align-items: center;
     gap: 1.5rem;
     font-weight: 500;
+    font-size: 1rem;
     color: var(--bluegray-700);
 
     &::before {
       content: "";
-      width: 24px;
-      height: 24px;
+      width: var(--marker-size);
+      height: var(--marker-size);
       border-radius: 50%;
       display: inline-block;
       background-color: white;
@@ -63,6 +66,15 @@
         background-color: var(--purple-100);
         border-color: var(--purple-500);
       }
+    }
+  }
+
+  @media (max-width: 1600px) {
+    gap: 0.75rem;
+    --marker-size: 20px;
+
+    li {
+      font-size: 0.875rem;
     }
   }
 }

@@ -6,7 +6,7 @@
         <div class="seperator"></div>
         <div class="sidebar">
             <LessonSteps :steps="normalizedSteps" :current-step="step" />
-            <hr>
+            <!-- <hr> -->
 
             <div class="buttons">
                 <Button icon="pi pi-arrow-left" severity="secondary" outlined @click="previous"
@@ -26,11 +26,15 @@
     width: 100%;
     flex-grow: 1;
     overflow: hidden;
+    --sidebar-padding: 1.5rem;
+    @media (min-width: 1600px) {
+        --sidebar-padding: 2rem;
+    }
 
     .p-stepper {
         overflow-y: auto;
         padding: 2px;
-        padding-right: 2rem;
+        padding-right: var(--sidebar-padding);
         scrollbar-width: thin;
         flex-grow: 1;
     }
@@ -38,7 +42,7 @@
     .seperator {
         width: 0px;
         border-left: 1.5px solid var(--bluegray-100);
-        padding-right: 2rem;
+        padding-right: var(--sidebar-padding);
     }
 
     .sidebar {
@@ -67,9 +71,9 @@
             padding-top: 0.5rem;
             background-color: white;
 
-
             .next {
                 flex: 1;
+                padding-inline: 1rem;
             }
         }
     }
