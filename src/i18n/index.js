@@ -938,7 +938,7 @@ const messages = {
         learningOutcomes:
           "Forhåbentlig efter at have gennemført denne lektion, kan du forstå:<ul><li>Hvad stamning og stop ord er, og hvordan de kan bruges i tekstbearbejdning</li><li> Hvordan computere kan generere tekst, og hvordan de kan være kreative, men også upålidelige</li><li> Hvordan tilfældighed kan påvirke tekstgenerering og medføre interessante og nogle gange uforudsigelige resultater.</li><li>Have en bedre forståelse af, hvordan tilfældighed spiller ind i tekst generering, og hvordan det kan bruges til at gøre tekstgenerering mere kreativ.</li></ul>",
         readMore:
-          'Du kan prøve en stemmer direkte her: <a href="http://text-processing.com/demo/stem/" target="_blank">http://text-processing.com/demo/stem/</a><br><br>En god forklarende video om N-grams er tilfængelig her: <a href="https://www.youtube.com/watch?v=E_mN90TYnlg" target="_blank">https://www.youtube.com/watch?v=E_mN90TYnlg</a>',
+          'Du kan prøve en stemmer direkte her: <a href="http://text-processing.com/demo/stem/" target="_blank">http://text-processing.com/demo/stem/</a><br><br>En god forklarende video om N-grams er tilgængelig her: <a href="https://www.youtube.com/watch?v=E_mN90TYnlg" target="_blank">https://www.youtube.com/watch?v=E_mN90TYnlg</a>',
         custom: {
           wordCloudBelow:
             "Nedenfor kan du se en ordsky genereret fra det valgte datasæt",
