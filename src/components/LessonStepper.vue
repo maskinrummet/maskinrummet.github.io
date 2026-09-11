@@ -5,7 +5,7 @@
         </Stepper>
         <div class="seperator"></div>
         <div class="sidebar">
-            <LessonSteps :steps="normalizedSteps" :current-step="step" />
+            <LessonSteps :steps="normalizedSteps" :current-step="step" :allowNavigation="canProgress && !linear" @stepClicked="handleStepClick" />
             <!-- <hr> -->
 
             <div class="buttons">
@@ -124,6 +124,9 @@ export default {
         },
         previous() {
             this.step--;
+        },
+        handleStepClick(index) {
+            this.step = index;
         }
     },
     computed: {

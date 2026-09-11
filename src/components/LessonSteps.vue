@@ -1,9 +1,10 @@
 <template>
-  <ul class="lesson-steps">
+  <ul class="lesson-steps" :class="{ 'allow-navigation': allowNavigation }">
     <li
       v-for="(step, index) in steps"
       :key="index"
       :class="{ 'active-step': index === currentStep, 'passed-step': index < currentStep }"
+      @click="allowNavigation && $emit('stepClicked', index)"
     >
       <span class="step-label">{{ step }}</span>
     </li>
@@ -40,6 +41,7 @@
     font-weight: 500;
     font-size: 1rem;
     color: var(--bluegray-700);
+    --hover-color: var(--bluegray-950);
 
     &::before {
       content: "";
@@ -53,6 +55,7 @@
 
     &.passed-step {
       color: var(--bluegray-200);
+      --hover-color: var(--bluegray-400);
 
       &::before {
         border-color: var(--bluegray-100);
@@ -61,11 +64,20 @@
     
     &.active-step {
       color: var(--purple-500);
+      --hover-color: var(--purple-700);
 
       &::before {
         background-color: var(--purple-100);
         border-color: var(--purple-500);
       }
+    }
+  }
+
+  &.allow-navigation li {
+    cursor: pointer;
+
+    &:hover {
+      color: var(--hover-color);
     }
   }
 
@@ -83,6 +95,7 @@
 <script>
 export default {
   name: "LessonStepper",
+  emits: ["stepClicked"],
   props: {
     steps: {
       type: Array,
@@ -91,7 +104,11 @@ export default {
     currentStep: {
       type: Number,
       required: true,
-    }
+    },
+    allowNavigation: {
+      type: Boolean,
+      default: false,
+    },
   }
 }
 </script>
