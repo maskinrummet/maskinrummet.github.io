@@ -259,6 +259,17 @@ const messages = {
       newDataset: "New dataset",
       createNewDatasetButton: "Create a new dataset",
     },
+    lessonStepper: {
+      introductionStep: "Introduction",
+      doneStep: "Done",
+      nextButton: "Next",
+      finishButton: "Finish lesson",
+    },
+    lessonCompletion: {
+      title: "Congratulations! You have now completed the lesson",
+      subtitle: "You can now take a break, or read more below",
+      seeMore: "See more",
+    },
     hourOfAILink: "Hour of AI",
     hourOfAI: {
       hourOfAITitle: "Build Your Own Language Model From Paper",
@@ -748,6 +759,17 @@ const messages = {
       viewDataset: "Se datasæt",
       newDataset: "Nyt datasæt",
       createNewDatasetButton: "Opret et nyt datasæt",
+    },
+    lessonStepper: {
+      introductionStep: "Introduktion",
+      doneStep: "Færdig",
+      nextButton: "Næste",
+      finishButton: "Afslut lektion",
+    },
+    lessonCompletion: {
+      title: "Tillykke! Du har nu gennemført lektionen",
+      subtitle: "Nu kan du holde en pause, eller læse mere nedenunder",
+      seeMore: "Se mere",
     },
     hourOfAILink: "Hour of AI",
     hourOfAI: {

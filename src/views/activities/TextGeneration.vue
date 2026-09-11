@@ -11,11 +11,17 @@
     :linear="!dataset"
     :canProgress="!!datasetId"
     :steps="[
-      { name: $t('intro'), beforeNext: fetchDataset },
+      { name: $t('lessonStepper.introductionStep'), beforeNext: fetchDataset },
       $t('wordCloud'),
       $t('positionalTextGeneration'),
       $t('ngrams'),
-      { name: $t('nGramsGeneration'), buttonNextLabel: $t('completeLesson') },
+      $t('nGramsGeneration'),
+      {
+        name: $t('lessonStepper.doneStep'),
+        nextButtonLabel: $t('lessonStepper.finishButton'),
+        nextButtonSeverity: 'success',
+        beforeNext: () => { router.push(`/`) }
+      },
     ]"
   >
     <StepperPanel header="Into">
@@ -378,6 +384,11 @@
         ></NgramTextGen>
       </template>
     </StepperPanel>
+    <StepperPanel :header="$t('lessonStepper.doneStep')">
+      <template #content>
+        <LessonCompletion :activity="activity" />
+      </template>
+    </StepperPanel>
   </LessonStepper>
 </template>
 <script>
@@ -403,6 +414,8 @@ import ActivityDescriptionCard from "@/components/ActivityDescriptionCard.vue";
 import "../../styles/lesson.css";
 import LessonStepper from "@/components/LessonStepper.vue";
 import DatasetSelectionV2 from "@/components/DatasetSelectionV2.vue";
+import LessonCompletion from "@/components/LessonCompletion.vue";
+import router from "@/router/index.js";
 
 export default {
   name: "TextGeneration",
@@ -417,6 +430,7 @@ export default {
     ActivityDescriptionCard,
     LessonStepper,
     DatasetSelectionV2,
+    LessonCompletion,
   },
   props: {
     activityID: {
@@ -434,7 +448,7 @@ export default {
       datasetId: null,
       sentence: "",
       complete: false,
-      currStep: 0,
+      currStep: 5,
       maxColor: [163, 11, 11],
       minColor: [24, 86, 143],
       windowSize: 2,
@@ -457,6 +471,7 @@ export default {
           },
         },
       },
+      router
     };
   },
   computed: {

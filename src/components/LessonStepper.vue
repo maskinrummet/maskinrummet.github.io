@@ -11,9 +11,9 @@
             <div class="buttons">
                 <Button icon="pi pi-arrow-left" severity="secondary" outlined @click="previous"
                     :disabled="step === 0" />
-                <Button class="next" :label="!loading && currentStepConfig.buttonNextLabel"
+                <Button class="next" :label="!loading && currentStepConfig.nextButtonLabel"
                     :icon="'pi' + (loading ? ' pi-spin pi-spinner' : ' pi-arrow-right')" iconPos="right" @click="next"
-                    :disabled="!canProgress" />
+                    :disabled="!canProgress" :severity="currentStepConfig.nextButtonSeverity" />
             </div>
         </div>
     </div>
@@ -37,6 +37,7 @@
         padding-right: var(--sidebar-padding);
         scrollbar-width: thin;
         flex-grow: 1;
+        position: relative;
     }
 
     .seperator {
@@ -140,8 +141,9 @@ export default {
 
             return {
                 // Base config
-                buttonNextLabel: this.$t('next'),
+                nextButtonLabel: this.$t('next'),
                 beforeNext: undefined,
+                nextButtonSeverity: 'primary',
                 ...stepConfig,
             }
         },
