@@ -1,5 +1,5 @@
 <template>
-    <Card class="mb-2 bg-purple-600 text-white activity-card">
+    <Card class="mb-2 bg-purple-600 text-white activity-description-card">
         <template #header>
             <div>
                 <h1 class="p-card-title">{{ $t(`activities.${activity.id}.title`) }}</h1>
@@ -47,7 +47,7 @@
 </template>
 
 <style>
-.activity-card {
+.activity-description-card {
     .p-card-header {
         display: flex;
         align-items: flex-start;
