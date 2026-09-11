@@ -52,6 +52,7 @@
         gap: 1rem;
         align-items: stretch;
         anchor-name: --lesson-sidebar;
+        min-width: 220px;
 
         hr {
             width: 100%;
@@ -74,7 +75,7 @@
 
             .next {
                 flex: 1;
-                padding-inline: 1rem;
+                white-space: nowrap;
             }
         }
     }

@@ -6,7 +6,6 @@
     ref="datasetModal"
   ></DatasetModal>
   <LessonStepper
-    v-if="!complete"
     v-model:active-step="currStep"
     :linear="!dataset"
     :canProgress="!!datasetId"
@@ -20,7 +19,7 @@
         name: $t('lessonStepper.doneStep'),
         nextButtonLabel: $t('lessonStepper.finishButton'),
         nextButtonSeverity: 'success',
-        beforeNext: () => { router.push(`/`) }
+        beforeNext: completed
       },
     ]"
   >
@@ -415,7 +414,7 @@ import "../../styles/lesson.css";
 import LessonStepper from "@/components/LessonStepper.vue";
 import DatasetSelectionV2 from "@/components/DatasetSelectionV2.vue";
 import LessonCompletion from "@/components/LessonCompletion.vue";
-import router from "@/router/index.js";
+import { gotoFrontpage } from "@/router/index.js";
 
 export default {
   name: "TextGeneration",
@@ -447,8 +446,7 @@ export default {
       dataset: null,
       datasetId: null,
       sentence: "",
-      complete: false,
-      currStep: 5,
+      currStep: 0,
       maxColor: [163, 11, 11],
       minColor: [24, 86, 143],
       windowSize: 2,
@@ -470,8 +468,7 @@ export default {
             display: false,
           },
         },
-      },
-      router
+      }
     };
   },
   computed: {
@@ -553,7 +550,6 @@ export default {
       }
 
       this.dataset = (await getDatasetById(this.datasetId)).data;
-      this.$emit("startActivity");
     },
     refreshDataset(dataset) {
       this.dataset = dataset;
@@ -588,8 +584,7 @@ export default {
     },
     completed() {
       this.resetScroll();
-      this.complete = true;
-      this.$emit("completedActivity");
+      gotoFrontpage();
     },
     showDatasetModal() {
       this.$refs.datasetModal.show();

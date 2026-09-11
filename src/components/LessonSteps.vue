@@ -71,6 +71,10 @@
         border-color: var(--purple-500);
       }
     }
+
+    .step-label {
+      white-space: nowrap;
+    }
   }
 
   &.allow-navigation li {

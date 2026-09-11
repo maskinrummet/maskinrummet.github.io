@@ -575,7 +575,7 @@ const messages = {
     learningOutcomes: "Læringsresultater",
     seeMore: "Se mere",
     splitting: "Opdeling i ord",
-    lowercasing: "Konvertering til små bogstaver",
+    lowercasing: "Små bogstaver",
     cleaning: "Rensning af tegnsætning",
     sentenceInputTitle: "Indtast en sætning",
     yourSentence: "Din sætning",

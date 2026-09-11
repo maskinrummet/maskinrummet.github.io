@@ -14,32 +14,8 @@
         v-if="currentComponent"
         :activityID="activity.id"
         :activity="activity"
-        @startActivity="inProgress = true"
-        @completedActivity="completed = true"
       ></component>
       <div v-else>Activity has not been registered properly</div>
-      <div v-if="completed">
-        <Card class="bg-green-900 text-white">
-          <template #title>{{ $t("congrats") }}</template>
-          <template #content>
-            <p>{{ $t("youCompleted") }}</p>
-          </template>
-        </Card>
-        <Fieldset
-          class="mt-2"
-          :legend="$t('learningOutcomes')"
-          :toggleable="true"
-          collapsed
-        >
-          <div v-html="$t(`activities.${activity.id}.learningOutcomes`)"></div>
-        </Fieldset>
-        <Card class="mt-2">
-          <template #title>{{ $t("seeMore") }}</template>
-          <template #content>
-            <div v-html="$t(`activities.${activity.id}.readMore`)"></div>
-          </template>
-        </Card>
-      </div>
     </template>
     <div v-else>
       <p>{{ $t("activityNotFound") }}</p>
@@ -56,10 +32,7 @@ import activities from "./activities";
 export default {
   name: "ActivityDetail",
   data() {
-    return {
-      inProgress: false,
-      completed: false,
-    };
+    return { };
   },
   setup() {
     const route = useRoute();
