@@ -105,7 +105,7 @@ export default {
       return Math.max(...this.bagOfWords.map(([, weight]) => weight));
     },
     sentences() {
-      if (!this.dataset.sentences) return [];
+      if (!this.dataset?.sentences) return [];
       return this.dataset.sentences.map((x) => x.text);
     },
   },
