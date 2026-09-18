@@ -170,7 +170,7 @@ const messages = {
     wordCloudExplained:
       'In a word cloud, the more times a word appears, the larger it is shown. Using a word cloud, computers can start to understand what the dataset is about, and what the most important words are. For example, if we\'re trying to tell if a dataset is about animals, we might look for words like "dog", "cat", "bird", being used multiple times. Through this technique, which a computer instead records as words and the number of times they appear, a computer can better understand what a dataset is about.',
     positionalTextGeneration: "Positional Text Generation",
-    nGramsGeneration: "N-grams Text Generation",
+    nGramsGeneration: "N-grams generation",
     windowSize: "N-gram size",
     startToken: "[START]",
     endToken: "[END]",
@@ -239,6 +239,37 @@ const messages = {
     numRows: "Number of rows per table",
     minOccurences:
       "Minimum number of times a word should appear to be included",
+    completeLesson: "Complete lesson",
+    datasetSelection: {
+      selectADataset: "Choose a dataset",
+      serverErrorOccurred: "An error occurred, please try again later",
+      datasetSelectionExplanation: "In this activity, we will use a dataset. You can create your own dataset, create a dataset that others can contribute to, or use one of the available datasets.",
+      loading: "Loading dataset...",
+      emptyDropdown: "No datasets...",
+      noSearchResults: "No search results",
+      open: "Open",
+      closed: "Closed",
+      example: "Example",
+      addSentence: "Add your own sentence",
+      removeSentence: "Remove sentence",
+      sentenceCount: "{count} Sentence | {count} Sentences",
+      yourSentence: "Your sentence",
+      userSentenceLabel: "Add your own sentence to the selected dataset",
+      viewDataset: "View dataset",
+      newDataset: "New dataset",
+      createNewDatasetButton: "Create a new dataset",
+    },
+    lessonStepper: {
+      introductionStep: "Introduction",
+      doneStep: "Done",
+      nextButton: "Next",
+      finishButton: "Finish lesson",
+    },
+    lessonCompletion: {
+      title: "Congratulations! You have now completed the lesson",
+      subtitle: "You can now take a break, or read more below",
+      seeMore: "See more",
+    },
     hourOfAILink: "Hour of AI",
     hourOfAI: {
       hourOfAITitle: "Build Your Own Language Model From Paper",
@@ -544,7 +575,7 @@ const messages = {
     learningOutcomes: "Læringsresultater",
     seeMore: "Se mere",
     splitting: "Opdeling i ord",
-    lowercasing: "Konvertering til små bogstaver",
+    lowercasing: "Små bogstaver",
     cleaning: "Rensning af tegnsætning",
     sentenceInputTitle: "Indtast en sætning",
     yourSentence: "Din sætning",
@@ -639,7 +670,7 @@ const messages = {
     wordCloudExplained:
       'I en ordsky: Jo flere gange ordet optræder i teksten, jo større er det. Fra en ordsky kan computere begynde at forstå, hvad datasættet handler om, og hvilke ord der er de vigtigste. For eksempel, hvis vi prøver at finde ud af, om et datasæt handler om dyr, kunne vi se efter ord som "hund", "kat", "fugl", der bruges flere gange. Gennem denne teknik, som en computer i stedet registrerer som ord og antallet af gange de optræder, kan en computer bedre forstå, hvad et datasæt handler om.',
     positionalTextGeneration: "Positionstekstgenerering",
-    nGramsGeneration: "N-grams Tekstgenerering",
+    nGramsGeneration: "N-grams generering",
     windowSize: "N-gram størrelse",
     startToken: "[START]",
     endToken: "[SLUT]",
@@ -709,6 +740,37 @@ const messages = {
     numRows: "Antal rækker i tabellen",
     minOccurences:
       "Minimum antal gange et ord skal optræde for at blive inkluderet",
+    completeLesson: "Afslut lektion",
+    datasetSelection: {
+      selectADataset: "Vælg et datasæt",
+      serverErrorOccurred: "Der opstod en fejl på serveren",
+      datasetSelectionExplanation: "I denne aktivitet vil vi bruge et datasæt. Du kan oprette dit eget datasæt, oprette et datasæt som andre kan bidrage til, eller bruge et af de tilgængelige datasæt.",
+      loading: "Indlæser datasæt...",
+      emptyDropdown: "Ingen datasæt...",
+      noSearchResults: "Ingen søgeresultater",
+      open: "Åben",
+      closed: "Lukket",
+      example: "Eksempel",
+      addSentence: "Tilføj din egen sætning",
+      removeSentence: "Fjern sætning",
+      sentenceCount: "{count} Sætning | {count} Sætninger",
+      yourSentence: "Din sætning",
+      userSentenceLabel: "Tilføj din egen sætning til det valgte datasæt",
+      viewDataset: "Se datasæt",
+      newDataset: "Nyt datasæt",
+      createNewDatasetButton: "Opret et nyt datasæt",
+    },
+    lessonStepper: {
+      introductionStep: "Introduktion",
+      doneStep: "Færdig",
+      nextButton: "Næste",
+      finishButton: "Afslut lektion",
+    },
+    lessonCompletion: {
+      title: "Tillykke! Du har nu gennemført lektionen",
+      subtitle: "Nu kan du holde en pause, eller læse mere nedenunder",
+      seeMore: "Se mere",
+    },
     hourOfAILink: "Hour of AI",
     hourOfAI: {
       hourOfAITitle: "Byg Din Egen Sprogmodel Med Papir",
@@ -876,7 +938,7 @@ const messages = {
         learningOutcomes:
           "Forhåbentlig efter at have gennemført denne lektion, kan du forstå:<ul><li>Hvad stamning og stop ord er, og hvordan de kan bruges i tekstbearbejdning</li><li> Hvordan computere kan generere tekst, og hvordan de kan være kreative, men også upålidelige</li><li> Hvordan tilfældighed kan påvirke tekstgenerering og medføre interessante og nogle gange uforudsigelige resultater.</li><li>Have en bedre forståelse af, hvordan tilfældighed spiller ind i tekst generering, og hvordan det kan bruges til at gøre tekstgenerering mere kreativ.</li></ul>",
         readMore:
-          'Du kan prøve en stemmer direkte her: <a href="http://text-processing.com/demo/stem/" target="_blank">http://text-processing.com/demo/stem/</a><br><br>En god forklarende video om N-grams er tilfængelig her: <a href="https://www.youtube.com/watch?v=E_mN90TYnlg" target="_blank">https://www.youtube.com/watch?v=E_mN90TYnlg</a>',
+          'Du kan prøve en stemmer direkte her: <a href="http://text-processing.com/demo/stem/" target="_blank">http://text-processing.com/demo/stem/</a><br><br>En god forklarende video om N-grams er tilgængelig her: <a href="https://www.youtube.com/watch?v=E_mN90TYnlg" target="_blank">https://www.youtube.com/watch?v=E_mN90TYnlg</a>',
         custom: {
           wordCloudBelow:
             "Nedenfor kan du se en ordsky genereret fra det valgte datasæt",

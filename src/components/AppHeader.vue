@@ -50,6 +50,12 @@
   </Menubar>
 </template>
 
+<style>
+.p-menubar {
+  height: 80px;
+}
+</style>
+
 <script>
 import Menubar from "primevue/menubar";
 import { langs } from "@/i18n";

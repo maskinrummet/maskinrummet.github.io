@@ -1,16 +1,37 @@
 <template>
   <span ref="scrollReset"></span>
-  <div v-if="!dataset">
-    <DatasetSelection @datasetReady="getDataset" />
-  </div>
   <DatasetModal
     @refresh="refreshDataset"
     :datasetId="datasetId"
     ref="datasetModal"
   ></DatasetModal>
-  <Stepper v-if="dataset && !complete" v-model:active-step="currStep">
+  <LessonStepper
+    v-model:active-step="currStep"
+    :linear="!dataset"
+    :canProgress="!!datasetId"
+    :steps="[
+      { name: $t('lessonStepper.introductionStep'), beforeNext: fetchDataset },
+      $t('wordCloud'),
+      $t('positionalTextGeneration'),
+      $t('ngrams'),
+      $t('nGramsGeneration'),
+      {
+        name: $t('lessonStepper.doneStep'),
+        nextButtonLabel: $t('lessonStepper.finishButton'),
+        nextButtonSeverity: 'success',
+        beforeNext: completed
+      },
+    ]"
+  >
+    <StepperPanel header="Into">
+      <ActivityDescriptionCard :activity="activity" :hasRequirements="false" />
+      <DatasetSelectionV2
+        @update:selected-dataset-id="datasetId = $event"
+        @update:user-sentence="sentence = $event"
+      />
+    </StepperPanel>
     <StepperPanel :header="$t('wordCloud')">
-      <template #content="{ nextCallback }">
+      <template #content>
         <Fieldset
           :legend="$t('wordCloud') + '?'"
           :toggleable="true"
@@ -127,21 +148,10 @@
             </Fieldset>
           </div>
         </div>
-        <StepperButtons
-          class="pt-4"
-          :nextCallback="
-            () => {
-              resetScroll();
-              nextCallback();
-            }
-          "
-          :centerButtonText="$t('viewDataset')"
-          :centerButtonCallback="showDatasetModal"
-        />
       </template>
     </StepperPanel>
     <StepperPanel :header="$t('positionalTextGeneration')">
-      <template #content="{ prevCallback, nextCallback }">
+      <template #content>
         <p class="text-center">
           {{ $t(`activities.${activityID}.custom.positionalGeneration`) }}
         </p>
@@ -264,25 +274,10 @@
             ></InspirationCard
           >
         </Fieldset>
-        <StepperButtons
-          class="pt-4"
-          :prevCallback="
-            () => {
-              resetScroll();
-              prevCallback();
-            }
-          "
-          :nextCallback="
-            () => {
-              resetScroll();
-              nextCallback();
-            }
-          "
-        />
       </template>
     </StepperPanel>
     <StepperPanel :header="$t('ngrams')">
-      <template #content="{ prevCallback, nextCallback }">
+      <template #content>
         <p class="text-center">
           {{ $t(`activities.${activityID}.custom.positionalTextGenBreakdown`) }}
         </p>
@@ -344,7 +339,7 @@
       </template>
     </StepperPanel>
     <StepperPanel :header="$t('nGramsGeneration')">
-      <template #content="{ prevCallback }">
+      <template #content>
         <p class="text-center mt-3">
           {{ $t(`activities.${activityID}.custom.introToSankey`) }}
         </p>
@@ -386,23 +381,17 @@
           :window-size-prop="windowSize"
           @windowSizeChange="(x) => (this.windowSize = x)"
         ></NgramTextGen>
-        <StepperButtons
-          class="pt-4"
-          :prevCallback="
-            () => {
-              resetScroll();
-              prevCallback();
-            }
-          "
-          :finishCallback="completed"
-        />
       </template>
     </StepperPanel>
-  </Stepper>
+    <StepperPanel :header="$t('lessonStepper.doneStep')">
+      <template #content>
+        <LessonCompletion :activity="activity" />
+      </template>
+    </StepperPanel>
+  </LessonStepper>
 </template>
 <script>
-import DatasetSelection from "@/components/DatasetSelection.vue";
-import { getDatasetById } from "@/api";
+import { addSentenceToDataset, getDatasetById } from "@/api";
 import i18n from "@/i18n";
 import {
   getBagOfWords,
@@ -420,11 +409,16 @@ import PositionalTextGen from "../singularActivities/PositionalTextGen.vue";
 import { Pie } from "vue-chartjs";
 import RadioButton from "primevue/radiobutton";
 import SankeyChart from "@/components/SankeyChart.vue";
+import ActivityDescriptionCard from "@/components/ActivityDescriptionCard.vue";
+import "../../styles/lesson.css";
+import LessonStepper from "@/components/LessonStepper.vue";
+import DatasetSelectionV2 from "@/components/DatasetSelectionV2.vue";
+import LessonCompletion from "@/components/LessonCompletion.vue";
+import { gotoFrontpage } from "@/router/index.js";
 
 export default {
   name: "TextGeneration",
   components: {
-    DatasetSelection,
     DatasetModal,
     InspirationCard,
     NgramTextGen,
@@ -432,10 +426,18 @@ export default {
     Pie,
     RadioButton,
     SankeyChart,
+    ActivityDescriptionCard,
+    LessonStepper,
+    DatasetSelectionV2,
+    LessonCompletion,
   },
   props: {
     activityID: {
       type: String,
+      required: true,
+    },
+    activity: {
+      type: Object,
       required: true,
     },
   },
@@ -444,7 +446,6 @@ export default {
       dataset: null,
       datasetId: null,
       sentence: "",
-      complete: false,
       currStep: 0,
       maxColor: [163, 11, 11],
       minColor: [24, 86, 143],
@@ -467,7 +468,7 @@ export default {
             display: false,
           },
         },
-      },
+      }
     };
   },
   computed: {
@@ -492,7 +493,7 @@ export default {
       return Math.max(...this.bagOfWords.map(([, weight]) => weight));
     },
     sentences() {
-      if (!this.dataset.sentences) return [];
+      if (!this.dataset || !this.dataset.sentences) return [];
       return this.dataset.sentences.map((x) => x.text);
     },
     ngrams() {
@@ -542,12 +543,13 @@ export default {
     },
   },
   methods: {
-    async getDataset({ datasetId, userSentence }) {
-      this.datasetId = datasetId;
-      this.sentence = userSentence;
-      this.dataset = (await getDatasetById(datasetId)).data;
-      this.$emit("startActivity");
-      this.resetScroll();
+    async fetchDataset() {
+      if (!this.datasetId) return;
+      if (this.sentence) {
+        await addSentenceToDataset(this.datasetId, this.sentence);
+      }
+
+      this.dataset = (await getDatasetById(this.datasetId)).data;
     },
     refreshDataset(dataset) {
       this.dataset = dataset;
@@ -582,8 +584,7 @@ export default {
     },
     completed() {
       this.resetScroll();
-      this.complete = true;
-      this.$emit("completedActivity");
+      gotoFrontpage();
     },
     showDatasetModal() {
       this.$refs.datasetModal.show();
