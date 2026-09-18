@@ -73,7 +73,7 @@
                             :label="$t('datasetSelection.removeSentence')"
                             @click="hideUserSentenceInput" icon="pi pi-minus" text />
 
-                        <span v-if="selectedDataset" class="sentence-count">
+                        <span v-if="selectedDataset && selectedDataset.sentence_count !== undefined" class="sentence-count">
                             {{ $t('datasetSelection.sentenceCount', { count: selectedDataset?.sentence_count || 0 }) }}
                         </span>
                     </div>
