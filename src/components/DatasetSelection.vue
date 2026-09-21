@@ -21,6 +21,7 @@
                 :placeholder="$t('selectADataset')"
                 :empty-message="$t('emptyDropdown')"
                 :empty-filter-message="$t('noSearchResults')"
+                option-label="name"
                 filter
                 style="height: 48px;"
               >
