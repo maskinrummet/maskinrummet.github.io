@@ -321,21 +321,6 @@
             class="adjust-width"
           />
         </div>
-        <StepperButtons
-          class="pt-4"
-          :prevCallback="
-            () => {
-              resetScroll();
-              prevCallback();
-            }
-          "
-          :nextCallback="
-            () => {
-              resetScroll();
-              nextCallback();
-            }
-          "
-        />
       </template>
     </StepperPanel>
     <StepperPanel :header="$t('nGramsGeneration')">
