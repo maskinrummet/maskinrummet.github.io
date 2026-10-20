@@ -38,6 +38,8 @@
         scrollbar-width: thin;
         flex-grow: 1;
         position: relative;
+        max-width: 1400px;
+        margin: 0 auto;
     }
 
     .seperator {
