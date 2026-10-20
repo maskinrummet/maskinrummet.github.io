@@ -54,7 +54,7 @@
                             </template>
                         </Dropdown>
 
-                        <template v-if="!isDatasetNewlyCreated">
+                        <template v-if="!isDatasetNewlyCreated && !selectedDataset">
                             <div class="seperator"></div>
 
                             <Button :label="$t('datasetSelection.createNewDatasetButton')" class="create-new" severity="info"
@@ -63,7 +63,7 @@
                     </div>
 
 
-                    <div class="action-row">
+                    <div class="action-row" v-if="selectedDataset">
                         <Button class="action-button" :label="$t('datasetSelection.viewDataset')"
                             :disabled="!selectedDataset" @click="showDatasetModal" icon="pi pi-list" text />
                         <Button v-if="selectedDataset?.is_open && !showSentenceInput" class="action-button"
