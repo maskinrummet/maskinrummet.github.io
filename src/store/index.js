@@ -1,10 +1,4 @@
 import { createStore } from "vuex";
-
-import tokenisationImage from "@/assets/activities/tokenisation-banner.png";
-import bagOfWordsPracticalImage from "@/assets/hq-bag-of-words.jpg";
-import spinningWheelImage from "@/assets/activities/spinning-wheels.jpg";
-import createNewImage from "@/assets/activities/create-new.jpg";
-import ngramImage from "@/assets/activities/ngram_example.png";
 import { ActivityModality } from "@/constants/activities";
 
 export default createStore({
@@ -17,7 +11,6 @@ export default createStore({
         age: 14,
         topics: ["textGeneration"],
         duration: 40,
-        image: ngramImage,
       },
       {
         id: "hourOfAI",
@@ -26,7 +19,6 @@ export default createStore({
         age: 10,
         topics: ["textGeneration", "datasetBias"],
         duration: 60,
-        image: spinningWheelImage,
         link: "hour-of-ai",
       },
       {
@@ -36,7 +28,6 @@ export default createStore({
         age: 10, // + will be appended e.g. 10+
         topics: ["textCleaning", "tokenisation"],
         duration: 20, // mins
-        image: tokenisationImage,
       },
       {
         id: "bagOfWordsPractical",
@@ -45,7 +36,6 @@ export default createStore({
         age: 8,
         topics: ["textCleaning", "tokenisation", "textGeneration"],
         duration: 40,
-        image: bagOfWordsPracticalImage,
       },
       {
         id: "embodiedSentenceGeneration",
@@ -54,7 +44,6 @@ export default createStore({
         age: 8,
         topics: ["textGeneration", "datasetBias"],
         duration: 20,
-        image: createNewImage,
       },
     ],
     singularActivities: [

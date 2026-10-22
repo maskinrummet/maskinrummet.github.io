@@ -50,7 +50,7 @@
         <Card class="w-full h-full">
           <template #header>
             <img
-              :src="activity.image"
+              :src="`/images/activities/${$t(`activities.${activity.id}.bannerImgFile`)}`"
               :alt="$t(`activities.${activity.id}.title`)"
               class="w-full block"
               style="
