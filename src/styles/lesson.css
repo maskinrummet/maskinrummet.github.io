@@ -1,0 +1,13 @@
+.activity-detail {
+  display: flex;
+  flex-direction: column;
+  height: var(--inner-content-height);
+}
+
+.p-stepper-panels {
+    padding: 0;
+}
+
+.p-stepper-nav {
+  display: none;
+}

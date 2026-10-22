@@ -1,20 +1,44 @@
 <template>
   <span ref="scrollReset"></span>
-  <div v-if="!sentence">
-    <Card>
-      <template #title>{{ this.$t("sentenceInputTitle") }}</template>
+  <LessonStepper
+    v-model:active-step="currStep"
+    :linear="true"
+    :canProgress="canProgress"
+    :steps="[
+      {
+        name: $t('lessonStepper.introductionStep'),
+        beforeNext: startLesson,
+      },
+      $t('yourSentence'),
+      $t('splitting'),
+      $t('lowercasing'),
+      $t('cleaning'),
+      {
+        name: $t('lessonStepper.doneStep'),
+        nextButtonLabel: $t('lessonStepper.finishButton'),
+        nextButtonSeverity: 'success',
+        beforeNext: finishLesson,
+      },
+    ]"
+  >
+    <StepperPanel :header="$t('lessonStepper.introductionStep')">
       <template #content>
-        <SingleSentenceInput
-          v-model="sentence"
-          class="mt-2"
-          @sentenceReady="getSentence"
-        />
+        <ActivityDescriptionCard :activity="activity" :hasRequirements="false" />
+        <Card>
+          <template #title>{{ $t('sentenceInputTitle') }}</template>
+          <template #content>
+            <InputText
+              v-model="sentenceInput"
+              class="w-full"
+              :placeholder="$t('yourSentence')"
+              :maxlength="250"
+            />
+          </template>
+        </Card>
       </template>
-    </Card>
-  </div>
-  <Stepper linear v-if="sentence && !complete">
+    </StepperPanel>
     <StepperPanel :header="$t('yourSentence')">
-      <template #content="{ nextCallback }">
+      <template #content>
         {{ $t("gotSentence") }} {{ sentence }}
         <p>{{ $t(`activities.${activityID}.custom.howComputersSee`) }}</p>
         <Button
@@ -47,14 +71,10 @@
         <p>
           {{ $t(`activities.${activityID}.custom.characterCodesExplained`) }}
         </p>
-        <StepperButtons
-          class="pt-4"
-          :nextCallback="() => resetSentenceCoded(nextCallback)"
-        />
       </template>
     </StepperPanel>
     <StepperPanel :header="$t('splitting')">
-      <template #content="{ prevCallback, nextCallback }">
+      <template #content>
         <p>
           {{
             $t(`activities.${activityID}.custom.splitSentenceUsingSpaceBelow`)
@@ -96,21 +116,17 @@
         <p v-if="!sentenceCoded.some((s) => s.char === ' ' && !s.hidden)">
           {{ $t(`niceWork`) }}
         </p>
-        <StepperButtons
-          class="pt-4"
-          :prevCallback="() => resetSentenceCoded(prevCallback)"
-          :nextCallback="() => resetSentenceCoded(nextCallback)"
-          :nextDisabled="sentenceCoded.some((s) => s.char === ' ' && !s.hidden)"
-          :centerButtonText="$t('autoClick')"
-          :centerButtonCallback="() => clickAllButtons('spaceButtons')"
-          :centerButtonDisabled="
-            !sentenceCoded.some((s) => s.char === ' ' && !s.hidden)
-          "
-        />
+        <div class="flex justify-content-center mt-2">
+          <Button
+            :label="$t('autoClick')"
+            @click="clickAllButtons('spaceButtons')"
+            :disabled="!sentenceCoded.some((s) => s.char === ' ' && !s.hidden)"
+          />
+        </div>
       </template>
     </StepperPanel>
     <StepperPanel :header="$t('lowercasing')">
-      <template #content="{ prevCallback, nextCallback }">
+      <template #content>
         <p>
           {{ $t(`activities.${activityID}.custom.lowercaseSentenceBelow`) }}
         </p>
@@ -165,27 +181,21 @@
         >
           {{ $t(`niceWork`) }}
         </p>
-        <StepperButtons
-          class="pt-4"
-          :prevCallback="() => resetSentenceCoded(prevCallback)"
-          :nextCallback="() => resetSentenceCoded(nextCallback)"
-          :nextDisabled="
-            sentenceCoded.some(
-              (s) => !s.showLower && s.char !== s.lowercaseChar
-            )
-          "
-          :centerButtonText="$t('autoClick')"
-          :centerButtonCallback="() => clickAllButtons('lowercaseButtons')"
-          :centerButtonDisabled="
-            !sentenceCoded.some(
-              (s) => !s.showLower && s.char !== s.lowercaseChar
-            )
-          "
-        />
+        <div class="flex justify-content-center mt-2">
+          <Button
+            :label="$t('autoClick')"
+            @click="clickAllButtons('lowercaseButtons')"
+            :disabled="
+              !sentenceCoded.some(
+                (s) => !s.showLower && s.char !== s.lowercaseChar
+              )
+            "
+          />
+        </div>
       </template>
     </StepperPanel>
     <StepperPanel :header="$t('cleaning')">
-      <template #content="{ prevCallback }">
+      <template #content>
         <p>
           {{ $t(`activities.${activityID}.custom.removePuncBelow`) }}
         </p>
@@ -228,57 +238,85 @@
         <p v-if="!sentenceCoded.some((s) => s.isPunc && !s.inAnimation)">
           {{ $t(`activities.${activityID}.custom.introToTokenisation`) }}
         </p>
-        <StepperButtons
-          class="pt-4"
-          :prevCallback="() => resetSentenceCoded(prevCallback)"
-          :finishCallback="finishLesson"
-          :finishDisabled="
-            sentenceCoded.some((s) => s.isPunc && !s.inAnimation)
-          "
-          :centerButtonText="$t('autoClick')"
-          :centerButtonCallback="() => clickAllButtons('puncButtons')"
-          :centerButtonDisabled="
-            !sentenceCoded.some((s) => s.isPunc && !s.inAnimation)
-          "
-        />
+        <div class="flex justify-content-center mt-2">
+          <Button
+            :label="$t('autoClick')"
+            @click="clickAllButtons('puncButtons')"
+            :disabled="!sentenceCoded.some((s) => s.isPunc && !s.inAnimation)"
+          />
+        </div>
       </template>
     </StepperPanel>
-  </Stepper>
+    <StepperPanel :header="$t('lessonStepper.doneStep')">
+      <template #content>
+        <LessonCompletion :activity="activity" />
+      </template>
+    </StepperPanel>
+  </LessonStepper>
 </template>
 
 <script>
-import SingleSentenceInput from "@/components/SingleSentenceInput.vue";
+import ActivityDescriptionCard from "@/components/ActivityDescriptionCard.vue";
+import LessonStepper from "@/components/LessonStepper.vue";
+import LessonCompletion from "@/components/LessonCompletion.vue";
+import { gotoFrontpage } from "@/router";
+import InputText from "primevue/inputtext";
 
 export default {
   name: "TextCleaning",
   components: {
-    SingleSentenceInput,
+    ActivityDescriptionCard,
+    LessonStepper,
+    LessonCompletion,
+    InputText,
   },
   props: {
     activityID: {
       type: String,
       required: true,
     },
+    activity: {
+      type: Object,
+      required: true,
+    },
   },
   data() {
     return {
+      sentenceInput: "",
       sentence: "",
       sentenceCoded: [],
-      complete: false,
+      currStep: 0,
     };
   },
+  computed: {
+    canProgress() {
+      if (this.currStep === 0) return !!this.sentenceInput;
+      if (this.currStep === 2) {
+        return !this.sentenceCoded.some((s) => s.char === " " && !s.hidden);
+      }
+      if (this.currStep === 3) {
+        return !this.sentenceCoded.some(
+          (s) => !s.showLower && s.char !== s.lowercaseChar
+        );
+      }
+      if (this.currStep === 4) {
+        return !this.sentenceCoded.some((s) => s.isPunc && !s.inAnimation);
+      }
+      return true;
+    },
+  },
   methods: {
+    startLesson() {
+      this.getSentence(this.sentenceInput);
+    },
     getSentence(sentence) {
       this.sentence =
         this.isPunc(sentence.slice(-1)) && !sentence.slice(-1) == " "
           ? sentence
           : sentence + ".";
       this.resetSentenceCoded(() => {});
-      this.$emit("startActivity");
-      this.resetScroll();
     },
     resetSentenceCoded(callback) {
-      this.resetScroll();
       this.sentenceCoded = Array.from(this.sentence).map((c, i) => {
         return {
           char: c,
@@ -353,11 +391,15 @@ export default {
     },
     finishLesson() {
       this.resetScroll();
-      this.complete = true;
-      this.$emit("completedActivity");
+      gotoFrontpage();
     },
     resetScroll() {
       this.$refs.scrollReset.scrollIntoView({ behavior: "smooth" });
+    },
+  },
+  watch: {
+    currStep() {
+      this.resetScroll();
     },
   },
 };

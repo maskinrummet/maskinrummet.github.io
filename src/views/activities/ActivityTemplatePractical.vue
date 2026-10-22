@@ -1,11 +1,31 @@
 <template>
   <span ref="scrollReset"></span>
-  <div v-if="!started" class="flex justify-content-center">
-    <Button @click="start">{{ $t("startActivity") }}</Button>
-  </div>
-  <Stepper v-if="started && !complete">
+  <LessonStepper
+    v-model:active-step="currStep"
+    :linear="true"
+    :canProgress="true"
+    :steps="[
+      {
+        name: $t('lessonStepper.introductionStep'),
+        beforeNext: start,
+      },
+      $t('step1'),
+      $t('step2'),
+      {
+        name: $t('lessonStepper.doneStep'),
+        nextButtonLabel: $t('lessonStepper.finishButton'),
+        nextButtonSeverity: 'success',
+        beforeNext: completed,
+      },
+    ]"
+  >
+    <StepperPanel :header="$t('lessonStepper.introductionStep')">
+      <template #content>
+        <ActivityDescriptionCard :activity="activity" :hasRequirements="false" />
+      </template>
+    </StepperPanel>
     <StepperPanel :header="$t('step1')">
-      <template #content="{ nextCallback }">
+      <template #content>
         <div class="text-center">
           <p>
             {{ $t(`activities.${activityID}.custom.createSentences`) }}
@@ -21,65 +41,70 @@
             {{ $t(`activities.${activityID}.custom.whatIsAWord`) }}
           </p>
         </div>
-        <StepperButtons
-          class="pt-4"
-          :nextCallback="
-            () => {
-              resetScroll();
-              nextCallback();
-            }
-          "
-        />
       </template>
     </StepperPanel>
     <StepperPanel :header="$t('step2')">
-      <template #content="{ prevCallback }">
+      <template #content>
         <p class="text-center">
           {{ $t(`activities.${activityID}.custom.secondTextandActivity`) }}
         </p>
-        <StepperButtons
-          class="pt-4"
-          :prevCallback="
-            () => {
-              resetScroll();
-              prevCallback();
-            }
-          "
-          :finishCallback="completed"
-        />
       </template>
     </StepperPanel>
-  </Stepper>
+    <StepperPanel :header="$t('lessonStepper.doneStep')">
+      <template #content>
+        <LessonCompletion :activity="activity" />
+      </template>
+    </StepperPanel>
+  </LessonStepper>
 </template>
 <script>
+import ActivityDescriptionCard from "@/components/ActivityDescriptionCard.vue";
+import LessonStepper from "@/components/LessonStepper.vue";
+import LessonCompletion from "@/components/LessonCompletion.vue";
+import { gotoFrontpage } from "@/router";
+
 export default {
   name: "ActivityTemplatePractical",
+  components: {
+    ActivityDescriptionCard,
+    LessonStepper,
+    LessonCompletion,
+  },
   props: {
     activityID: {
       type: String,
       required: true,
     },
+    activity: {
+      type: Object,
+      required: true,
+    },
   },
   data() {
     return {
-      started: false,
-      complete: false,
-      refreshing: false,
+      currStep: 0,
     };
+  },
+  computed: {
+    canProgress() {
+      return true;
+    },
   },
   methods: {
     start() {
-      this.started = true;
-      this.$emit("startActivity");
       this.resetScroll();
     },
     completed() {
       this.resetScroll();
-      this.complete = true;
-      this.$emit("completedActivity");
+      gotoFrontpage();
     },
     resetScroll() {
       this.$refs.scrollReset.scrollIntoView({ behavior: "smooth" });
+    },
+  },
+  watch: {
+    currStep() {
+      this.resetScroll();
     },
   },
 };
