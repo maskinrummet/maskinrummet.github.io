@@ -19,6 +19,7 @@
   flex-direction: column;
   gap: 1rem;
   position: relative;
+  margin: 0;
 
   --marker-size: 24px;
 

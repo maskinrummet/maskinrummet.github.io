@@ -32,25 +32,10 @@
     </StepperPanel>
     <StepperPanel :header="$t('wordCloud')">
       <template #content>
-        <Fieldset
-          :legend="$t('wordCloud') + '?'"
-          :toggleable="true"
-          :collapsed="true"
-          class="center-legend"
-        >
-          <InspirationCard
-            :title="$t('wordCloud')"
-            :description="$t('wordCloudExplained')"
-          >
-            <template #example>
-              <img
-                class="w-full border-2 border-round-md max-w-30rem"
-                src="@/assets/word-cloud.png"
-                :alt="$t(`wordCloudExample`)" /></template
-          ></InspirationCard>
-        </Fieldset>
         <p class="text-center mt-3 mb-3">
-          {{ $t(`activities.${activityID}.custom.wordCloudBelow`) }}
+          <!-- {{ $t(`activities.${activityID}.custom.wordCloudBelow`) }}
+             -->
+          Nedenfor kan du se en <KeyTerm term="wordcloud">ordsky</KeyTerm> genereret fra det valgte datasæt
         </p>
         <div class="flex justify-content-center">
           <div class="w-9 p-3 h-30rem border-2 border-round-md">
@@ -85,7 +70,9 @@
         </div>
         <div class="grid mt-3">
           <div class="col flex justify-content-center align-items-center">
-            <label for="langStemming" class="mr-2">{{ $t("stemming") }}:</label>
+            <label for="langStemming" class="mr-2">
+              <KeyTerm term="stemming">Stemming</KeyTerm>:
+            </label>
             <Dropdown
               v-model="langStemming"
               :options="stemmingOptions"
@@ -95,9 +82,9 @@
             />
           </div>
           <div class="col flex justify-content-center align-items-center">
-            <label for="langStopwords" class="mr-2"
-              >{{ $t("stopwords") }}:</label
-            >
+            <label for="langStopwords" class="mr-2">
+              <KeyTerm term="stopwords">Stopord</KeyTerm>:
+            </label>
             <Dropdown
               v-model="langStopwords"
               :options="stopwordsOptions"
@@ -105,47 +92,6 @@
               optionValue="value"
               filter
             />
-          </div>
-        </div>
-        <div class="grid mt-3">
-          <div class="col">
-            <Fieldset
-              :legend="$t('stemming') + '?'"
-              :toggleable="true"
-              :collapsed="true"
-              class="center-legend"
-            >
-              <InspirationCard
-                :title="$t('stemming')"
-                :description="
-                  $t(`activities.${activityID}.custom.stemmingExplained`)
-                "
-              >
-                <template #footer></template>
-                <template #example>
-                  <div class="w-full border-2 border-round-md max-w-30rem p-3">
-                    <p v-html="$t(`stemmingExample`)"></p></div></template
-              ></InspirationCard>
-            </Fieldset>
-          </div>
-          <div class="col">
-            <Fieldset
-              :legend="$t('stopwords') + '?'"
-              :toggleable="true"
-              :collapsed="true"
-              class="center-legend"
-            >
-              <InspirationCard
-                :title="$t('stopwords')"
-                :description="
-                  $t(`activities.${activityID}.custom.stopwordsExplained`)
-                "
-              >
-                <template #example>
-                  <div class="w-full border-2 border-round-md max-w-30rem p-3">
-                    <p v-html="$t(`stopwordsExample`)"></p></div></template
-              ></InspirationCard>
-            </Fieldset>
           </div>
         </div>
       </template>
@@ -400,6 +346,7 @@ import LessonStepper from "@/components/LessonStepper.vue";
 import DatasetSelectionV2 from "@/components/DatasetSelectionV2.vue";
 import LessonCompletion from "@/components/LessonCompletion.vue";
 import { gotoFrontpage } from "@/router/index.js";
+import KeyTerm from "@/components/KeyTerm.vue";
 
 export default {
   name: "TextGeneration",
@@ -415,6 +362,7 @@ export default {
     LessonStepper,
     DatasetSelectionV2,
     LessonCompletion,
+    KeyTerm
   },
   props: {
     activityID: {

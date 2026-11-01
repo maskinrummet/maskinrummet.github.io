@@ -5,8 +5,19 @@
         </Stepper>
         <div class="seperator"></div>
         <div class="sidebar">
-            <LessonSteps :steps="normalizedSteps" :current-step="step" :allowNavigation="canProgress && !linear" @stepClicked="handleStepClick" />
-            <!-- <hr> -->
+            <LessonSteps :steps="normalizedSteps" :current-step="step" :allowNavigation="canProgress && !linear"
+                @stepClicked="handleStepClick" />
+
+            <hr>
+
+            <div class="key-terms" v-if="visibleTerms.length > 0">
+                <h2>Nøglebegreber</h2>
+
+                <button v-for="term in visibleTerms" :key="term.term" class="key-term"
+                    command="show-modal" :commandfor="`key-term-${term.term}`">
+                    <i class="pi pi-search"></i> {{ term.text }}?
+                </button>
+            </div>
 
             <div class="buttons">
                 <Button icon="pi pi-arrow-left" severity="secondary" outlined @click="previous"
@@ -17,6 +28,40 @@
             </div>
         </div>
     </div>
+
+    <dialog class="key-term-dialog" id="key-term-wordcloud">
+        <button class="dialog-close pi pi-times" command="close" commandfor="key-term-wordcloud"></button>
+        <InspirationCard :title="$t('wordCloud')" :description="$t('wordCloudExplained')">
+            <template #example>
+                <img class="w-full border-2 border-round-md max-w-30rem" src="@/assets/word-cloud.png"
+                    :alt="$t(`wordCloudExample`)" /></template>
+        </InspirationCard>
+    </dialog>
+
+    <dialog class="key-term-dialog" id="key-term-stemming">
+        <button class="dialog-close pi pi-times" command="close" commandfor="key-term-stemming"></button>
+        <InspirationCard :title="$t('stemming')" :description="$t('activities.textGeneration.custom.stemmingExplained')
+            ">
+            <template #footer></template>
+            <template #example>
+                <div class="w-full border-2 border-round-md max-w-30rem p-3">
+                    <p v-html="$t(`stemmingExample`)"></p>
+                </div>
+            </template>
+        </InspirationCard>
+    </dialog>
+
+    <dialog class="key-term-dialog" id="key-term-stopwords">
+        <button class="dialog-close pi pi-times" command="close" commandfor="key-term-stopwords"></button>
+        <InspirationCard :title="$t('stopwords')" :description="$t('activities.textGeneration.custom.stopwordsExplained')
+            ">
+            <template #example>
+                <div class="w-full border-2 border-round-md max-w-30rem p-3">
+                    <p v-html="$t(`stopwordsExample`)"></p>
+                </div>
+            </template>
+        </InspirationCard>
+    </dialog>
 </template>
 
 <style>
@@ -27,6 +72,7 @@
     flex-grow: 1;
     overflow: hidden;
     --sidebar-padding: 1.5rem;
+
     @media (min-width: 1600px) {
         --sidebar-padding: 2rem;
     }
@@ -62,6 +108,36 @@
             border-top: 1.5px solid var(--bluegray-100);
         }
 
+        .key-terms {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+
+            h2 {
+                margin-top: 0;
+                font-size: 1.175em;
+                font-weight: 600;
+                color: var(--bluegray-700);
+            }
+
+            .key-term {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                font-size: 0.875em;
+                color: var(--bluegray-700);
+                font-weight: 600;
+                cursor: pointer;
+                border: none;
+                background: none;
+                text-transform: capitalize;
+
+                &:hover {
+                    color: var(--purple-500);
+                }
+            }
+        }
+
         .buttons {
             display: flex;
             justify-content: space-between;
@@ -81,16 +157,43 @@
             }
         }
     }
+
+}
+
+.key-term-dialog {
+    border: none;
+    border-radius: 1rem;
+    padding: 0;
+    position: relative;
+    width: min(90%, 900px);
+
+    .dialog-close {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        border: none;
+        background: none;
+        font-size: 1.25rem;
+        color: var(--bluegray-700);
+        cursor: pointer;
+
+        &:hover {
+            color: var(--purple-500);
+        }
+    }
 }
 </style>
 
 <script>
+import { visibleTermsState } from '@/store/keyTerms.js';
 import LessonSteps from './LessonSteps.vue';
+import InspirationCard from "@/components/InspirationCard.vue";
 
 export default {
     name: "LessonStepper",
     components: {
-        LessonSteps
+        LessonSteps,
+        InspirationCard
     },
     props: {
         linear: {
@@ -157,6 +260,9 @@ export default {
             return this.steps.map(step => {
                 return typeof step === 'string' ? step : step.name;
             })
+        },
+        visibleTerms() {
+            return Array.from(visibleTermsState?.terms.entries()).map(([term, text]) => ({ term, text }));
         }
     }
 }
