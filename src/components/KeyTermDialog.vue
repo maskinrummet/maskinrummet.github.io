@@ -1,5 +1,5 @@
 <template>
-    <dialog :id="dialogKey" class="key-term-dialog">
+    <dialog :id="dialogKey" class="key-term-dialog" @click.self="closeDialog">
         <button class="dialog-close pi pi-times" command="close" :commandfor="dialogKey"></button>
         <slot></slot>
     </dialog>
@@ -38,4 +38,8 @@ const props = defineProps({
 });
 
 const dialogKey = computed(() => `key-term-${props.id}`);
+
+function closeDialog(event) {
+    event.currentTarget.close();
+}
 </script>
