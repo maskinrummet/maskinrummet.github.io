@@ -9,7 +9,16 @@
       :optionLabel="({ i18nKey }) => $t(i18nKey)"
       optionValue="value"
       :disabled="generatedSentence.some((word) => !word.show)"
-    />
+    >
+      <template #footer>
+        <div class="method-dropdown-footer">
+          <i class="pi pi-question-circle"></i>
+          <KeyTerm :label="$t('randomness')" term="generation-strategy">
+            {{ $t("whatMethodShouldIUse") }}
+          </KeyTerm>
+        </div>
+      </template>
+    </Dropdown>
     <Button
       class="m-1"
       severity="success"
@@ -169,11 +178,13 @@ import {
   Colors,
 } from "chart.js";
 import { Pie } from "vue-chartjs";
+import KeyTerm from "./KeyTerm.vue";
 
 ChartJS.register(ArcElement, Tooltip, Legend, Colors);
 
 export default {
   components: {
+    KeyTerm,
     Pie,
   },
   props: {
@@ -275,6 +286,19 @@ export default {
   display: inline-block;
   animation: dotty steps(1, end) 1s infinite;
   content: "";
+}
+
+.method-dropdown-footer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  font-size: 0.875rem;
+  background-color: var(--bluegray-50);
+  border: 1px solid var(--bluegray-100);
+  border-top-color: var(--bluegray-200);
+  border-bottom-left-radius: 0.375rem;
+  border-bottom-right-radius: 0.375rem;
 }
 
 @keyframes dotty {

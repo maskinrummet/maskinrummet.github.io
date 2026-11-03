@@ -12,9 +12,19 @@
     :steps="[
       { name: $t('lessonStepper.introductionStep'), beforeNext: fetchDataset },
       $t('wordCloud'),
-      $t('positionalTextGeneration'),
+      {
+        name: $t('positionalTextGeneration'),
+        additionalKeyTerms: [
+          { term: 'generation-strategy', label: $t('randomness') }
+        ]
+      },
       $t('ngrams'),
-      $t('nGramsGeneration'),
+      {
+        name: $t('nGramsGeneration'),
+        additionalKeyTerms: [
+          { term: 'generation-strategy', label: $t('randomness') }
+        ]
+      },
       {
         name: $t('lessonStepper.doneStep'),
         nextButtonLabel: $t('lessonStepper.finishButton'),
@@ -102,124 +112,6 @@
           {{ $t(`activities.${activityID}.custom.positionalGeneration`) }}
         </p>
         <PositionalTextGen :dataset="dataset"></PositionalTextGen>
-        <Fieldset
-          :legend="`${$t('greedy')}? ${$t('random')}?`"
-          :toggleable="true"
-          :collapsed="true"
-          class="center-legend mt-4"
-        >
-          <InspirationCard :title="$t('randomness')">
-            <template #description>
-              {{ $t("randomnessExplained") }}
-              <ul>
-                <li :class="randomnessDemo === 'greedy' ? 'font-bold' : ''">
-                  {{ $t("greedyExplained") }}
-                </li>
-                <li
-                  :class="
-                    randomnessDemo === 'weightedRandom' ? 'font-bold' : ''
-                  "
-                >
-                  {{ $t("weightedRandomExplained") }}
-                </li>
-                <li :class="randomnessDemo === 'random' ? 'font-bold' : ''">
-                  {{ $t("randomExplained") }}
-                </li>
-              </ul>
-              {{ $t("whatIsTemperature") }}
-            </template>
-            <template #example>
-              <div class="w-full border-2 border-round-md max-w-30rem p-3">
-                <div class="flex justify-content-center">
-                  <Button
-                    v-if="randomnessDemo === 'greedy'"
-                    @click="drawWord"
-                    >{{ $t("chooseWord") }}</Button
-                  >
-                  <Button
-                    v-else
-                    @click="randomTimeout"
-                    :disabled="randomChoice"
-                    >{{ $t("chooseWord") }}</Button
-                  >
-                </div>
-                <div class="flex flex-wrap justify-content-center gap-2 my-5">
-                  <div class="flex align-items-center">
-                    <RadioButton
-                      v-model="randomnessDemo"
-                      inputId="greedy"
-                      name="randomnessDemo"
-                      value="greedy"
-                      :disabled="randomChoice"
-                    />
-                    <label for="greedy" class="ml-2">{{ $t("greedy") }}</label>
-                  </div>
-                  <div class="flex align-items-center">
-                    <RadioButton
-                      v-model="randomnessDemo"
-                      inputId="weightedRandom"
-                      name="randomnessDemo"
-                      value="weightedRandom"
-                      :disabled="randomChoice"
-                    />
-                    <label for="weightedRandom" class="ml-2">{{
-                      $t("weightedRandom")
-                    }}</label>
-                  </div>
-                  <div class="flex align-items-center">
-                    <RadioButton
-                      v-model="randomnessDemo"
-                      inputId="random"
-                      name="randomnessDemo"
-                      value="random"
-                      :disabled="randomChoice"
-                    />
-                    <label for="random" class="ml-2">{{ $t("random") }}</label>
-                  </div>
-                </div>
-                <div
-                  class="mx-auto triangle-down"
-                  v-if="randomnessDemo !== 'greedy'"
-                ></div>
-                <div></div>
-                <!-- This div prevents pie chart from going into the margin of the triangle above-->
-                <div
-                  class="m-3 max-w-full"
-                  :class="randomnessDemo === 'greedy' ? '' : 'rotating'"
-                  ref="pie"
-                  :style="{
-                    animationPlayState: randomChoice ? 'running' : 'paused',
-                    aspectRatio: 1,
-                  }"
-                >
-                  <Pie :data="pieChartData" :options="chartOptions"></Pie>
-                </div>
-
-                <div>
-                  <Button
-                    disabled
-                    v-for="(x, i) in chosenSentence"
-                    :key="i"
-                    class="m-1"
-                    >{{ x }}</Button
-                  >
-                </div>
-                <div class="flex justify-content-center mt-2">
-                  <Button
-                    severity="danger"
-                    @click="
-                      () => {
-                        this.chosenSentence = [];
-                      }
-                    "
-                    v-if="chosenSentence.length !== 0"
-                    >{{ $t("clear") }}</Button
-                  >
-                </div>
-              </div></template
-            ></InspirationCard
-          >
-        </Fieldset>
       </template>
     </StepperPanel>
     <StepperPanel :header="$t('ngrams')">
@@ -350,6 +242,120 @@
               </div>
           </template>
       </InspirationCard>
+  </KeyTermDialog>
+
+  <KeyTermDialog id="generation-strategy">
+    <InspirationCard :title="$t('randomness')">
+      <template #description>
+        {{ $t("randomnessExplained") }}
+        <ul>
+          <li :class="randomnessDemo === 'greedy' ? 'font-bold' : ''">
+            {{ $t("greedyExplained") }}
+          </li>
+          <li
+            :class="
+              randomnessDemo === 'weightedRandom' ? 'font-bold' : ''
+            "
+          >
+            {{ $t("weightedRandomExplained") }}
+          </li>
+          <li :class="randomnessDemo === 'random' ? 'font-bold' : ''">
+            {{ $t("randomExplained") }}
+          </li>
+        </ul>
+        {{ $t("whatIsTemperature") }}
+      </template>
+      <template #example>
+        <div class="w-full border-2 border-round-md max-w-30rem p-3 overflow-x-hidden">
+          <div class="flex justify-content-center">
+            <Button
+              v-if="randomnessDemo === 'greedy'"
+              @click="drawWord"
+              >{{ $t("chooseWord") }}</Button
+            >
+            <Button
+              v-else
+              @click="randomTimeout"
+              :disabled="randomChoice"
+              >{{ $t("chooseWord") }}</Button
+            >
+          </div>
+          <div class="flex flex-wrap justify-content-center gap-2 my-5">
+            <div class="flex align-items-center">
+              <RadioButton
+                v-model="randomnessDemo"
+                inputId="greedy"
+                name="randomnessDemo"
+                value="greedy"
+                :disabled="randomChoice"
+              />
+              <label for="greedy" class="ml-2">{{ $t("greedy") }}</label>
+            </div>
+            <div class="flex align-items-center">
+              <RadioButton
+                v-model="randomnessDemo"
+                inputId="weightedRandom"
+                name="randomnessDemo"
+                value="weightedRandom"
+                :disabled="randomChoice"
+              />
+              <label for="weightedRandom" class="ml-2">{{
+                $t("weightedRandom")
+              }}</label>
+            </div>
+            <div class="flex align-items-center">
+              <RadioButton
+                v-model="randomnessDemo"
+                inputId="random"
+                name="randomnessDemo"
+                value="random"
+                :disabled="randomChoice"
+              />
+              <label for="random" class="ml-2">{{ $t("random") }}</label>
+            </div>
+          </div>
+          <div
+            class="mx-auto triangle-down"
+            :class="randomnessDemo == 'greedy' && 'invisble-arrow'"
+          ></div>
+          <div></div>
+          <!-- This div prevents pie chart from going into the margin of the triangle above-->
+          <div
+            class="m-3 max-w-full"
+            :class="randomnessDemo === 'greedy' ? '' : 'rotating'"
+            ref="pie"
+            :style="{
+              animationPlayState: randomChoice ? 'running' : 'paused',
+              aspectRatio: 1,
+            }"
+          >
+            <Pie :data="pieChartData" :options="chartOptions"></Pie>
+          </div>
+
+          <div>
+            <Button
+              disabled
+              v-for="(x, i) in chosenSentence"
+              :key="i"
+              class="m-1"
+              >{{ x }}</Button
+            >
+          </div>
+          <div class="flex justify-content-center mt-2">
+            <Button
+              severity="danger"
+              @click="
+                () => {
+                  this.chosenSentence = [];
+                }
+              "
+              v-if="chosenSentence.length !== 0"
+              >{{ $t("clear") }}</Button
+            >
+          </div>
+        </div>
+      </template>
+    </InspirationCard>
   </KeyTermDialog>
 </template>
 <script>
@@ -656,5 +662,9 @@ export default {
   border-left: 25px solid transparent;
   border-right: 25px solid transparent;
   border-top: 50px solid var(--text-color);
+
+  &.invisble-arrow {
+    border-top: 50px solid transparent;
+  }
 }
 </style>

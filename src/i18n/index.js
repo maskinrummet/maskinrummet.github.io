@@ -270,6 +270,7 @@ const messages = {
       subtitle: "You can now take a break, or read more below",
       seeMore: "See more",
     },
+    whatMethodShouldIUse: "Hvilken metode skal jeg vælge",
     hourOfAILink: "Hour of AI",
     hourOfAI: {
       hourOfAITitle: "Build Your Own Language Model From Paper",
@@ -774,6 +775,7 @@ const messages = {
       subtitle: "Nu kan du holde en pause, eller læse mere nedenunder",
       seeMore: "Se mere",
     },
+    whatMethodShouldIUse: "Hvilken metode skal jeg vælge",
     hourOfAILink: "Hour of AI",
     hourOfAI: {
       hourOfAITitle: "Byg Din Egen Sprogmodel Med Papir",

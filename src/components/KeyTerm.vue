@@ -12,7 +12,7 @@
 
 <style>
 .inline-key-term {
-    display: inline-block;
+    display: inline-flex;
     font-weight: 600;
     color: var(--purple-500);
     cursor: pointer;
@@ -25,8 +25,8 @@
     &::after {
         content: "?";
         font-size: 0.75em;
-        vertical-align: super;
         margin-left: 0.125rem;
+        text-decoration: none !important;
     }
 
     &:hover {
@@ -40,7 +40,8 @@ import { visibleTermsState } from '@/store/keyTerms';
 import { ref, onMounted, onBeforeUnmount, defineProps, useSlots, computed } from 'vue';
 
 const props = defineProps({
-    term: { type: String, required: true }
+    term: { type: String, required: true },
+    label: { type: String, required: false, default: '' }
 });
 
 const slots = useSlots();
@@ -55,7 +56,7 @@ let observer = null;
 onMounted(() => {
     observer = new IntersectionObserver(([entry]) => {
         if (entry.isIntersecting) {
-            visibleTermsState.add(props.term, slotText.value);
+            visibleTermsState.add(props.term, props.label || slotText.value);
         } else {
             visibleTermsState.remove(props.term);
         }

@@ -15,7 +15,7 @@
 
                 <button v-for="term in visibleTerms" :key="term.term" class="key-term"
                     command="show-modal" :commandfor="`key-term-${term.term}`">
-                    <i class="pi pi-search"></i> {{ term.text }}?
+                    <i class="pi pi-search"></i> {{ term.label }}?
                 </button>
             </div>
 
@@ -194,6 +194,9 @@ export default {
                 nextButtonLabel: this.$t('next'),
                 beforeNext: undefined,
                 nextButtonSeverity: 'primary',
+                additionalKeyTerms: [],
+
+                // Override with step-specific config
                 ...stepConfig,
             }
         },
@@ -203,7 +206,13 @@ export default {
             })
         },
         visibleTerms() {
-            return Array.from(visibleTermsState?.terms.entries()).map(([term, text]) => ({ term, text }));
+            const dynamicTerms = Array.from(visibleTermsState?.terms.entries()).map(([term, label]) => ({ term, label }));
+            const additionalTerms = this.currentStepConfig.additionalKeyTerms || [];
+
+            return [
+                ...dynamicTerms,
+                ...additionalTerms
+            ].filter((term, index, self) => self.findIndex(t => t.term === term.term) === index); // Remove duplicates
         }
     }
 }
