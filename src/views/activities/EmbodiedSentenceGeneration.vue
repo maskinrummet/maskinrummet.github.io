@@ -10,7 +10,13 @@
         beforeNext: fetchDataset,
       },
       $t('randomWords'),
-      $t('mostCommonWords'),
+      {
+        name: $t('mostCommonWords'),
+        additionalKeyTerms: [
+          { term: 'wordcloud', label: $t('wordCloud') },
+          { term: 'stopwords', label: $t('stopwords') }
+        ]
+      },
       {
         name: $t('lessonStepper.doneStep'),
         nextButtonLabel: $t('lessonStepper.finishButton'),
@@ -113,6 +119,25 @@
       </template>
     </StepperPanel>
   </LessonStepper>
+
+  <KeyTermDialog id="wordcloud">
+      <InspirationCard :title="$t('wordCloud')" :description="$t('wordCloudExplained')">
+          <template #example>
+              <img class="w-full border-2 border-round-md max-w-30rem" src="@/assets/word-cloud.png"
+                  :alt="$t(`wordCloudExample`)" /></template>
+      </InspirationCard>
+  </KeyTermDialog>
+
+  <KeyTermDialog id="stopwords">
+      <InspirationCard :title="$t('stopwords')" :description="$t('activities.textGeneration.custom.stopwordsExplained')
+          ">
+          <template #example>
+              <div class="w-full border-2 border-round-md max-w-30rem p-3">
+                  <p v-html="$t(`stopwordsExample`)"></p>
+              </div>
+          </template>
+      </InspirationCard>
+  </KeyTermDialog>
 </template>
 <script>
 import { getDatasetById } from "@/api";
@@ -129,6 +154,8 @@ import LessonStepper from "@/components/LessonStepper.vue";
 import ActivityDescriptionCard from "@/components/ActivityDescriptionCard.vue";
 import LessonCompletion from "@/components/LessonCompletion.vue";
 import { gotoFrontpage } from "@/router";
+import KeyTermDialog from "@/components/KeyTermDialog.vue";
+import InspirationCard from "@/components/InspirationCard.vue";
 
 export default {
   name: "EmbodiedSentenceGeneration",
@@ -137,6 +164,8 @@ export default {
     LessonStepper,
     ActivityDescriptionCard,
     LessonCompletion,
+    KeyTermDialog,
+    InspirationCard,
   },
   props: {
     activityID: {
