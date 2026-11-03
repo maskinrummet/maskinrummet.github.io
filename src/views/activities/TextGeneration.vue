@@ -71,7 +71,7 @@
         <div class="grid mt-3">
           <div class="col flex justify-content-center align-items-center">
             <label for="langStemming" class="mr-2">
-              <KeyTerm term="stemming">Stemming</KeyTerm>:
+              <KeyTerm term="stemming">{{ $t("stemming") }}</KeyTerm>:
             </label>
             <Dropdown
               v-model="langStemming"
@@ -83,7 +83,7 @@
           </div>
           <div class="col flex justify-content-center align-items-center">
             <label for="langStopwords" class="mr-2">
-              <KeyTerm term="stopwords">Stopord</KeyTerm>:
+              <KeyTerm term="stopwords">{{ $t("stopwords") }}</KeyTerm>:
             </label>
             <Dropdown
               v-model="langStopwords"
@@ -320,6 +320,37 @@
       </template>
     </StepperPanel>
   </LessonStepper>
+
+  <KeyTermDialog id="wordcloud">
+      <InspirationCard :title="$t('wordCloud')" :description="$t('wordCloudExplained')">
+          <template #example>
+              <img class="w-full border-2 border-round-md max-w-30rem" src="@/assets/word-cloud.png"
+                  :alt="$t(`wordCloudExample`)" /></template>
+      </InspirationCard>
+  </KeyTermDialog>
+
+  <KeyTermDialog id="stemming">
+      <InspirationCard :title="$t('stemming')" :description="$t('activities.textGeneration.custom.stemmingExplained')
+          ">
+          <template #footer></template>
+          <template #example>
+              <div class="w-full border-2 border-round-md max-w-30rem p-3">
+                  <p v-html="$t(`stemmingExample`)"></p>
+              </div>
+          </template>
+      </InspirationCard>
+  </KeyTermDialog>
+
+  <KeyTermDialog id="stopwords">
+      <InspirationCard :title="$t('stopwords')" :description="$t('activities.textGeneration.custom.stopwordsExplained')
+          ">
+          <template #example>
+              <div class="w-full border-2 border-round-md max-w-30rem p-3">
+                  <p v-html="$t(`stopwordsExample`)"></p>
+              </div>
+          </template>
+      </InspirationCard>
+  </KeyTermDialog>
 </template>
 <script>
 import { addSentenceToDataset, getDatasetById } from "@/api";
@@ -347,6 +378,7 @@ import DatasetSelectionV2 from "@/components/DatasetSelectionV2.vue";
 import LessonCompletion from "@/components/LessonCompletion.vue";
 import { gotoFrontpage } from "@/router/index.js";
 import KeyTerm from "@/components/KeyTerm.vue";
+import KeyTermDialog from "@/components/KeyTermDialog.vue";
 
 export default {
   name: "TextGeneration",
@@ -362,7 +394,8 @@ export default {
     LessonStepper,
     DatasetSelectionV2,
     LessonCompletion,
-    KeyTerm
+    KeyTerm,
+    KeyTermDialog
   },
   props: {
     activityID: {
