@@ -266,7 +266,7 @@
         {{ $t("whatIsTemperature") }}
       </template>
       <template #example>
-        <div class="w-full border-2 border-round-md max-w-30rem p-3 overflow-x-hidden">
+        <div class="w-full border-2 border-round-md max-w-30rem p-3 overflow-hidden">
           <div class="flex justify-content-center">
             <Button
               v-if="randomnessDemo === 'greedy'"
