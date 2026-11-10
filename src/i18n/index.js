@@ -126,7 +126,6 @@ const messages = {
     areYouSureDelete:
       "Are you sure you want to delete the entire dataset permanently?",
     add: "Add",
-    createDataset: "Create Dataset",
     emptyDatasetName: "You need to provide a dataset name",
     longDatasetName: "The dataset name is too long (max 50 characters)",
     emptyPassword: "You need to provide a password for the dataset",
@@ -473,6 +472,39 @@ const messages = {
         bannerImgFile: "spinning-wheels.jpg",
       },
     },
+    createDataset: {
+      title: "Create new dataset",
+      subtitle:
+        "Here you can create a new dataset for use on the site and in activities. You can provide all the text, or make the dataset open so others can contribute to it.",
+      form: {
+        name: {
+          label: "Dataset name",
+          placeholder: "Name",
+        },
+        password: {
+          label: "Password",
+          placeholder: "Password",
+          repeat: "Repeat password",
+          disclaimer:
+            "Every dataset has a password, which you can share with anyone who should be able to change its settings.<br/><strong>NOTE</strong>: Use a silly password instead of your normal password, as we cannot guarantee security.",
+        },
+        open: {
+          label: "Allow others to contribute to the dataset?",
+        },
+        content: {
+          label: "Content",
+          options: {
+            empty: "Start with an empty dataset",
+            notEmpty: "Start with content",
+          },
+        },
+      },
+      summary:
+        "In summary, datasets are:<ul><li>Editable</li><li>Deletable</li><li>Password protected</li><li>Publicly visible</li></ul>",
+      createButton: "Create dataset",
+      cancelButton: "Cancel",
+    },
+    
   },
   da: {
     maskinrummet: "Maskinrummet",
@@ -598,7 +630,6 @@ const messages = {
     areYouSureDelete:
       "Er du sikker på, at du vil slette hele datasættet permanent?",
     add: "Tilføj",
-    createDataset: "Opret Datasæt",
     emptyDatasetName: "Du skal angive et datasætnavn",
     longDatasetName: "Datasætnavnet er for langt (maks 50 tegn)",
     emptyPassword: "Du skal angive en adgangskode til datasættet",
@@ -946,6 +977,35 @@ const messages = {
         bannerImgFile: "spinning-wheels.jpg",
       },
     },
+    createDataset: {
+      title: "Opret nyt datasæt",
+      subtitle: "Her kan du oprette et nyt datasæt til brug på siden og i aktiviteter. Du kan levere alt teksten, eller gøre datasættet åbent så andre kan bidrage til det.",
+      form: {
+        name: {
+          label: "Datasæt navn",
+          placeholder: "Navn"
+        },
+        password: {
+          label: "Adgangskode",
+          placeholder: "Adgangskode",
+          repeat: "Gentag adgangskode",
+          disclaimer: "Hvert datasæt har en adgangskode, som du kan dele med alle der skal have mulighed for at ændre i indstillingerne.<br/><strong>BEMÆRK</strong>: Brug en fjollet adgangskode istedet for din normale adgankode, da vi ikke kan garantere for sikkerheden."
+        },
+        open: {
+          label: "Tillad andre at bidrage til datasættet?"
+        },
+        content: {
+          label: "Indhold",
+          options: {
+            empty: "Start med et tomt datasæt",
+            notEmpty: "Start med indhold"
+          }
+        }
+      },
+      summary: "Sammenfattende er datasæt:<ul><li>Redigerbare</li><li>Slettelige</li><li>Adgangskodebeskyttede</li><li>Offentligt synlige</li></ul>",
+      createButton: "Opret datasæt",
+      cancelButton: "Annuller",
+    }
   },
 };
 

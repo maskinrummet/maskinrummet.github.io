@@ -1,42 +1,55 @@
 <template>
-  <div v-html="$t('createANewDatasetIntro')" class="m-2"></div>
-  <form @submit="checkDataset">
-    <div class="flex justify-content-center mb-5">
-      <FloatLabel>
-        <label> {{ $t("datasetName") }} </label>
-        <InputText v-model="datasetName" />
-      </FloatLabel>
+  <p class="mt-0">{{ $t("createDataset.subtitle") }}</p>
+  <form @submit="checkDataset" class="create-dataset-form">
+    <div class="row">
+        <div class="field">
+          <label for="datasetName"> {{ $t("createDataset.form.name.label") }} </label>
+          <InputText
+            id="datasetName"
+            v-model="datasetName"
+            :placeholder="$t('createDataset.form.name.placeholder')"
+          />
+        </div>
     </div>
-    <div class="flex justify-content-center mb-5">
-      <FloatLabel>
-        <Password v-model="password" :feedback="false" toggleMask />
-        <label>{{ $t("datasetPassword") }}</label>
-      </FloatLabel>
+    <div class="row">
+      <div class="field">
+          <label for="datasetPassword"> {{ $t("createDataset.form.password.label") }} </label>
+          <div class="flex gap-2 w-full">
+            <Password
+              id="datasetPassword"
+              v-model="password"
+              :placeholder="$t('createDataset.form.password.placeholder')"
+              :feedback="false"
+              toggleMask
+            />
+            <Password v-model="passwordConfirm" :placeholder="$t('createDataset.form.password.repeat')" :feedback="false" toggleMask />
+          </div>
+          <div class="hint">
+            <p class="m-0" v-html="$t('createDataset.form.password.disclaimer')"></p>
+          </div>
+        </div>
     </div>
-    <div class="flex justify-content-center mb-5">
-      <FloatLabel>
-        <Password v-model="passwordConfirm" :feedback="false" toggleMask />
-        <label>{{ $t("confirmDatasetPassword") }}</label>
-      </FloatLabel>
+    <div class="row">
+      <div class="field horizontal">
+        <label for="openToggle">{{ $t("createDataset.form.open.label") }}</label>
+        <InputSwitch v-model="open" pt:input:id="openToggle" />
+      </div>
     </div>
-    <div class="flex justify-content-center mb-5 align-items-center">
-      <label class="mr-3">{{ $t("openDataset") }}</label>
-      <ToggleButton
-        v-model="open"
-        :onLabel="$t('open')"
-        :offLabel="$t('closed')"
-        onIcon="pi pi-lock-open"
-        offIcon="pi pi-lock"
-        :aria-label="$t('openDataset')"
-      />
-    </div>
-    <div class="flex justify-content-center">
-      <label class="mr-2">{{ $t("startEmptyDataset") }}</label>
-      <Checkbox v-model="startEmpty" :binary="true" />
+    <div class="row">
+      <div class="field">
+        <label for="initialContent">{{ $t("createDataset.form.content.label") }}</label>
+        <SelectButton
+          v-model="initialContent"
+          :options="initialContentOptions"
+          optionLabel="label"
+          optionValue="value"
+          :allow-empty="false"
+        />
+      </div>
     </div>
     <div v-if="!startEmpty">
-      <div class="flex justify-content-center my-4">
-        <h3>{{ $t("startingSentences") }}</h3>
+      <div class="flex my-4">
+        <strong>{{ $t("startingSentences") }}</strong>
       </div>
       <DataTable
         :value="
@@ -128,11 +141,18 @@
         >
       </Message>
     </transition-group>
-    <div class="flex justify-content-end mt-3">
+    <div class="flex justify-content-end mt-3 gap-2">
       <Button
-        :label="$t('createDataset')"
-        severity="success"
+        :label="$t('createDataset.cancelButton')"
+        severity="secondary"
+        @click="$emit('cancel')"
+        class="py-2"
+      ></Button>
+      <Button
+        :label="$t('createDataset.createButton')"
+        severity="info"
         type="submit"
+        class="py-2"
       ></Button>
     </div>
   </form>
@@ -144,17 +164,76 @@
   font-size: 1rem !important;
   font-weight: normal !important;
 }
+
+
+.create-dataset-form {
+  .row {
+    margin-bottom: 1rem;
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+
+    &.horizontal {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    label {
+      margin-bottom: 0.25rem;
+      font-size: 0.95em;
+      font-weight: 600;
+    }
+
+    input, .p-password, .p-selectbutton {
+      width: 100%;
+    }
+
+    .p-selectbutton {
+      display: flex;
+
+      .p-button {
+        flex: 1;
+        --color: #0ea5e9;
+
+        &:focus {
+          box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px rgb(from var(--color) r g b / 20%), 0 1px 2px 0 black;
+        }
+
+        &.p-highlight {
+          background-color: rgb(from var(--color) r g b / 20%);
+          border-color: var(--color);
+          color: var(--color);
+        }
+      }
+    }
+
+    .hint {
+      font-size: 0.75em;
+      color: var(--text-color-secondary);
+      margin-top: 0.25rem;
+    }
+  }
+}
 </style>
 
 <script>
+import InputSwitch from "primevue/inputswitch";
 import DatasetBulkInsert from "./DatasetBulkInsert.vue";
 import TruncatedText from "./TruncatedText.vue";
+import SelectButton from "primevue/selectbutton";
 
 export default {
   name: "CreateDataset",
   components: {
     TruncatedText,
     DatasetBulkInsert,
+    InputSwitch,
+    SelectButton
   },
   data() {
     return {
@@ -162,11 +241,15 @@ export default {
       password: "",
       passwordConfirm: "",
       open: true,
-      startEmpty: true,
       startingSentencesList: [],
       error: "",
       editingRows: [],
       first: 0,
+      initialContentOptions: [
+        { label: this.$t("createDataset.form.content.options.empty"), value: "empty" },
+        { label: this.$t("createDataset.form.content.options.notEmpty"), value: "notEmpty" }
+      ],
+      initialContent: "empty",
     };
   },
   methods: {
@@ -251,5 +334,10 @@ export default {
       this.startingSentencesList[newData.pos] = newData;
     },
   },
+  computed: {
+    startEmpty() {
+      return this.initialContent === "empty";
+    },
+  }
 };
 </script>

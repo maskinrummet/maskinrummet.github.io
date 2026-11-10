@@ -81,7 +81,7 @@
               <Dialog
                 v-model:visible="createVisible"
                 modal
-                :header="$t('newDataset')"
+                :header="$t('createDataset.title')"
                 class="w-9"
               >
                 <CreateDataset @datasetReady="submitDataset"></CreateDataset>
@@ -158,7 +158,7 @@ export default {
       selectedDataset: { id: null },
       getDatasetError: "",
       datasetPreview: null,
-      createVisible: false,
+      createVisible: true,
       createdDataset: null,
       loading: false,
     };
