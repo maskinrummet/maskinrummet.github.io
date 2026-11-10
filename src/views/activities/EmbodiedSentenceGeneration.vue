@@ -1,16 +1,41 @@
 <template>
   <span ref="scrollReset"></span>
-  <div v-if="!dataset">
-    <DatasetSelection @datasetReady="getDataset" />
-  </div>
-  <DatasetModal
-    @refresh="refreshDataset"
-    :datasetId="datasetId"
-    ref="datasetModal"
-  ></DatasetModal>
-  <Stepper v-if="dataset && !complete" v-model:active-step="currStep">
+  <LessonStepper
+    v-model:active-step="currStep"
+    :linear="!dataset"
+    :canProgress="canProgress"
+    :steps="[
+      {
+        name: $t('lessonStepper.introductionStep'),
+        beforeNext: fetchDataset,
+      },
+      $t('randomWords'),
+      {
+        name: $t('mostCommonWords'),
+        additionalKeyTerms: [
+          { term: 'wordcloud', label: $t('wordCloud') },
+          { term: 'stopwords', label: $t('stopwords') }
+        ]
+      },
+      {
+        name: $t('lessonStepper.doneStep'),
+        nextButtonLabel: $t('lessonStepper.finishButton'),
+        nextButtonSeverity: 'success',
+        beforeNext: completed,
+      },
+    ]"
+  >
+    <StepperPanel :header="$t('lessonStepper.introductionStep')">
+      <template #content>
+        <ActivityDescriptionCard :activity="activity" :hasRequirements="false" />
+        <DatasetSelectionV2
+          @update:selected-dataset-id="datasetId = $event"
+          @update:user-sentence="sentence = $event"
+        />
+      </template>
+    </StepperPanel>
     <StepperPanel :header="$t('randomWords')">
-      <template #content="{ nextCallback }">
+      <template #content>
         <div class="text-center">
           <div
             class="my-2"
@@ -35,22 +60,10 @@
             </div>
           </div>
         </div>
-        <StepperButtons
-          class="pt-4"
-          :nextCallback="
-            () => {
-              resetScroll();
-              nextCallback();
-            }
-          "
-          :centerButtonText="$t('viewDataset')"
-          :centerButtonCallback="showDatasetModal"
-          :nextDisabled="!randomWords"
-        />
       </template>
     </StepperPanel>
     <StepperPanel :header="$t('mostCommonWords')">
-      <template #content="{ prevCallback }">
+      <template #content>
         <p class="text-center">
           {{ $t(`activities.${activityID}.custom.wordCloud`) }}
         </p>
@@ -98,22 +111,35 @@
             {{ $t(`activities.${activityID}.custom.bias`) }}
           </p>
         </div>
-        <StepperButtons
-          class="pt-4"
-          :prevCallback="
-            () => {
-              resetScroll();
-              prevCallback();
-            }
-          "
-          :finishCallback="completed"
-        />
       </template>
     </StepperPanel>
-  </Stepper>
+    <StepperPanel :header="$t('lessonStepper.doneStep')">
+      <template #content>
+        <LessonCompletion :activity="activity" />
+      </template>
+    </StepperPanel>
+  </LessonStepper>
+
+  <KeyTermDialog id="wordcloud">
+      <InspirationCard :title="$t('wordCloud')" :description="$t('wordCloudExplained')">
+          <template #example>
+              <img class="w-full border-2 border-round-md max-w-30rem" src="@/assets/word-cloud.png"
+                  :alt="$t(`wordCloudExample`)" /></template>
+      </InspirationCard>
+  </KeyTermDialog>
+
+  <KeyTermDialog id="stopwords">
+      <InspirationCard :title="$t('stopwords')" :description="$t('activities.textGeneration.custom.stopwordsExplained')
+          ">
+          <template #example>
+              <div class="w-full border-2 border-round-md max-w-30rem p-3">
+                  <p v-html="$t(`stopwordsExample`)"></p>
+              </div>
+          </template>
+      </InspirationCard>
+  </KeyTermDialog>
 </template>
 <script>
-import DatasetSelection from "@/components/DatasetSelection.vue";
 import { getDatasetById } from "@/api";
 import i18n from "@/i18n";
 import {
@@ -122,17 +148,32 @@ import {
   drawFromBagOfWords,
   stopwordsOptions,
 } from "@/views/activities/utils";
-import DatasetModal from "@/components/DatasetModal.vue";
+import { addSentenceToDataset } from "@/api";
+import DatasetSelectionV2 from "@/components/DatasetSelectionV2.vue";
+import LessonStepper from "@/components/LessonStepper.vue";
+import ActivityDescriptionCard from "@/components/ActivityDescriptionCard.vue";
+import LessonCompletion from "@/components/LessonCompletion.vue";
+import { gotoFrontpage } from "@/router";
+import KeyTermDialog from "@/components/KeyTermDialog.vue";
+import InspirationCard from "@/components/InspirationCard.vue";
 
 export default {
   name: "EmbodiedSentenceGeneration",
   components: {
-    DatasetSelection,
-    DatasetModal,
+    DatasetSelectionV2,
+    LessonStepper,
+    ActivityDescriptionCard,
+    LessonCompletion,
+    KeyTermDialog,
+    InspirationCard,
   },
   props: {
     activityID: {
       type: String,
+      required: true,
+    },
+    activity: {
+      type: Object,
       required: true,
     },
   },
@@ -142,7 +183,6 @@ export default {
       datasetId: null,
       randomWords: null,
       sentence: "",
-      complete: false,
       currStep: 0,
       maxColor: [163, 11, 11],
       minColor: [24, 86, 143],
@@ -152,6 +192,11 @@ export default {
     };
   },
   computed: {
+    canProgress() {
+      if (this.currStep === 0) return !!this.datasetId;
+      if (this.currStep === 1) return !!this.randomWords;
+      return true;
+    },
     bagOfWords() {
       return getBagOfWords(this.sentences, this.langStopwords);
     },
@@ -159,7 +204,7 @@ export default {
       return Math.max(...this.bagOfWords.map(([, weight]) => weight));
     },
     sentences() {
-      if (!this.dataset.sentences) return [];
+      if (!this.dataset?.sentences) return [];
       return this.dataset.sentences.map((x) => x.text);
     },
     fiveTopWords() {
@@ -168,15 +213,13 @@ export default {
   },
   methods: {
     generateNgram,
-    async getDataset({ datasetId, userSentence }) {
-      this.datasetId = datasetId;
-      this.sentence = userSentence;
-      this.dataset = (await getDatasetById(datasetId)).data;
-      this.$emit("startActivity");
+    async fetchDataset() {
+      if (!this.datasetId) return;
+      if (this.sentence) {
+        await addSentenceToDataset(this.datasetId, this.sentence);
+      }
+      this.dataset = (await getDatasetById(this.datasetId)).data;
       this.resetScroll();
-    },
-    refreshDataset(dataset) {
-      this.dataset = dataset;
     },
     getRandomWords() {
       this.randomWords = Array.from({ length: 5 }, () =>
@@ -205,11 +248,7 @@ export default {
     },
     completed() {
       this.resetScroll();
-      this.complete = true;
-      this.$emit("completedActivity");
-    },
-    showDatasetModal() {
-      this.$refs.datasetModal.show();
+      gotoFrontpage();
     },
     resetScroll() {
       this.$refs.scrollReset.scrollIntoView({ behavior: "smooth" });
@@ -217,6 +256,11 @@ export default {
     stopwordsOptionLabel({ i18nKey }) {
       if (i18nKey === "doNoStopwords") return i18n.global.t(i18nKey);
       return i18n.global.t(i18nKey) + " " + i18n.global.t("stopwords");
+    },
+  },
+  watch: {
+    currStep() {
+      this.resetScroll();
     },
   },
 };

@@ -1,35 +1,51 @@
 <template>
   <span ref="scrollReset"></span>
-  <div v-if="!dataset">
-    <DatasetSelection @datasetReady="getDataset" />
-  </div>
   <DatasetModal
     @refresh="refreshDataset"
     :datasetId="datasetId"
     ref="datasetModal"
   ></DatasetModal>
-  <Stepper v-if="dataset && !complete" v-model:active-step="currStep">
+  <LessonStepper
+    v-model:active-step="currStep"
+    :linear="!dataset"
+    :canProgress="!!datasetId"
+    :steps="[
+      { name: $t('lessonStepper.introductionStep'), beforeNext: fetchDataset },
+      $t('wordCloud'),
+      {
+        name: $t('positionalTextGeneration'),
+        additionalKeyTerms: [
+          { term: 'generation-strategy', label: $t('randomness') }
+        ]
+      },
+      $t('ngrams'),
+      {
+        name: $t('nGramsGeneration'),
+        additionalKeyTerms: [
+          { term: 'generation-strategy', label: $t('randomness') }
+        ]
+      },
+      {
+        name: $t('lessonStepper.doneStep'),
+        nextButtonLabel: $t('lessonStepper.finishButton'),
+        nextButtonSeverity: 'success',
+        beforeNext: completed
+      },
+    ]"
+  >
+    <StepperPanel header="Into">
+      <ActivityDescriptionCard :activity="activity" :hasRequirements="false" />
+      <DatasetSelectionV2
+        @update:selected-dataset-id="datasetId = $event"
+        @update:user-sentence="sentence = $event"
+      />
+    </StepperPanel>
     <StepperPanel :header="$t('wordCloud')">
-      <template #content="{ nextCallback }">
-        <Fieldset
-          :legend="$t('wordCloud') + '?'"
-          :toggleable="true"
-          :collapsed="true"
-          class="center-legend"
-        >
-          <InspirationCard
-            :title="$t('wordCloud')"
-            :description="$t('wordCloudExplained')"
-          >
-            <template #example>
-              <img
-                class="w-full border-2 border-round-md max-w-30rem"
-                src="@/assets/word-cloud.png"
-                :alt="$t(`wordCloudExample`)" /></template
-          ></InspirationCard>
-        </Fieldset>
+      <template #content>
         <p class="text-center mt-3 mb-3">
-          {{ $t(`activities.${activityID}.custom.wordCloudBelow`) }}
+          <!-- {{ $t(`activities.${activityID}.custom.wordCloudBelow`) }}
+             -->
+          Nedenfor kan du se en <KeyTerm term="wordcloud">ordsky</KeyTerm> genereret fra det valgte datasæt
         </p>
         <div class="flex justify-content-center">
           <div class="w-9 p-3 h-30rem border-2 border-round-md">
@@ -64,7 +80,9 @@
         </div>
         <div class="grid mt-3">
           <div class="col flex justify-content-center align-items-center">
-            <label for="langStemming" class="mr-2">{{ $t("stemming") }}:</label>
+            <label for="langStemming" class="mr-2">
+              <KeyTerm term="stemming">{{ $t("stemming") }}</KeyTerm>:
+            </label>
             <Dropdown
               v-model="langStemming"
               :options="stemmingOptions"
@@ -74,9 +92,9 @@
             />
           </div>
           <div class="col flex justify-content-center align-items-center">
-            <label for="langStopwords" class="mr-2"
-              >{{ $t("stopwords") }}:</label
-            >
+            <label for="langStopwords" class="mr-2">
+              <KeyTerm term="stopwords">{{ $t("stopwords") }}</KeyTerm>:
+            </label>
             <Dropdown
               v-model="langStopwords"
               :options="stopwordsOptions"
@@ -86,203 +104,18 @@
             />
           </div>
         </div>
-        <div class="grid mt-3">
-          <div class="col">
-            <Fieldset
-              :legend="$t('stemming') + '?'"
-              :toggleable="true"
-              :collapsed="true"
-              class="center-legend"
-            >
-              <InspirationCard
-                :title="$t('stemming')"
-                :description="
-                  $t(`activities.${activityID}.custom.stemmingExplained`)
-                "
-              >
-                <template #footer></template>
-                <template #example>
-                  <div class="w-full border-2 border-round-md max-w-30rem p-3">
-                    <p v-html="$t(`stemmingExample`)"></p></div></template
-              ></InspirationCard>
-            </Fieldset>
-          </div>
-          <div class="col">
-            <Fieldset
-              :legend="$t('stopwords') + '?'"
-              :toggleable="true"
-              :collapsed="true"
-              class="center-legend"
-            >
-              <InspirationCard
-                :title="$t('stopwords')"
-                :description="
-                  $t(`activities.${activityID}.custom.stopwordsExplained`)
-                "
-              >
-                <template #example>
-                  <div class="w-full border-2 border-round-md max-w-30rem p-3">
-                    <p v-html="$t(`stopwordsExample`)"></p></div></template
-              ></InspirationCard>
-            </Fieldset>
-          </div>
-        </div>
-        <StepperButtons
-          class="pt-4"
-          :nextCallback="
-            () => {
-              resetScroll();
-              nextCallback();
-            }
-          "
-          :centerButtonText="$t('viewDataset')"
-          :centerButtonCallback="showDatasetModal"
-        />
       </template>
     </StepperPanel>
     <StepperPanel :header="$t('positionalTextGeneration')">
-      <template #content="{ prevCallback, nextCallback }">
+      <template #content>
         <p class="text-center">
           {{ $t(`activities.${activityID}.custom.positionalGeneration`) }}
         </p>
         <PositionalTextGen :dataset="dataset"></PositionalTextGen>
-        <Fieldset
-          :legend="`${$t('greedy')}? ${$t('random')}?`"
-          :toggleable="true"
-          :collapsed="true"
-          class="center-legend mt-4"
-        >
-          <InspirationCard :title="$t('randomness')">
-            <template #description>
-              {{ $t("randomnessExplained") }}
-              <ul>
-                <li :class="randomnessDemo === 'greedy' ? 'font-bold' : ''">
-                  {{ $t("greedyExplained") }}
-                </li>
-                <li
-                  :class="
-                    randomnessDemo === 'weightedRandom' ? 'font-bold' : ''
-                  "
-                >
-                  {{ $t("weightedRandomExplained") }}
-                </li>
-                <li :class="randomnessDemo === 'random' ? 'font-bold' : ''">
-                  {{ $t("randomExplained") }}
-                </li>
-              </ul>
-              {{ $t("whatIsTemperature") }}
-            </template>
-            <template #example>
-              <div class="w-full border-2 border-round-md max-w-30rem p-3">
-                <div class="flex justify-content-center">
-                  <Button
-                    v-if="randomnessDemo === 'greedy'"
-                    @click="drawWord"
-                    >{{ $t("chooseWord") }}</Button
-                  >
-                  <Button
-                    v-else
-                    @click="randomTimeout"
-                    :disabled="randomChoice"
-                    >{{ $t("chooseWord") }}</Button
-                  >
-                </div>
-                <div class="flex flex-wrap justify-content-center gap-2 my-5">
-                  <div class="flex align-items-center">
-                    <RadioButton
-                      v-model="randomnessDemo"
-                      inputId="greedy"
-                      name="randomnessDemo"
-                      value="greedy"
-                      :disabled="randomChoice"
-                    />
-                    <label for="greedy" class="ml-2">{{ $t("greedy") }}</label>
-                  </div>
-                  <div class="flex align-items-center">
-                    <RadioButton
-                      v-model="randomnessDemo"
-                      inputId="weightedRandom"
-                      name="randomnessDemo"
-                      value="weightedRandom"
-                      :disabled="randomChoice"
-                    />
-                    <label for="weightedRandom" class="ml-2">{{
-                      $t("weightedRandom")
-                    }}</label>
-                  </div>
-                  <div class="flex align-items-center">
-                    <RadioButton
-                      v-model="randomnessDemo"
-                      inputId="random"
-                      name="randomnessDemo"
-                      value="random"
-                      :disabled="randomChoice"
-                    />
-                    <label for="random" class="ml-2">{{ $t("random") }}</label>
-                  </div>
-                </div>
-                <div
-                  class="mx-auto triangle-down"
-                  v-if="randomnessDemo !== 'greedy'"
-                ></div>
-                <div></div>
-                <!-- This div prevents pie chart from going into the margin of the triangle above-->
-                <div
-                  class="m-3 max-w-full"
-                  :class="randomnessDemo === 'greedy' ? '' : 'rotating'"
-                  ref="pie"
-                  :style="{
-                    animationPlayState: randomChoice ? 'running' : 'paused',
-                    aspectRatio: 1,
-                  }"
-                >
-                  <Pie :data="pieChartData" :options="chartOptions"></Pie>
-                </div>
-
-                <div>
-                  <Button
-                    disabled
-                    v-for="(x, i) in chosenSentence"
-                    :key="i"
-                    class="m-1"
-                    >{{ x }}</Button
-                  >
-                </div>
-                <div class="flex justify-content-center mt-2">
-                  <Button
-                    severity="danger"
-                    @click="
-                      () => {
-                        this.chosenSentence = [];
-                      }
-                    "
-                    v-if="chosenSentence.length !== 0"
-                    >{{ $t("clear") }}</Button
-                  >
-                </div>
-              </div></template
-            ></InspirationCard
-          >
-        </Fieldset>
-        <StepperButtons
-          class="pt-4"
-          :prevCallback="
-            () => {
-              resetScroll();
-              prevCallback();
-            }
-          "
-          :nextCallback="
-            () => {
-              resetScroll();
-              nextCallback();
-            }
-          "
-        />
       </template>
     </StepperPanel>
     <StepperPanel :header="$t('ngrams')">
-      <template #content="{ prevCallback, nextCallback }">
+      <template #content>
         <p class="text-center">
           {{ $t(`activities.${activityID}.custom.positionalTextGenBreakdown`) }}
         </p>
@@ -326,25 +159,10 @@
             class="adjust-width"
           />
         </div>
-        <StepperButtons
-          class="pt-4"
-          :prevCallback="
-            () => {
-              resetScroll();
-              prevCallback();
-            }
-          "
-          :nextCallback="
-            () => {
-              resetScroll();
-              nextCallback();
-            }
-          "
-        />
       </template>
     </StepperPanel>
     <StepperPanel :header="$t('nGramsGeneration')">
-      <template #content="{ prevCallback }">
+      <template #content>
         <p class="text-center mt-3">
           {{ $t(`activities.${activityID}.custom.introToSankey`) }}
         </p>
@@ -386,23 +204,162 @@
           :window-size-prop="windowSize"
           @windowSizeChange="(x) => (this.windowSize = x)"
         ></NgramTextGen>
-        <StepperButtons
-          class="pt-4"
-          :prevCallback="
-            () => {
-              resetScroll();
-              prevCallback();
-            }
-          "
-          :finishCallback="completed"
-        />
       </template>
     </StepperPanel>
-  </Stepper>
+    <StepperPanel :header="$t('lessonStepper.doneStep')">
+      <template #content>
+        <LessonCompletion :activity="activity" />
+      </template>
+    </StepperPanel>
+  </LessonStepper>
+
+  <KeyTermDialog id="wordcloud">
+      <InspirationCard :title="$t('wordCloud')" :description="$t('wordCloudExplained')">
+          <template #example>
+              <img class="w-full border-2 border-round-md max-w-30rem" src="@/assets/word-cloud.png"
+                  :alt="$t(`wordCloudExample`)" /></template>
+      </InspirationCard>
+  </KeyTermDialog>
+
+  <KeyTermDialog id="stemming">
+      <InspirationCard :title="$t('stemming')" :description="$t('activities.textGeneration.custom.stemmingExplained')
+          ">
+          <template #footer></template>
+          <template #example>
+              <div class="w-full border-2 border-round-md max-w-30rem p-3">
+                  <p v-html="$t(`stemmingExample`)"></p>
+              </div>
+          </template>
+      </InspirationCard>
+  </KeyTermDialog>
+
+  <KeyTermDialog id="stopwords">
+      <InspirationCard :title="$t('stopwords')" :description="$t('activities.textGeneration.custom.stopwordsExplained')
+          ">
+          <template #example>
+              <div class="w-full border-2 border-round-md max-w-30rem p-3">
+                  <p v-html="$t(`stopwordsExample`)"></p>
+              </div>
+          </template>
+      </InspirationCard>
+  </KeyTermDialog>
+
+  <KeyTermDialog id="generation-strategy">
+    <InspirationCard :title="$t('randomness')">
+      <template #description>
+        {{ $t("randomnessExplained") }}
+        <ul>
+          <li :class="randomnessDemo === 'greedy' ? 'font-bold' : ''">
+            {{ $t("greedyExplained") }}
+          </li>
+          <li
+            :class="
+              randomnessDemo === 'weightedRandom' ? 'font-bold' : ''
+            "
+          >
+            {{ $t("weightedRandomExplained") }}
+          </li>
+          <li :class="randomnessDemo === 'random' ? 'font-bold' : ''">
+            {{ $t("randomExplained") }}
+          </li>
+        </ul>
+        {{ $t("whatIsTemperature") }}
+      </template>
+      <template #example>
+        <div class="w-full border-2 border-round-md max-w-30rem p-3 overflow-hidden">
+          <div class="flex justify-content-center">
+            <Button
+              v-if="randomnessDemo === 'greedy'"
+              @click="drawWord"
+              >{{ $t("chooseWord") }}</Button
+            >
+            <Button
+              v-else
+              @click="randomTimeout"
+              :disabled="randomChoice"
+              >{{ $t("chooseWord") }}</Button
+            >
+          </div>
+          <div class="flex flex-wrap justify-content-center gap-2 my-5">
+            <div class="flex align-items-center">
+              <RadioButton
+                v-model="randomnessDemo"
+                inputId="greedy"
+                name="randomnessDemo"
+                value="greedy"
+                :disabled="randomChoice"
+              />
+              <label for="greedy" class="ml-2">{{ $t("greedy") }}</label>
+            </div>
+            <div class="flex align-items-center">
+              <RadioButton
+                v-model="randomnessDemo"
+                inputId="weightedRandom"
+                name="randomnessDemo"
+                value="weightedRandom"
+                :disabled="randomChoice"
+              />
+              <label for="weightedRandom" class="ml-2">{{
+                $t("weightedRandom")
+              }}</label>
+            </div>
+            <div class="flex align-items-center">
+              <RadioButton
+                v-model="randomnessDemo"
+                inputId="random"
+                name="randomnessDemo"
+                value="random"
+                :disabled="randomChoice"
+              />
+              <label for="random" class="ml-2">{{ $t("random") }}</label>
+            </div>
+          </div>
+          <div
+            class="mx-auto triangle-down"
+            :class="randomnessDemo == 'greedy' && 'invisble-arrow'"
+          ></div>
+          <div></div>
+          <!-- This div prevents pie chart from going into the margin of the triangle above-->
+          <div
+            class="m-3 max-w-full"
+            :class="randomnessDemo === 'greedy' ? '' : 'rotating'"
+            ref="pie"
+            :style="{
+              animationPlayState: randomChoice ? 'running' : 'paused',
+              aspectRatio: 1,
+            }"
+          >
+            <Pie :data="pieChartData" :options="chartOptions"></Pie>
+          </div>
+
+          <div>
+            <Button
+              disabled
+              v-for="(x, i) in chosenSentence"
+              :key="i"
+              class="m-1"
+              >{{ x }}</Button
+            >
+          </div>
+          <div class="flex justify-content-center mt-2">
+            <Button
+              severity="danger"
+              @click="
+                () => {
+                  this.chosenSentence = [];
+                }
+              "
+              v-if="chosenSentence.length !== 0"
+              >{{ $t("clear") }}</Button
+            >
+          </div>
+        </div>
+      </template>
+    </InspirationCard>
+  </KeyTermDialog>
 </template>
 <script>
-import DatasetSelection from "@/components/DatasetSelection.vue";
-import { getDatasetById } from "@/api";
+import { addSentenceToDataset, getDatasetById } from "@/api";
 import i18n from "@/i18n";
 import {
   getBagOfWords,
@@ -420,11 +377,18 @@ import PositionalTextGen from "../singularActivities/PositionalTextGen.vue";
 import { Pie } from "vue-chartjs";
 import RadioButton from "primevue/radiobutton";
 import SankeyChart from "@/components/SankeyChart.vue";
+import ActivityDescriptionCard from "@/components/ActivityDescriptionCard.vue";
+import "../../styles/lesson.css";
+import LessonStepper from "@/components/LessonStepper.vue";
+import DatasetSelectionV2 from "@/components/DatasetSelectionV2.vue";
+import LessonCompletion from "@/components/LessonCompletion.vue";
+import { gotoFrontpage } from "@/router/index.js";
+import KeyTerm from "@/components/KeyTerm.vue";
+import KeyTermDialog from "@/components/KeyTermDialog.vue";
 
 export default {
   name: "TextGeneration",
   components: {
-    DatasetSelection,
     DatasetModal,
     InspirationCard,
     NgramTextGen,
@@ -432,10 +396,20 @@ export default {
     Pie,
     RadioButton,
     SankeyChart,
+    ActivityDescriptionCard,
+    LessonStepper,
+    DatasetSelectionV2,
+    LessonCompletion,
+    KeyTerm,
+    KeyTermDialog
   },
   props: {
     activityID: {
       type: String,
+      required: true,
+    },
+    activity: {
+      type: Object,
       required: true,
     },
   },
@@ -444,7 +418,6 @@ export default {
       dataset: null,
       datasetId: null,
       sentence: "",
-      complete: false,
       currStep: 0,
       maxColor: [163, 11, 11],
       minColor: [24, 86, 143],
@@ -467,7 +440,7 @@ export default {
             display: false,
           },
         },
-      },
+      }
     };
   },
   computed: {
@@ -492,7 +465,7 @@ export default {
       return Math.max(...this.bagOfWords.map(([, weight]) => weight));
     },
     sentences() {
-      if (!this.dataset.sentences) return [];
+      if (!this.dataset || !this.dataset.sentences) return [];
       return this.dataset.sentences.map((x) => x.text);
     },
     ngrams() {
@@ -542,12 +515,13 @@ export default {
     },
   },
   methods: {
-    async getDataset({ datasetId, userSentence }) {
-      this.datasetId = datasetId;
-      this.sentence = userSentence;
-      this.dataset = (await getDatasetById(datasetId)).data;
-      this.$emit("startActivity");
-      this.resetScroll();
+    async fetchDataset() {
+      if (!this.datasetId) return;
+      if (this.sentence) {
+        await addSentenceToDataset(this.datasetId, this.sentence);
+      }
+
+      this.dataset = (await getDatasetById(this.datasetId)).data;
     },
     refreshDataset(dataset) {
       this.dataset = dataset;
@@ -582,8 +556,7 @@ export default {
     },
     completed() {
       this.resetScroll();
-      this.complete = true;
-      this.$emit("completedActivity");
+      gotoFrontpage();
     },
     showDatasetModal() {
       this.$refs.datasetModal.show();
@@ -689,5 +662,9 @@ export default {
   border-left: 25px solid transparent;
   border-right: 25px solid transparent;
   border-top: 50px solid var(--text-color);
+
+  &.invisble-arrow {
+    border-top: 50px solid transparent;
+  }
 }
 </style>

@@ -19,6 +19,10 @@ function getPath(k) {
   return "/:lang(" + LOCALES.join("|") + ")" + k;
 }
 
+export function gotoFrontpage() {
+  router.push(`/${i18n.global.locale}`);
+}
+
 const routes = [
   { path: "/", redirect: `/${DEFAULT_LOCALE}` },
   {

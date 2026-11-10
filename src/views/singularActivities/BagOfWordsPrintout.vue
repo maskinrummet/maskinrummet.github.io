@@ -176,7 +176,7 @@ export default {
   },
   computed: {
     sentences() {
-      if (!this.dataset.sentences) return [];
+      if (!this.dataset?.sentences) return [];
       return this.dataset.sentences.map((x) => x.text);
     },
     bagOfWords() {

@@ -27,7 +27,6 @@ import Divider from "primevue/divider";
 
 import VueWordCloud from "vuewordcloud";
 
-import StepperButtons from "@/components/StepperButtons.vue";
 import InputNumber from "primevue/inputnumber";
 
 export default {
@@ -58,6 +57,5 @@ export default {
   Textarea,
   InputNumber,
   VueWordCloud,
-  StepperButtons,
   Divider,
 };
