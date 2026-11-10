@@ -82,9 +82,9 @@
                 v-model:visible="createVisible"
                 modal
                 :header="$t('createDataset.title')"
-                class="w-9"
+                class="create-dataset-dialog"
               >
-                <CreateDataset @datasetReady="submitDataset"></CreateDataset>
+                <CreateDataset @datasetReady="submitDataset" @cancel="createVisible = false"></CreateDataset>
               </Dialog>
             </div>
           </div>
@@ -127,6 +127,11 @@
   .p-tooltip-text {
     padding: 0.5rem 0.75rem;
   }
+
+  .create-dataset-dialog {
+    width: 90%;
+    max-width: 800px;
+  }
 </style>
 
 <script>
@@ -158,7 +163,7 @@ export default {
       selectedDataset: { id: null },
       getDatasetError: "",
       datasetPreview: null,
-      createVisible: true,
+      createVisible: false,
       createdDataset: null,
       loading: false,
     };
