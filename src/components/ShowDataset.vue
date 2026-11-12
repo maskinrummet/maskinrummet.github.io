@@ -18,35 +18,11 @@
         ></Column
       >
     </DataTable>
-    <form @submit="verify">
-      <div class="flex justify-content-between">
-        <InputGroup>
-          <FloatLabel>
-            <Password v-model="password" :feedback="false" toggleMask />
-            <label for="password-input">{{ $t("datasetPassword") }}</label>
-          </FloatLabel>
-          <Button :label="$t('editDataset')" type="submit" severity="success" />
-        </InputGroup>
-        <Button
-          :label="$t('refreshDataset')"
-          @click="$emit('refresh')"
-          class="ml-2"
-        ></Button>
-      </div>
-      <transition-group name="p-message" tag="div">
-        <Message severity="error" v-if="error" :closable="false">
-          <template #container
-            ><div class="p-2">{{ error }}</div></template
-          >
-        </Message>
-      </transition-group>
-    </form>
   </div>
   <div v-else>{{ $t("loading") }}</div>
 </template>
 
 <script>
-import { verifyPassword } from "@/api";
 
 export default {
   name: "ShowDataset",
@@ -63,23 +39,7 @@ export default {
     },
   },
   data() {
-    return {
-      password: "",
-      error: "",
-    };
-  },
-  methods: {
-    verify(e) {
-      e.preventDefault();
-      verifyPassword(this.dataset.id, this.password)
-        .then(() => {
-          this.$emit("edit", this.password);
-          this.error = "";
-        })
-        .catch((error) => {
-          this.error = error.response.data.error;
-        });
-    },
+    return { };
   },
   computed: {
     inputTexts() {
