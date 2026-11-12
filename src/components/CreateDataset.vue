@@ -141,6 +141,7 @@
         >
       </Message>
     </transition-group>
+    <p v-html="$t('createDataset.summary')"></p>
     <div class="flex justify-content-end mt-3 gap-2">
       <Button
         :label="$t('createDataset.cancelButton')"
