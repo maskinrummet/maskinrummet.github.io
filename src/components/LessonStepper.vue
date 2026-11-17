@@ -19,12 +19,19 @@
                 </button>
             </div>
 
-            <div class="buttons">
-                <Button icon="pi pi-arrow-left" severity="secondary" outlined @click="previous"
-                    :disabled="step === 0" />
-                <Button class="next" :label="!loading && currentStepConfig.nextButtonLabel"
-                    :icon="'pi' + (loading ? ' pi-spin pi-spinner' : ' pi-arrow-right')" iconPos="right" @click="next"
-                    :disabled="!canProgress" :severity="currentStepConfig.nextButtonSeverity" />
+            <div class="sidebar-footer">
+                <button v-if="shouldShowDatasetButton" class="show-dataset" @click="showDataset">
+                    <i class="pi pi-list"></i>
+                    {{ $t('viewDataset') }}
+                </button>
+
+                <div class="buttons">
+                    <Button icon="pi pi-arrow-left" severity="secondary" outlined @click="previous"
+                        :disabled="step === 0" />
+                    <Button class="next" :label="!loading && currentStepConfig.nextButtonLabel"
+                        :icon="'pi' + (loading ? ' pi-spin pi-spinner' : ' pi-arrow-right')" iconPos="right" @click="next"
+                        :disabled="!canProgress" :severity="currentStepConfig.nextButtonSeverity" />
+                </div>
             </div>
         </div>
     </div>
@@ -104,10 +111,10 @@
             }
         }
 
-        .buttons {
+        .sidebar-footer {
             display: flex;
-            justify-content: space-between;
-            gap: 0.25rem;
+            flex-direction: column;
+            gap: 0.75rem;
             position: fixed;
             position-anchor: --lesson-sidebar;
             bottom: 0;
@@ -116,11 +123,36 @@
             padding-bottom: 1rem;
             padding-top: 0.5rem;
             background-color: white;
+            
+            .show-dataset {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                font-size: 1em;
+                font-weight: 600;
+                background: none;
+                border: none;
+                color: var(--purple-500);
+                transition: color 0.2s ease-in-out;
 
-            .next {
-                flex: 1;
-                white-space: nowrap;
+                &:hover {
+                    color: var(--purple-700);
+                    cursor: pointer;
+                }
             }
+
+            .buttons {
+                display: flex;
+                gap: 0.5rem;
+                justify-content: space-between;
+                width: 100%;
+
+                .next {
+                    flex: 1;
+                    white-space: nowrap;
+                }
+            }
+
         }
     }
 
@@ -153,9 +185,13 @@ export default {
         canProgress: {
             type: Boolean,
             default: true
+        },
+        showDatasetButton: {
+            type: Boolean,
+            default: false
         }
     },
-    emits: ["update:activeStep"],
+    emits: ["update:activeStep", "onShowDataset"],
     data() {
         return {
             loading: false
@@ -174,6 +210,9 @@ export default {
         },
         handleStepClick(index) {
             this.step = index;
+        },
+        showDataset() {
+            this.$emit("onShowDataset");
         }
     },
     computed: {
@@ -195,10 +234,14 @@ export default {
                 beforeNext: undefined,
                 nextButtonSeverity: 'primary',
                 additionalKeyTerms: [],
+                showDatasetButton: this.showDatasetButton,
 
                 // Override with step-specific config
                 ...stepConfig,
             }
+        },
+        shouldShowDatasetButton() {
+            return this.currentStepConfig.showDatasetButton;
         },
         normalizedSteps() {
             return this.steps.map(step => {

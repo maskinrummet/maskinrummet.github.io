@@ -4,10 +4,12 @@
     v-model:active-step="currStep"
     :linear="!dataset"
     :canProgress="canProgress"
+    :showDatasetButton="true"
     :steps="[
       {
         name: $t('lessonStepper.introductionStep'),
         beforeNext: fetchDataset,
+        showDatasetButton: false
       },
       $t('randomWords'),
       {
@@ -22,8 +24,10 @@
         nextButtonLabel: $t('lessonStepper.finishButton'),
         nextButtonSeverity: 'success',
         beforeNext: completed,
+        showDatasetButton: false
       },
     ]"
+    @on-show-dataset="showDatasetModal"
   >
     <StepperPanel :header="$t('lessonStepper.introductionStep')">
       <template #content>
@@ -31,6 +35,7 @@
         <DatasetSelectionV2
           @update:selected-dataset-id="datasetId = $event"
           @update:user-sentence="sentence = $event"
+          ref="datasetSelection"
         />
       </template>
     </StepperPanel>
@@ -256,6 +261,9 @@ export default {
     stopwordsOptionLabel({ i18nKey }) {
       if (i18nKey === "doNoStopwords") return i18n.global.t(i18nKey);
       return i18n.global.t(i18nKey) + " " + i18n.global.t("stopwords");
+    },
+    showDatasetModal() {
+      this.$refs.datasetSelection.showDatasetModal();
     },
   },
   watch: {

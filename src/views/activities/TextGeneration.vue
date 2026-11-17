@@ -1,16 +1,12 @@
 <template>
   <span ref="scrollReset"></span>
-  <DatasetModal
-    @refresh="refreshDataset"
-    :datasetId="datasetId"
-    ref="datasetModal"
-  ></DatasetModal>
   <LessonStepper
     v-model:active-step="currStep"
     :linear="!dataset"
     :canProgress="!!datasetId"
+    :showDatasetButton="true"
     :steps="[
-      { name: $t('lessonStepper.introductionStep'), beforeNext: fetchDataset },
+      { name: $t('lessonStepper.introductionStep'), beforeNext: fetchDataset, showDatasetButton: false },
       $t('wordCloud'),
       {
         name: $t('positionalTextGeneration'),
@@ -29,15 +25,18 @@
         name: $t('lessonStepper.doneStep'),
         nextButtonLabel: $t('lessonStepper.finishButton'),
         nextButtonSeverity: 'success',
-        beforeNext: completed
+        beforeNext: completed,
+        showDatasetButton: false
       },
     ]"
+    @onShowDataset="showDatasetModal"
   >
     <StepperPanel header="Into">
       <ActivityDescriptionCard :activity="activity" :hasRequirements="false" />
       <DatasetSelectionV2
         @update:selected-dataset-id="datasetId = $event"
         @update:user-sentence="sentence = $event"
+        ref="datasetSelection"
       />
     </StepperPanel>
     <StepperPanel :header="$t('wordCloud')">
@@ -370,7 +369,6 @@ import {
   cleanString,
   sortNumericalThenAlphabetical,
 } from "@/views/activities/utils";
-import DatasetModal from "@/components/DatasetModal.vue";
 import InspirationCard from "@/components/InspirationCard.vue";
 import NgramTextGen from "../singularActivities/NgramTextGen.vue";
 import PositionalTextGen from "../singularActivities/PositionalTextGen.vue";
@@ -389,7 +387,6 @@ import KeyTermDialog from "@/components/KeyTermDialog.vue";
 export default {
   name: "TextGeneration",
   components: {
-    DatasetModal,
     InspirationCard,
     NgramTextGen,
     PositionalTextGen,
@@ -559,7 +556,7 @@ export default {
       gotoFrontpage();
     },
     showDatasetModal() {
-      this.$refs.datasetModal.show();
+      this.$refs.datasetSelection.showDatasetModal();
     },
     drawWord() {
       let transformMatrix = window
