@@ -251,7 +251,6 @@ export default {
         visibleTerms() {
             const dynamicTerms = Array.from(visibleTermsState?.terms.entries()).map(([term, label]) => ({ term, label }));
             const additionalTerms = this.currentStepConfig.additionalKeyTerms || [];
-            console.log(dynamicTerms, additionalTerms);
             return [
                 ...dynamicTerms,
                 ...additionalTerms
