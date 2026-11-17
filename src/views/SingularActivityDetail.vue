@@ -24,14 +24,20 @@
       <div v-else-if="datasetError">
         {{ datasetError }}
       </div>
-      <div v-else-if="!dataset">
-        <DatasetSelection @datasetReady="getDataset" />
+      <div v-else-if="!started" class="intro">
+        <DatasetSelectionV2
+          @update:selected-dataset-id="selectedDatasetId = $event"
+          @update:user-sentence="sentence = $event"
+        />
+
+        <Button v-if="selectedDatasetId" :label="'Start'" @click="startActivity" />
       </div>
+
       <div v-else>
         <!-- Switch logic for activity -->
         <component
           :is="currentComponent"
-          v-if="currentComponent"
+          v-if="currentComponent && dataset"
           :activityID="activity.id"
           :dataset="dataset"
         ></component>
@@ -44,18 +50,26 @@
   </div>
 </template>
 
+<style>
+.intro {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+</style>
+
 <script>
 import { computed, ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
 import singularActivities from "./singularActivities";
 import { getDatasetById } from "@/api";
-import DatasetSelection from "@/components/DatasetSelection.vue";
+import DatasetSelectionV2 from "@/components/DatasetSelectionV2.vue";
 
 export default {
   name: "ActivityDetail",
   components: {
-    DatasetSelection,
+    DatasetSelectionV2,
   },
   setup() {
     const route = useRoute();
@@ -66,6 +80,7 @@ export default {
     const loading = ref(null);
     const activityId = computed(() => route.params.id);
     const datasetId = computed(() => route.params.datasetId);
+    const started = computed(() => !!datasetId.value);
     onMounted(() => {
       if (datasetId.value) {
         loading.value = true;
@@ -95,6 +110,13 @@ export default {
       dataset,
       datasetError,
       datasetId,
+      started,
+    };
+  },
+  data() {
+    return {
+      selectedDatasetId: null,
+      sentence: "",
     };
   },
   computed: {
@@ -106,10 +128,10 @@ export default {
     },
   },
   methods: {
-    async getDataset({ datasetId }) {
+    startActivity() {
       this.$router.push({
         name: this.$route.name,
-        params: { datasetId },
+        params: { ...this.$route.params, datasetId: this.selectedDatasetId },
       });
     },
     refreshDataset(dataset) {
