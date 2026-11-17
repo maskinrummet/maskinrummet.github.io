@@ -5,6 +5,7 @@
       :key="index"
       :class="{ 'active-step': index === currentStep, 'passed-step': index < currentStep }"
       @click="allowNavigation && $emit('stepClicked', index)"
+      :title="step"
     >
       <span class="step-label">{{ step }}</span>
     </li>
@@ -75,6 +76,8 @@
 
     .step-label {
       white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 
